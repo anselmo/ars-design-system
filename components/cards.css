@@ -1,0 +1,45 @@
+/* ═══════════════════════════════════════════════
+   Rapid Loyalty Design System — Cards & Metrics
+   ═══════════════════════════════════════════════ */
+
+/*
+ * Metric cards use ds-label for the header and ds-card-num
+ * for the value. White background, 1px rule border, 24px padding.
+ *
+ * Points Display Component sizes:
+ * - SM: 13px, 400 weight, tabular-nums
+ * - MD: 15px, 500 weight, tabular-nums
+ * - LG: 22px, 700 weight, tabular-nums, tracking -0.01em
+ * - Suffix "pts": 0.7em, 400 weight, text-mid, tracking normal
+ * - Negative values: text-red
+ */
+
+.card {
+  border: 1px solid var(--l-rule);
+  padding: 24px;
+  background: var(--l-white);
+}
+
+.card-header {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--l-mid);
+  margin-bottom: 8px;
+}
+
+.card-num {
+  font-size: 2.5rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.card-num-suffix {
+  font-size: 0.4em;
+  font-weight: 400;
+  letter-spacing: normal;
+  color: var(--l-mid);
+  margin-left: 4px;
+}

@@ -1,0 +1,98 @@
+/* ═══════════════════════════════════════════════
+   Rapid Loyalty Design System — Typography
+   ═══════════════════════════════════════════════ */
+
+/*
+ * Barlow is the sole typeface. Weight and scale create
+ * hierarchy — never colour alone.
+ */
+
+:root {
+  --font-sans: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* ── Type Scale ── */
+
+.ds-display {
+  font-size: clamp(3rem, 9vw, 5rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+}
+
+.ds-display-red {
+  font-size: clamp(3rem, 9vw, 5rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+  color: var(--l-red);
+}
+
+.ds-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.ds-subheading {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.ds-body {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.ds-body-light {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--l-mid);
+}
+
+.ds-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--l-mid);
+}
+
+.ds-card-num {
+  font-size: 2.5rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.ds-card-num-orange {
+  font-size: 2.5rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--l-orange);
+}
+
+.ds-card-num-red {
+  font-size: 2.5rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--l-red);
+}
+
+/*
+ * Inline Scales (Data Tables & UI Chrome)
+ * ───────────────────────────────────────
+ * Table header     │ 9px  │ 700 │ uppercase, tracking 0.16em, text-mid
+ * Table cell       │ 13px │ 400 │ —
+ * Top bar name     │ 13px │ 400 │ text-ink
+ * Top bar action   │ 11px │ 700 │ uppercase, tracking 0.06em, text-mid
+ * Error text       │ 12px │ 500 │ text-red
+ * Points (sm)      │ 13px │ 400 │ tabular-nums
+ * Points (md)      │ 15px │ 500 │ tabular-nums
+ * Points (lg)      │ 22px │ 700 │ tabular-nums, tracking -0.01em
+ * Points suffix    │ 0.7em│ 400 │ text-mid, tracking normal
+ */

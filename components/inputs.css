@@ -1,0 +1,49 @@
+/* ═══════════════════════════════════════════════
+   Rapid Loyalty Design System — Inputs
+   ═══════════════════════════════════════════════ */
+
+/*
+ * Two input styles:
+ * - Underline (login, hero forms)
+ * - Bordered (data entry, filters)
+ */
+
+/* ── Underline Input ── */
+.input-underline {
+  width: 100%;
+  max-width: 400px;
+  border: 0;
+  border-bottom: 1.5px solid var(--l-rule);
+  background: transparent;
+  padding: 8px 0;
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+  color: var(--l-black);
+  transition: border-color 0.15s;
+}
+.input-underline::placeholder { color: var(--l-rule); }
+.input-underline:focus { border-color: var(--l-black); }
+
+/* ── Bordered Input ── */
+.input-bordered {
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid var(--l-rule);
+  background: transparent;
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  color: var(--l-black);
+  transition: border-color 0.15s;
+}
+.input-bordered:focus { border-color: var(--l-black); }
+
+/*
+ * Underline: border-b-[1.5px] border-rule, focus: border-ink.
+ *            15px text. No background, no side borders.
+ *
+ * Bordered:  border border-rule, focus: border-ink.
+ *            13px text. Used in forms, filter bars, settings.
+ */

@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/arodriguesdasilva/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.5/skills/brainstorming/**)",
+      "Bash(/Users/arodriguesdasilva/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.5/skills/brainstorming/scripts/start-server.sh --project-dir /Users/arodriguesdasilva/dev/ars-design-system)",
+      "Read(//Users/arodriguesdasilva/.claude/skills/**)",
+      "Edit(~/.claude/skills/ars-design-system/**)"
+    ],
+    "additionalDirectories": [
+      "/Users/arodriguesdasilva/.claude/skills/ars-design-system"
+    ]
+  }
+}

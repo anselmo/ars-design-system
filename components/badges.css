@@ -1,0 +1,60 @@
+/* ═══════════════════════════════════════════════
+   Rapid Loyalty Design System — Status Badges
+   ═══════════════════════════════════════════════ */
+
+/*
+ * Custom status badges (not shadcn Badge) map domain statuses
+ * to five semantic variants. 11px bold uppercase with 0.08em tracking.
+ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border: 1px solid;
+  white-space: nowrap;
+}
+
+/* ── Variants ── */
+
+.badge-default {
+  border-color: var(--l-rule);
+  color: var(--l-black);
+}
+
+.badge-success {
+  border-color: var(--l-rule);
+  color: var(--l-black);
+  background: var(--l-light);
+}
+
+.badge-warning {
+  border-color: var(--l-rule);
+  color: var(--l-mid);
+}
+
+.badge-danger {
+  border-color: rgba(217, 28, 24, 0.3);
+  color: var(--l-red);
+}
+
+.badge-muted {
+  border-color: var(--l-rule);
+  color: var(--l-mid);
+  background: var(--l-light);
+}
+
+/*
+ * Status → Variant Mapping
+ * ────────────────────────
+ * success  │ border-rule text-ink bg-light     │ ACTIVE, COMPLETED, APPROVED, LIVE, PAID
+ * warning  │ border-rule text-mid              │ PENDING, SUBMITTED, IN REVIEW, PAUSED, CALCULATING, REVIEW, SUSPENDED
+ * danger   │ border-red/30 text-red            │ REVERSED, REJECTED, EXPIRED, DISPUTED
+ * muted    │ border-rule text-mid bg-light     │ DRAFT, CLOSED, ARCHIVED, CANCELLED, CONSUMED, INITIATED
+ * default  │ border-rule text-ink              │ SCHEDULED, INVOICED
+ */

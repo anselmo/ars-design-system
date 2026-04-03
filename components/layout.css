@@ -1,0 +1,113 @@
+/* ═══════════════════════════════════════════════
+   Rapid Loyalty Design System — Layout Patterns
+   ═══════════════════════════════════════════════ */
+
+/*
+ * Two-column shell: paper sidebar + white main area.
+ * Fixed top bar with user info and tenant switcher.
+ *
+ * Layout Token Reference
+ * ──────────────────────
+ * Page background │ bg-white                     │ Full viewport
+ * Sidebar         │ bg-paper (#F7F6F2)           │ border-r border-rule, fixed width, full height
+ * Top bar         │ bg-white                     │ border-b border-rule, h-12 (48px)
+ * Page header     │ inherits                     │ border-b border-rule, px-6 py-5
+ * Card            │ bg-white                     │ border border-rule, p-6 (24px)
+ */
+
+/* ── Page Header ── */
+.page-header {
+  border-bottom: 1px solid var(--l-rule);
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.page-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.page-header p {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--l-mid);
+  margin-top: 4px;
+}
+
+/* ── Top Bar ── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  height: 48px;
+  border-bottom: 1px solid var(--l-rule);
+  padding: 0 20px;
+}
+
+.topbar-name {
+  font-size: 13px;
+}
+
+.topbar-action {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--l-mid);
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.topbar-action:hover { color: var(--l-black); }
+
+/* ── Sidebar ── */
+.sidebar {
+  width: 220px;
+  background: var(--l-paper);
+  border-right: 1px solid var(--l-rule);
+  padding: 16px;
+}
+
+.sidebar-brand {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.sidebar-brand-sub {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--l-mid);
+  margin-top: 2px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  color: var(--l-mid);
+  cursor: pointer;
+  transition: all 0.1s;
+}
+.sidebar-item:hover {
+  background: var(--l-light);
+  color: var(--l-black);
+}
+.sidebar-item.active {
+  background: var(--l-light);
+  color: var(--l-black);
+  font-weight: 500;
+}
+
+.sidebar-icon {
+  width: 16px;
+  height: 16px;
+  background: var(--l-rule);
+}

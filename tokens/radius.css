@@ -1,0 +1,25 @@
+/* ═══════════════════════════════════════════════
+   Rapid Loyalty Design System — Border Radius
+   ═══════════════════════════════════════════════ */
+
+/*
+ * Zero. Everywhere. This is a Swiss-style design system —
+ * all corners are sharp. Every Tailwind radius token is
+ * overridden to 0px.
+ */
+
+:root {
+  --radius:     0px;
+  --radius-sm:  0px;
+  --radius-md:  0px;
+  --radius-lg:  0px;
+  --radius-xl:  0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+}
+
+/*
+ * All components, buttons, cards, inputs, badges,
+ * dialogs — zero radius, no exceptions.
+ */

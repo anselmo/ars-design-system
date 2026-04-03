@@ -1,0 +1,96 @@
+/* ═══════════════════════════════════════════════
+   Rapid Loyalty Design System — Buttons
+   ═══════════════════════════════════════════════ */
+
+/*
+ * Six variants, four sizes. All buttons use 11px uppercase
+ * bold type with 0.06em tracking. Built with class-variance-authority
+ * (CVA) on Base UI primitives.
+ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+/* ── Variants ── */
+
+.btn-default {
+  height: 32px;
+  padding: 0 10px;
+  background: var(--l-black);
+  color: var(--l-white);
+}
+.btn-default:hover { background: #2a2a2a; }
+
+.btn-outline {
+  height: 32px;
+  padding: 0 10px;
+  background: var(--l-white);
+  color: var(--l-black);
+  border-color: var(--l-rule);
+}
+.btn-outline:hover { background: var(--l-paper); }
+
+.btn-secondary {
+  height: 32px;
+  padding: 0 10px;
+  background: var(--l-paper);
+  color: var(--l-black);
+}
+.btn-secondary:hover { background: var(--l-light); }
+
+.btn-ghost {
+  height: 32px;
+  padding: 0 10px;
+  background: transparent;
+  color: var(--l-black);
+}
+.btn-ghost:hover { background: var(--l-paper); }
+
+.btn-destructive {
+  height: 32px;
+  padding: 0 10px;
+  background: rgba(217, 28, 24, 0.1);
+  color: var(--l-red);
+}
+.btn-destructive:hover { background: rgba(217, 28, 24, 0.2); }
+
+.btn-link {
+  height: 32px;
+  padding: 0 10px;
+  background: transparent;
+  color: var(--l-black);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ── Sizes ── */
+
+.btn-xs { height: 24px; padding: 0 8px; font-size: 10px; }
+.btn-sm { height: 28px; padding: 0 10px; font-size: 11px; }
+.btn-lg { height: 36px; padding: 0 10px; font-size: 11px; }
+
+/*
+ * Token Reference
+ * ───────────────
+ * default     │ bg-primary (#0D0D0D)      │ text-primary-foreground (#FFF)  │ transparent       │ primary/80
+ * outline     │ bg-background (#FFF)       │ text-foreground                │ border-border      │ bg-muted
+ * secondary   │ bg-secondary (#F7F6F2)     │ text-secondary-foreground      │ transparent       │ secondary/80
+ * ghost       │ transparent                │ inherits                       │ transparent       │ bg-muted
+ * destructive │ bg-destructive/10          │ text-destructive (#D91C18)     │ transparent       │ destructive/20
+ * link        │ transparent                │ text-primary                   │ none              │ underline
+ *
+ * Login / Full-Width CTA Pattern:
+ * h-[38px], w-full, bg-ink, text-white, 11px bold uppercase tracking-[0.06em]
+ */

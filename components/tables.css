@@ -1,0 +1,35 @@
+/* ═══════════════════════════════════════════════
+   Rapid Loyalty Design System — Data Tables
+   ═══════════════════════════════════════════════ */
+
+/*
+ * Built on TanStack React Table. 9px uppercase label headers,
+ * 13px body cells, rule borders, paper hover state.
+ * Pagination at bottom-right.
+ */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--l-mid);
+  text-align: left;
+  padding: 8px 16px;
+  border-bottom: 1.5px solid var(--l-rule);
+}
+
+.table td {
+  font-size: 13px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--l-rule);
+}
+
+.table tr:hover td {
+  background: var(--l-paper);
+}

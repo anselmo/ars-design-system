@@ -1,0 +1,23 @@
+/* ═══════════════════════════════════════════════
+   Rapid Loyalty Design System — Charts & Data Viz
+   ═══════════════════════════════════════════════ */
+
+/*
+ * Built with Recharts. Charts use CSS variables directly
+ * for consistency. Orange is the primary data colour;
+ * gray dashed lines for secondary series.
+ *
+ * Token Reference
+ * ───────────────
+ * Primary line/area     │ var(--l-orange)          │ #FE561A     │ Points earned, key metrics
+ * Area fill             │ var(--l-orange) 10% op   │ #FE561A@0.1 │ Gradient fill under line
+ * Secondary line        │ var(--l-rule)            │ #D8D8D4     │ Dashed stroke, events count
+ * Grid lines            │ var(--l-light)           │ #EFEFEB     │ Horizontal only
+ * Axis labels           │ var(--l-mid)             │ #6B6B6B     │ 11px Barlow
+ * Tooltip background    │ var(--l-white)           │ #FFFFFF     │ 1px rule border, no radius
+ * Donut segments        │ orange, rule, light, mid │ —           │ Max 4 segments; use opacity for more
+ * Bar chart fills       │ var(--l-orange)          │ #FE561A     │ Horizontal bars, no radius
+ * Progress bar track    │ var(--l-light)           │ #EFEFEB     │ Background track
+ * Progress bar fill     │ var(--l-orange)          │ #FE561A     │ Budget consumption
+ * Negative values       │ var(--l-red)             │ #D91C18     │ Burns, losses, negative deltas
+ */

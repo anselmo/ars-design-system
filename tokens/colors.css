@@ -1,0 +1,85 @@
+/* ═══════════════════════════════════════════════
+   Rapid Loyalty Design System — Colour Tokens
+   ═══════════════════════════════════════════════ */
+
+/*
+ * Nine primitive colour tokens form the entire palette.
+ * No grays beyond mid — the system relies on white, paper,
+ * light, and rule to create hierarchy through surface
+ * contrast rather than colour variety.
+ */
+
+:root {
+  /* ── Primitives ── */
+  --l-white:  #FFFFFF;
+  --l-paper:  #F7F6F2;
+  --l-light:  #EFEFEB;
+  --l-rule:   #D8D8D4;
+  --l-mid:    #6B6B6B;
+  --l-black:  #0D0D0D;
+  --l-dark:   #1A1A1A;
+  --l-orange: #FE561A;
+  --l-red:    #D91C18;
+  --l-blue:   #F4FCFF;
+  --l-green:  #55C251;
+
+  /* ── Semantic: Surface & Text ── */
+  --background:             var(--l-white);
+  --foreground:             var(--l-black);
+  --card:                   var(--l-white);
+  --card-foreground:        var(--l-black);
+  --popover:                var(--l-white);
+  --popover-foreground:     var(--l-black);
+  --primary:                var(--l-black);
+  --primary-foreground:     var(--l-white);
+  --secondary:              var(--l-paper);
+  --secondary-foreground:   var(--l-black);
+  --muted:                  var(--l-paper);
+  --muted-foreground:       var(--l-mid);
+  --accent:                 var(--l-light);
+  --accent-foreground:      var(--l-black);
+  --destructive:            var(--l-red);
+
+  /* ── Semantic: Chrome & Controls ── */
+  --border:                 var(--l-rule);
+  --input:                  var(--l-rule);
+  --ring:                   var(--l-black);
+
+  /* ── Semantic: Sidebar ── */
+  --sidebar:                        var(--l-paper);
+  --sidebar-foreground:             var(--l-black);
+  --sidebar-primary:                var(--l-black);
+  --sidebar-primary-foreground:     var(--l-white);
+  --sidebar-accent:                 var(--l-light);
+  --sidebar-accent-foreground:      var(--l-black);
+  --sidebar-border:                 var(--l-rule);
+  --sidebar-ring:                   var(--l-black);
+
+  /* ── Custom Tailwind Aliases ── */
+  --color-paper:  #F7F6F2;
+  --color-rule:   #D8D8D4;
+  --color-mid:    #6B6B6B;
+  --color-ink:    #0D0D0D;
+  --color-dark:   #1A1A1A;
+  --color-orange: #FE561A;
+  --color-red:    #D91C18;
+  --color-light:  #EFEFEB;
+  --color-blue:   #F4FCFF;
+  --color-green:  #55C251;
+}
+
+/*
+ * Usage Guidelines
+ * ────────────────
+ * --l-white   │ Primary background    │ Page background, cards, popovers, main content area
+ * --l-paper   │ Secondary surface     │ Sidebar background, muted sections, table hover state
+ * --l-light   │ Accent fill           │ Ghost button hover, active sidebar items, success/muted badge fill
+ * --l-rule    │ Borders & dividers    │ All borders, table rules, input underlines, badge outlines
+ * --l-mid     │ Secondary text        │ Labels, descriptions, muted foreground, timestamps
+ * --l-black   │ Primary text & fills  │ Headings, body text, default button background, icons
+ * --l-dark    │ Dark surfaces         │ Top bar background (dark variant), dark card backgrounds
+ * --l-orange  │ Primary accent        │ Hero metrics, chart lines, key analytics, card numbers
+ * --l-red     │ Error & destructive   │ Error messages, negative values, reversed/rejected badges, destructive buttons
+ * --l-blue    │ Light blue tint       │ Info highlights, selected states, soft informational backgrounds
+ * --l-green   │ Positive & gains      │ Positive numbers, upward metrics, gains, growth indicators
+ */
