@@ -1,0 +1,54 @@
+name: Deploy reference.html to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "reference.html"
+      - "fonts/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Assemble _site/
+        run: |
+          mkdir -p _site
+          # Make the spec the default entry point AND keep /reference.html working.
+          cp reference.html _site/index.html
+          cp reference.html _site/reference.html
+          # Bundled Barlow weights — reference.html resolves them at ./fonts/.
+          cp -R fonts _site/fonts
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
