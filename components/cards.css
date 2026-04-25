@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════
-   Rapid Loyalty Design System — Cards & Metrics
+   ARS Design System — Cards & Metrics
    ═══════════════════════════════════════════════ */
 
 /*
@@ -15,7 +15,7 @@
  */
 
 .card {
-  border: 1px solid var(--l-rule);
+  border: 1px solid var(--border);
   padding: 24px;
   background: var(--l-white);
 }

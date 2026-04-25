@@ -1,0 +1,56 @@
+---
+title: Typography
+description: Barlow only. Hierarchy through weight and scale. The .ds-* class scale + inline UI scales.
+---
+
+## Barlow is the sole typeface
+
+Barlow does the entire system. Hierarchy is built from **weight and scale** — never from a second typeface. The Swiss-influenced restraint is part of the brand: one family, applied with discipline, gets its character from contrast in size and weight rather than mixing voices.
+
+The package bundles five `woff2` weights — **300, 400, 500, 600, 700** — and registers them via `@font-face` in `tokens/fonts.css`. No Google Fonts `<link>` is needed.
+
+The single typography token:
+
+```css
+--font-sans: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+```
+
+## Type scale (`.ds-*` classes)
+
+| Class                   | Size                          | Weight | Letter-spacing | Use                                          |
+| ----------------------- | ----------------------------- | ------ | -------------- | -------------------------------------------- |
+| `.ds-display`           | `clamp(3rem, 9vw, 5rem)`      | 600    | -0.04em        | Hero numerals, landing display type          |
+| `.ds-display-red`       | `clamp(3rem, 9vw, 5rem)`      | 600    | -0.04em        | Same scale, red emphasis (`--l-red`)         |
+| `.ds-heading`           | `2rem` (32px)                 | 700    | —              | Section headings                             |
+| `.ds-subheading`        | `1.25rem` (20px)              | 400    | —              | Lede / supporting copy                       |
+| `.ds-body`              | `1rem` (16px)                 | 400    | —              | Body copy                                    |
+| `.ds-body-light`        | `1rem` (16px)                 | 300    | —              | Muted body (`--l-mid`)                       |
+| `.ds-label`             | `9px`                         | 700    | 0.16em         | Micro-labels, uppercase, `--l-mid`           |
+| `.ds-card-num`          | `2.5rem` (40px)               | 500    | -0.04em        | Card metric numerals                         |
+| `.ds-card-num-orange`   | `2.5rem` (40px)               | 500    | -0.04em        | Same scale, orange accent (`--l-orange`)     |
+| `.ds-card-num-red`      | `2.5rem` (40px)               | 500    | -0.04em        | Same scale, red emphasis (`--l-red`)         |
+
+## Inline UI scales (no class — applied per component)
+
+These scales are too narrow in scope to deserve a class. They live inside component CSS for tables, top bar, error text, and points displays.
+
+| Context           | Size  | Weight | Treatment                                          |
+| ----------------- | ----- | ------ | -------------------------------------------------- |
+| Table header      | 9px   | 700    | uppercase, tracking 0.16em, `--l-mid`              |
+| Table cell        | 13px  | 400    | —                                                  |
+| Top bar name      | 13px  | 400    | `--l-black`                                        |
+| Top bar action    | 11px  | 700    | uppercase, tracking 0.06em, `--l-mid`              |
+| Error text        | 12px  | 500    | `--l-red`                                          |
+| Points (sm)       | 13px  | 400    | `tabular-nums`                                     |
+| Points (md)       | 15px  | 500    | `tabular-nums`                                     |
+| Points (lg)       | 22px  | 700    | `tabular-nums`, tracking -0.01em                   |
+| Points suffix     | 0.7em | 400    | `--l-mid`, tracking normal                         |
+
+## Letter-spacing convention
+
+Four specific values do all the work. Treat the list as closed — new tracking values should not be invented per-component.
+
+- **`0.16em`** — micro-labels at 9px (`.ds-label`, table headers). Wide tracking compensates for the small size and makes uppercase legible.
+- **`0.06em`** — buttons and top-bar actions at 11px. Tighter than micro-labels, still loose enough for uppercase.
+- **`-0.04em`** — display and card-number scales (40px+). Tightens optical spacing at large sizes.
+- **`-0.01em`** — large points display (22px). A subtle pull-in for tabular numerals.

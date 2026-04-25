@@ -1,0 +1,33 @@
+/* ═══════════════════════════════════════════════
+   ARS Design System — Motion
+   ═══════════════════════════════════════════════
+   Three durations and two easings cover the system.
+   Swiss restraint: motion is functional, never decorative.
+   Anything that wants to "ease in dramatically" is wrong here.
+
+   Use cases
+   ─────────
+   --motion-fast    │ 120ms │ hover, focus rings, button press, color change
+   --motion-base    │ 180ms │ open/close, dropdown reveal, accordion expand
+   --motion-slow    │ 240ms │ modal/drawer slide-in, larger transforms
+
+   --ease-standard  │ cubic-bezier(.2,0,0,1) │ default — slight ease-out
+   --ease-emphasized│ cubic-bezier(.3,0,0,1) │ for entrances that want lift
+   ═══════════════════════════════════════════════ */
+
+:root {
+  --motion-fast: 120ms;
+  --motion-base: 180ms;
+  --motion-slow: 240ms;
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.3, 0, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 0ms;
+    --motion-base: 0ms;
+    --motion-slow: 0ms;
+  }
+}

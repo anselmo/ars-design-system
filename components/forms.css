@@ -1,0 +1,372 @@
+/* ═══════════════════════════════════════════════
+   ARS Design System — Form Controls
+   ═══════════════════════════════════════════════
+   Textarea, select, checkbox, radio, switch, file input.
+
+   Markup compatibility
+   ────────────────────
+   Each control supports BOTH:
+   - Radix UI markup (data-state="checked|unchecked|indeterminate", role="...")
+   - Native HTML form controls (:checked, :disabled, :read-only)
+
+   Use whichever the consumer prefers. Styles are written against both.
+
+   Zero-radius doctrine
+   ────────────────────
+   Checkboxes and file-input buttons are sharp. Radios and switches are
+   genuine circles (radius: 50%) — that is the only exception in the system.
+   ═══════════════════════════════════════════════ */
+
+/* ── Textarea ── */
+.textarea {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  min-height: 80px;
+  border: 1px solid var(--border);
+  background: transparent;
+  padding: 8px 10px;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--l-black);
+  outline: none;
+  resize: vertical;
+  transition: border-color var(--motion-fast) var(--ease-standard);
+}
+.textarea:focus { border-color: var(--l-black); }
+.textarea:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--l-paper);
+  color: var(--l-mid);
+}
+.textarea:read-only {
+  background: var(--l-paper);
+  border-color: var(--border);
+}
+.textarea.input--error { border-color: var(--l-red); }
+.textarea.input--error:focus { border-color: var(--l-red); }
+.textarea.input--error:focus-visible {
+  outline: 2px solid var(--l-red);
+  outline-offset: 2px;
+}
+
+/* ── Select ── */
+/* Inline SVG chevron (color matches --l-mid #6B6B6B). The chevron is the only
+   image asset in this file; CSS cannot reliably render a chevron via borders
+   alone without rotated pseudo-elements that conflict with focus rings. */
+.select {
+  width: 100%;
+  max-width: 400px;
+  height: 32px;
+  border: 1px solid var(--border);
+  background-color: transparent;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none' stroke='%236B6B6B' stroke-width='1.5'><path d='M1 1l4 4 4-4'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding: 0 28px 0 10px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--l-black);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  transition: border-color var(--motion-fast) var(--ease-standard);
+}
+.select:focus { border-color: var(--l-black); }
+.select:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: var(--l-paper);
+  color: var(--l-mid);
+}
+.select.input--error { border-color: var(--l-red); }
+.select.input--error:focus { border-color: var(--l-red); }
+.select.input--error:focus-visible {
+  outline: 2px solid var(--l-red);
+  outline-offset: 2px;
+}
+
+/* ── Checkbox ── */
+/* 16×16 sharp square. Works with native <input type="checkbox"> and Radix
+   <button role="checkbox" data-state="checked|unchecked">. */
+.checkbox {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  position: relative;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  vertical-align: middle;
+  transition:
+    background-color var(--motion-fast) var(--ease-standard),
+    border-color var(--motion-fast) var(--ease-standard);
+}
+.checkbox:hover:not(:disabled) { border-color: var(--l-mid); }
+
+.checkbox:checked,
+.checkbox[data-state="checked"] {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+/* Pure-CSS checkmark via two borders rotated 45°.
+   No SVG, no font — works on any consumer's browser. */
+.checkbox:checked::after,
+.checkbox[data-state="checked"]::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 4px;
+  width: 4px;
+  height: 8px;
+  border-left: 1.5px solid var(--primary-foreground);
+  border-bottom: 1.5px solid var(--primary-foreground);
+  border-top: 0;
+  border-right: 0;
+  transform: rotate(-45deg);
+}
+
+/* Indeterminate (Radix sets data-state="indeterminate"; native uses .indeterminate
+   property which we cannot select on, so consumers should toggle [data-state]). */
+.checkbox[data-state="indeterminate"] {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.checkbox[data-state="indeterminate"]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  right: 3px;
+  height: 1.5px;
+  margin-top: -0.75px;
+  background: var(--primary-foreground);
+}
+
+.checkbox:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.checkbox:disabled,
+.checkbox[data-disabled],
+.checkbox[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Radio ── */
+/* 16×16 circle — first allowed exception to the zero-radius rule. */
+.radio {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 50%;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  position: relative;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  vertical-align: middle;
+  transition:
+    border-color var(--motion-fast) var(--ease-standard);
+}
+.radio:hover:not(:disabled) { border-color: var(--l-mid); }
+
+.radio:checked,
+.radio[data-state="checked"] {
+  border-color: var(--primary);
+}
+
+/* 8×8 dot in the center via ::after. Pure CSS, no image. */
+.radio:checked::after,
+.radio[data-state="checked"]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  background: var(--primary);
+  border-radius: 50%;
+}
+
+.radio:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.radio:disabled,
+.radio[data-disabled],
+.radio[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Switch ── */
+/* 32×16 track + 12×12 thumb. Designed for Radix
+   <button role="switch" data-state="checked|unchecked">. Native
+   <input type="checkbox" role="switch"> is supported via :checked. */
+.switch {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 32px;
+  height: 16px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: var(--l-rule);
+  cursor: pointer;
+  position: relative;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  vertical-align: middle;
+  transition: background-color var(--motion-fast) var(--ease-standard);
+}
+
+/* Thumb — second allowed border-radius: 50% exception. */
+.switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  background: var(--l-white);
+  border-radius: 50%;
+  transition: transform var(--motion-fast) var(--ease-standard);
+}
+
+.switch:checked,
+.switch[data-state="checked"] {
+  background: var(--primary);
+}
+.switch:checked::after,
+.switch[data-state="checked"]::after {
+  transform: translateX(16px);
+}
+
+.switch:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.switch:disabled,
+.switch[data-disabled],
+.switch[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── File Input ── */
+/* Native <input type="file" class="file-input">. The browser renders the
+   "Choose file" button + filename label; we style the button via
+   ::file-selector-button to match .btn-outline. */
+.file-input {
+  display: inline-block;
+  max-width: 400px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--l-mid);
+  cursor: pointer;
+  outline: none;
+}
+
+.file-input::file-selector-button {
+  height: 32px;
+  padding: 0 10px;
+  margin-right: 10px;
+  background: var(--l-white);
+  color: var(--l-black);
+  border: 1.5px solid var(--border);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color var(--motion-fast) var(--ease-standard);
+}
+.file-input::file-selector-button:hover {
+  background: var(--l-paper);
+}
+
+/* WebKit legacy alias — older Safari uses ::-webkit-file-upload-button. */
+.file-input::-webkit-file-upload-button {
+  height: 32px;
+  padding: 0 10px;
+  margin-right: 10px;
+  background: var(--l-white);
+  color: var(--l-black);
+  border: 1.5px solid var(--border);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color var(--motion-fast) var(--ease-standard);
+}
+.file-input::-webkit-file-upload-button:hover {
+  background: var(--l-paper);
+}
+
+.file-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.file-input:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.file-input:disabled::file-selector-button {
+  cursor: not-allowed;
+}
+
+/*
+ * Token Reference
+ * ───────────────
+ * .textarea       │ 1px rule border, transparent bg, 13px, resize: vertical, min-height 80
+ * .select         │ 1px rule border, h-32, custom chevron (SVG data URL, --l-mid stroke)
+ * .checkbox       │ 16×16 sharp square, --primary fill on check, CSS-only checkmark
+ * .radio          │ 16×16 circle (radius: 50% — sanctioned exception), 8×8 dot on check
+ * .switch         │ 32×16 track, 12×12 circular thumb (radius: 50% — sanctioned exception)
+ * .file-input     │ Native input, ::file-selector-button styled like .btn-outline
+ *
+ * Shared states (mirrors inputs.css):
+ *   :focus-visible  │ outline 2px var(--ring), offset 2px (red on .input--error)
+ *   :disabled       │ opacity 0.4–0.5, not-allowed cursor (matches buttons + inputs)
+ *   :checked / [data-state="checked"]  │ both selectors paired everywhere applicable
+ *
+ * Radix compatibility:
+ *   Checkbox: <button role="checkbox" data-state="checked|unchecked|indeterminate">
+ *   Radio:    <button role="radio"    data-state="checked|unchecked">
+ *   Switch:   <button role="switch"   data-state="checked|unchecked">
+ *   Select:   uses native <select> — Radix Select is a popover, styled separately.
+ */

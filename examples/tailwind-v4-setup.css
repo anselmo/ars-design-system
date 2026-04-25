@@ -1,0 +1,68 @@
+/* ═══════════════════════════════════════════════
+   Example: Tailwind CSS v4 + @ars/design-system
+   ═══════════════════════════════════════════════
+   Place this file as your main CSS entry (e.g. src/app.css).
+
+   Tailwind v4 uses a CSS-first config — no tailwind.config.js
+   is required. Custom CSS variables declared inside @theme
+   are surfaced as utility classes automatically.
+
+   Import order matters:
+     1. @import "tailwindcss"           → load Tailwind first
+     2. @import "@ars/design-system"    → load DS tokens + components
+     3. @theme { ... }                  → re-export DS tokens as Tailwind utilities
+*/
+
+@import "tailwindcss";
+@import "@ars/design-system";
+
+@theme {
+  /* ── Colors ────────────────────────────────────
+     Each --color-* below generates utilities like
+     bg-paper, text-orange, border-rule, etc.
+     The values reference the DS primitives so the
+     design system remains the single source of truth. */
+  --color-paper:  var(--l-paper);   /* bg-paper, text-paper, border-paper */
+  --color-rule:   var(--l-rule);    /* bg-rule, border-rule  */
+  --color-mid:    var(--l-mid);     /* text-mid, secondary text */
+  --color-ink:    var(--l-black);   /* text-ink — primary text/fill */
+  --color-dark:   var(--l-dark);    /* dark surfaces (top bar, etc.) */
+  --color-light:  var(--l-light);   /* accent fill */
+  --color-orange: var(--l-orange);  /* primary accent */
+  --color-red:    var(--l-red);     /* destructive / error */
+  --color-blue:   var(--l-blue);    /* info tint */
+  --color-green:  var(--l-green);   /* positive / gains */
+
+  /* ── Border Radius ─────────────────────────────
+     The DS is zero-radius everywhere. ALL --radius-*
+     tokens MUST be set here, otherwise Tailwind's
+     defaults (rounded-md, rounded-lg, etc.) re-introduce
+     rounding on shadcn/ui components and utilities. */
+  --radius:     0px;
+  --radius-sm:  0px;
+  --radius-md:  0px;
+  --radius-lg:  0px;
+  --radius-xl:  0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+
+  /* ── Typography ────────────────────────────────
+     font-sans applies Barlow everywhere.  The DS only
+     ships one typeface — hierarchy comes from weight
+     and scale, not font family. */
+  --font-sans: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/*
+ * After this setup, the following utilities are wired up:
+ *
+ *   bg-paper      bg-orange      bg-ink
+ *   text-mid      text-orange    text-red
+ *   border-rule   border-light   border-orange
+ *   font-sans     (Barlow)
+ *   rounded-md    (collapses to 0)
+ *
+ * Use DS component classes (.btn, .badge, .ds-display, .sidebar-item)
+ * alongside Tailwind utilities — they share the same token layer.
+ */

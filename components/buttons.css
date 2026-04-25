@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════
-   Rapid Loyalty Design System — Buttons
+   ARS Design System — Buttons
    ═══════════════════════════════════════════════ */
 
 /*
@@ -19,8 +19,9 @@
   text-transform: uppercase;
   border: 1px solid transparent;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all var(--motion-fast) var(--ease-standard);
   white-space: nowrap;
+  position: relative; /* anchor for .btn--loading spinner */
 }
 
 /* ── Variants ── */
@@ -38,7 +39,7 @@
   padding: 0 10px;
   background: var(--l-white);
   color: var(--l-black);
-  border-color: var(--l-rule);
+  border-color: var(--border);
 }
 .btn-outline:hover { background: var(--l-paper); }
 
@@ -80,6 +81,67 @@
 .btn-xs { height: 24px; padding: 0 8px; font-size: 10px; }
 .btn-sm { height: 28px; padding: 0 10px; font-size: 11px; }
 .btn-lg { height: 36px; padding: 0 10px; font-size: 11px; }
+
+/* ── States ── */
+
+/* Keyboard-only focus ring — mouse users skip it via :focus-visible. */
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* :not(:disabled) prevents the press animation from firing on disabled buttons. */
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn--loading {
+  color: transparent;
+  pointer-events: none;
+  cursor: wait;
+}
+
+.btn--loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border: 2px solid transparent;
+  border-top-color: var(--ring);
+  border-radius: 50%;
+  /* Spinner duration is hardcoded — motion tokens cap at 240ms,
+     which would look frantic on a continuous rotation. 0.8s is the
+     sanctioned exception; do not tokenize this. */
+  animation: ds-btn-spin 0.8s linear infinite;
+}
+
+@keyframes ds-btn-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Spinner colour overrides — default ring (black) is invisible on dark/red fills. */
+.btn-default.btn--loading::after,
+.btn-destructive.btn--loading::after {
+  border-top-color: var(--primary-foreground);
+}
+
+/* Honour reduced-motion: freeze the spinner so it remains a visible indicator
+   without rotating. Loading state still hides the label. */
+@media (prefers-reduced-motion: reduce) {
+  .btn--loading::after {
+    animation: none;
+  }
+}
 
 /*
  * Token Reference

@@ -1,0 +1,79 @@
+/* ═══════════════════════════════════════════════
+   ARS Design System — Tooltip
+   ═══════════════════════════════════════════════
+   CSS shell. Pair with Radix UI Tooltip (or any
+   headless lib that exposes [data-state] and [data-side]
+   on the content element).
+
+   Anatomy
+   ───────
+   .tooltip-content   the popover bubble (dark on light)
+   .tooltip-arrow     style for the SVG arrow Radix injects
+
+   Inverted contrast (black bg, white text) is intentional —
+   tooltips need to register at a glance against the
+   light system surfaces. This is the only place in ARS
+   where dark surface is the default.
+
+   Hover delay, dismissal, positioning: Radix handles.
+   ═══════════════════════════════════════════════ */
+
+.tooltip-content {
+  background: var(--foreground);
+  color: var(--background);
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  max-width: 240px;
+  box-shadow: var(--shadow-popover);
+  z-index: var(--z-popover);
+  pointer-events: none;
+  user-select: none;
+  transition:
+    opacity var(--motion-fast) var(--ease-standard),
+    transform var(--motion-fast) var(--ease-standard);
+}
+
+.tooltip-content[data-state="instant-open"],
+.tooltip-content[data-state="delayed-open"] {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.tooltip-content[data-state="closed"] {
+  opacity: 0;
+}
+
+/* Direction-aware micro-displacement on closed state —
+   tiny lift toward the trigger so the fade has a hint of motion. */
+.tooltip-content[data-side="top"][data-state="closed"] {
+  transform: translateY(2px);
+}
+
+.tooltip-content[data-side="bottom"][data-state="closed"] {
+  transform: translateY(-2px);
+}
+
+.tooltip-content[data-side="left"][data-state="closed"] {
+  transform: translateX(2px);
+}
+
+.tooltip-content[data-side="right"][data-state="closed"] {
+  transform: translateX(-2px);
+}
+
+/* Arrow — Radix injects an <svg>. We only set fill so it
+   inherits the inverted tooltip surface. No SVG drawing here. */
+.tooltip-arrow {
+  fill: var(--foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tooltip-content[data-side="top"][data-state="closed"],
+  .tooltip-content[data-side="bottom"][data-state="closed"],
+  .tooltip-content[data-side="left"][data-state="closed"],
+  .tooltip-content[data-side="right"][data-state="closed"] {
+    transform: none;
+  }
+}

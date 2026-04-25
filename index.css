@@ -1,24 +1,43 @@
 /* ═══════════════════════════════════════════════
-   Rapid Loyalty Design System — Main Entry Point
+   ARS Design System — Main Entry Point
    ═══════════════════════════════════════════════
    Swiss-inspired, zero-radius, Barlow typeface.
    Built on shadcn/ui + Tailwind CSS v4.
    ═══════════════════════════════════════════════ */
 
 /* Tokens */
+@import "./tokens/fonts.css";
 @import "./tokens/colors.css";
 @import "./tokens/typography.css";
 @import "./tokens/spacing.css";
 @import "./tokens/radius.css";
+@import "./tokens/motion.css";
+@import "./tokens/elevation.css";
+@import "./tokens/z-index.css";
 
 /* Components */
 @import "./components/buttons.css";
 @import "./components/badges.css";
 @import "./components/inputs.css";
+@import "./components/forms.css";
 @import "./components/cards.css";
 @import "./components/tables.css";
 @import "./components/layout.css";
 @import "./components/charts.css";
+
+/* Phase 3a: floating-surface components (paired with Radix UI markup) */
+@import "./components/dialog.css";
+@import "./components/dropdown.css";
+@import "./components/tooltip.css";
+@import "./components/toast.css";
+
+/* Phase 4 Tier-2: navigation + feedback + loading */
+@import "./components/tabs.css";
+@import "./components/pagination.css";
+@import "./components/breadcrumb.css";
+@import "./components/alert.css";
+@import "./components/empty-state.css";
+@import "./components/skeleton.css";
 
 /* ── Base Reset ── */
 @layer base {

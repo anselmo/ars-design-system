@@ -1,0 +1,139 @@
+/* ═══════════════════════════════════════════════
+   ARS Design System — Dialog
+   ═══════════════════════════════════════════════
+   CSS shell only. Pair with Radix UI Dialog or any
+   headless library that exposes data-state="open|closed"
+   on its Overlay and Content elements.
+
+   Anatomy
+   ───────
+   .dialog-overlay         backdrop (tinted, fades)
+   .dialog-content         centered panel (slides + fades)
+   .dialog-title           heading inside content
+   .dialog-description     subtitle / lead paragraph
+   .dialog-close           top-right close (X) button
+   .dialog-actions         button row (cancel + confirm)
+
+   Behavior is the consumer's job: focus trap, escape key,
+   click-outside, scroll lock. Radix handles all of that
+   when you compose this CSS with @radix-ui/react-dialog.
+   ═══════════════════════════════════════════════ */
+
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 13, 13, 0.4);
+  z-index: var(--z-overlay);
+  transition: opacity var(--motion-base) var(--ease-standard);
+}
+
+.dialog-overlay[data-state="closed"] {
+  opacity: 0;
+}
+
+.dialog-overlay[data-state="open"] {
+  opacity: 1;
+}
+
+.dialog-content {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--background);
+  border: 1px solid var(--border);
+  padding: var(--space-shell);
+  box-shadow: var(--shadow-modal);
+  z-index: var(--z-modal);
+  width: calc(100vw - 32px);
+  max-width: 440px;
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
+  transition:
+    opacity var(--motion-base) var(--ease-standard),
+    transform var(--motion-base) var(--ease-emphasized);
+}
+
+.dialog-content:focus {
+  outline: none;
+}
+
+.dialog-content[data-state="closed"] {
+  opacity: 0;
+  transform: translate(-50%, calc(-50% + 8px));
+}
+
+.dialog-content[data-state="open"] {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.dialog-title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+  margin: 0 0 8px;
+}
+
+.dialog-description {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+  margin: 0 0 20px;
+}
+
+.dialog-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  color: var(--l-mid);
+  cursor: pointer;
+}
+
+.dialog-close:hover {
+  color: var(--foreground);
+}
+
+.dialog-close:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.dialog-close::before,
+.dialog-close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 1.5px;
+  background: currentColor;
+}
+
+.dialog-close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.dialog-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog-content[data-state="closed"] {
+    transform: translate(-50%, -50%);
+  }
+}

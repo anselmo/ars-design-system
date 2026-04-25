@@ -1,0 +1,101 @@
+---
+title: Colors
+description: Eleven primitives, semantic aliases, Tailwind aliases. Hierarchy through surface contrast, not depth.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## Primitives
+
+Eleven primitive colour tokens form the entire palette. No grays beyond `--l-mid` — the system relies on white, paper, light, and rule to create hierarchy through surface contrast rather than colour variety.
+
+| Token        | Hex       | Role                  | Use case                                                                                |
+| ------------ | --------- | --------------------- | --------------------------------------------------------------------------------------- |
+| `--l-white`  | `#FFFFFF` | Primary background    | Page background, cards, popovers, main content area                                     |
+| `--l-paper`  | `#F7F6F2` | Secondary surface     | Sidebar background, muted sections, table hover state                                   |
+| `--l-light`  | `#EFEFEB` | Accent fill           | Ghost button hover, active sidebar items, success/muted badge fill                      |
+| `--l-rule`   | `#D8D8D4` | Borders & dividers    | All borders, table rules, input underlines, badge outlines                              |
+| `--l-mid`    | `#6B6B6B` | Secondary text        | Labels, descriptions, muted foreground, timestamps                                      |
+| `--l-black`  | `#0D0D0D` | Primary text & fills  | Headings, body text, default button background, icons                                   |
+| `--l-dark`   | `#1A1A1A` | Dark surfaces         | Top bar background (dark variant), dark card backgrounds                                |
+| `--l-orange` | `#FE561A` | Primary accent        | Hero metrics, chart lines, key analytics, card numbers                                  |
+| `--l-red`    | `#D91C18` | Error & destructive   | Error messages, negative values, reversed/rejected badges, destructive buttons          |
+| `--l-blue`   | `#F4FCFF` | Light blue tint       | Info highlights, selected states, soft informational backgrounds                        |
+| `--l-green`  | `#55C251` | Positive & gains      | Positive numbers, upward metrics, gains, growth indicators                              |
+
+## Semantic aliases
+
+Semantic tokens are unprefixed. They alias primitives so the same component CSS works under either theme — only the alias re-points in dark mode.
+
+| Token                    | Light-mode mapping  |
+| ------------------------ | ------------------- |
+| `--background`           | `var(--l-white)`    |
+| `--foreground`           | `var(--l-black)`    |
+| `--card`                 | `var(--l-white)`    |
+| `--card-foreground`      | `var(--l-black)`    |
+| `--popover`              | `var(--l-white)`    |
+| `--popover-foreground`   | `var(--l-black)`    |
+| `--primary`              | `var(--l-black)`    |
+| `--primary-foreground`   | `var(--l-white)`    |
+| `--secondary`            | `var(--l-paper)`    |
+| `--secondary-foreground` | `var(--l-black)`    |
+| `--muted`                | `var(--l-paper)`    |
+| `--muted-foreground`     | `var(--l-mid)`      |
+| `--accent`               | `var(--l-light)`    |
+| `--accent-foreground`    | `var(--l-black)`    |
+| `--destructive`          | `var(--l-red)`      |
+| `--border`               | `var(--l-rule)`     |
+| `--input`                | `var(--l-rule)`     |
+| `--ring`                 | `var(--l-black)`    |
+
+## Tailwind aliases
+
+The `--color-*` family exists for Tailwind v4's `@theme` block. They mirror the primitives by hex value rather than aliasing, so they are theme-static — they do **not** re-override in dark mode by design.
+
+| Token            | Hex       |
+| ---------------- | --------- |
+| `--color-paper`  | `#F7F6F2` |
+| `--color-rule`   | `#D8D8D4` |
+| `--color-mid`    | `#6B6B6B` |
+| `--color-ink`    | `#0D0D0D` |
+| `--color-dark`   | `#1A1A1A` |
+| `--color-orange` | `#FE561A` |
+| `--color-red`    | `#D91C18` |
+| `--color-light`  | `#EFEFEB` |
+| `--color-blue`   | `#F4FCFF` |
+| `--color-green`  | `#55C251` |
+
+For the full setup, see [Install → Tailwind CSS v4](/install#tailwind-css-v4).
+
+## Sidebar palette
+
+A dedicated `--sidebar-*` family so the shell chrome can be themed independently from the main canvas.
+
+| Token                            | Light-mode mapping  |
+| -------------------------------- | ------------------- |
+| `--sidebar`                      | `var(--l-paper)`    |
+| `--sidebar-foreground`           | `var(--l-black)`    |
+| `--sidebar-primary`              | `var(--l-black)`    |
+| `--sidebar-primary-foreground`   | `var(--l-white)`    |
+| `--sidebar-accent`               | `var(--l-light)`    |
+| `--sidebar-accent-foreground`    | `var(--l-black)`    |
+| `--sidebar-border`               | `var(--l-rule)`     |
+| `--sidebar-ring`                 | `var(--l-black)`    |
+
+## Accessibility notes
+
+Body and secondary text on white/paper/light surfaces all clear WCAG 2.1 AA — `--l-mid` is **5.33:1** on white and **4.93:1** on paper. Black text and the focus ring (`--l-black`) clear AAA on every surface.
+
+Three brand-colour caveats — verified against WCAG 2.1 contrast ratios:
+
+<Aside type="caution" title="Orange — large text only">
+`--l-orange` is **3.20:1** on white. Use for: large text (≥18pt or ≥14pt-bold), button backgrounds with large white labels, icons, chart strokes, accent borders. **Avoid:** body-size orange text on light surfaces.
+</Aside>
+
+<Aside type="caution" title="Green — non-text only">
+`--l-green` is **2.28:1** on white — fails AA at all sizes. Use for: status dots, large icons, decorative fills with no text inside. **Avoid:** green text on any surface, white text on green fills. For success status text, prefer black text inside a light green-tinted background, or use `--l-black` plus a leading icon.
+</Aside>
+
+<Aside type="caution" title="Rule — decorative only">
+`--l-rule` is **1.43:1** on white — fails WCAG 1.4.11 non-text contrast. Use for: purely decorative dividers, table internal grid lines, badge outlines. **Avoid:** load-bearing structural borders that separate unrelated content. For those, reach for `--l-mid` (3.5:1+ on white).
+</Aside>

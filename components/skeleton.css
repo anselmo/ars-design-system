@@ -1,0 +1,84 @@
+/* ═══════════════════════════════════════════════
+   ARS Design System — Skeleton
+   ═══════════════════════════════════════════════
+   Loading placeholders. Three shapes: text, rect, circle.
+
+   Anatomy
+   ───────
+   .skeleton                base (paper-light fill, pulse anim)
+   .skeleton--text          inline text-line placeholder
+   .skeleton--rect          block rectangle (cards, images)
+   .skeleton--circle        avatar/icon placeholder (50% radius)
+
+   Pulse runs at 1.4s — sanctioned exception to motion tokens
+   (which top out at 240ms) since continuous animations need
+   slower cadence to avoid frantic feel. Honors prefers-reduced-
+   motion (animation: none).
+   ═══════════════════════════════════════════════ */
+
+/* ── Base ────────────────────────────────────────
+   Single declaration covers the fill + animation.
+   Variants below override layout (display, sizing,
+   border-radius for the circle) — never the fill or
+   the animation, so all skeletons pulse in lockstep. */
+
+.skeleton {
+  display: inline-block;
+  background: var(--l-light);
+  animation: ds-skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+/* ── Text line ───────────────────────────────────
+   Sits on the text baseline so a skeleton can stand
+   in for an inline word/phrase without jumping the
+   surrounding layout. */
+
+.skeleton--text {
+  height: 1em;
+  width: 100%;
+  vertical-align: middle;
+}
+
+/* ── Rectangular block ───────────────────────────
+   Default loading shape for cards, image slots, and
+   any larger filled region. */
+
+.skeleton--rect {
+  display: block;
+  height: 80px;
+  width: 100%;
+}
+
+/* ── Circle (genuine circle exception to zero-radius)
+   Same exception we make for .radio and the switch
+   thumb: a true round shape, not a rounded rectangle. */
+
+.skeleton--circle {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+/* ── Pulse keyframes ─────────────────────────────
+   Opacity-only pulse — no transform, no color cycle.
+   Cheaper than animating background-position and
+   reads as the same visual signal. */
+
+@keyframes ds-skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.5; }
+}
+
+/* ── Reduced motion ──────────────────────────────
+   a11y guard — users with prefers-reduced-motion get
+   a static block instead of the pulse. The skeleton
+   shape still communicates "loading" without the
+   continuous animation. */
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}

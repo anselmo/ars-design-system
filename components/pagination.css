@@ -1,0 +1,114 @@
+/* ═══════════════════════════════════════════════
+   ARS Design System — Pagination
+   ═══════════════════════════════════════════════
+   Numbered page navigation. No Radix dependency —
+   plain <nav>/<a>/<button> markup, [aria-current="page"]
+   marks the active page.
+
+   Anatomy
+   ───────
+   .pagination          flex container
+   .pagination-item     numbered page button
+   .pagination-prev     previous page (Prev label)
+   .pagination-next     next page (Next label)
+   .pagination-ellipsis non-interactive "…" marker
+   ═══════════════════════════════════════════════ */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.pagination-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  background: transparent;
+  color: var(--foreground);
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  transition:
+    background var(--motion-fast) var(--ease-standard),
+    border-color var(--motion-fast) var(--ease-standard);
+}
+
+.pagination-item:hover {
+  background: var(--accent);
+}
+
+.pagination-item[aria-current="page"] {
+  border-color: var(--border);
+  background: var(--accent);
+  font-weight: 700;
+}
+
+.pagination-item:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.pagination-item:disabled,
+.pagination-item[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.pagination-prev,
+.pagination-next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 12px;
+  background: transparent;
+  color: var(--foreground);
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition:
+    background var(--motion-fast) var(--ease-standard),
+    border-color var(--motion-fast) var(--ease-standard);
+}
+
+.pagination-prev:hover,
+.pagination-next:hover {
+  background: var(--accent);
+}
+
+.pagination-prev:focus-visible,
+.pagination-next:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.pagination-prev:disabled,
+.pagination-prev[aria-disabled="true"],
+.pagination-next:disabled,
+.pagination-next[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.pagination-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  color: var(--muted-foreground);
+  user-select: none;
+}

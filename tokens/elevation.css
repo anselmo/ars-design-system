@@ -1,0 +1,32 @@
+/* ═══════════════════════════════════════════════
+   ARS Design System — Elevation (shadow doctrine)
+   ═══════════════════════════════════════════════
+   Static surfaces use NO shadows — depth comes from
+   surface contrast (white → paper → light → rule layers)
+   and 1px borders against --l-rule.
+
+   Shadows are reserved for FLOATING SURFACES only:
+   tooltips, dropdowns, popovers, toasts, modal sheets.
+   Anything that doesn't sit on the page rail.
+
+   Three tiers
+   ───────────
+   --shadow-popover │ tooltips, dropdown menus (lowest lift)
+   --shadow-overlay │ toasts, sticky notifications (medium)
+   --shadow-modal   │ dialogs, drawers (strongest, still restrained)
+
+   All shadows tint with --l-black (#0D0D0D) at varying alpha
+   for palette consistency — never pure #000 or off-spec greys.
+
+   Forbidden
+   ─────────
+   ✗  box-shadow on cards, tables, sidebar, page-header
+   ✗  inset shadows
+   ✗  multi-layer "drop + ambient" Material-style stacks
+   ═══════════════════════════════════════════════ */
+
+:root {
+  --shadow-popover: 0 2px 8px rgba(13, 13, 13, 0.08);
+  --shadow-overlay: 0 4px 16px rgba(13, 13, 13, 0.10);
+  --shadow-modal:   0 8px 32px rgba(13, 13, 13, 0.12);
+}

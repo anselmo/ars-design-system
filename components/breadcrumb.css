@@ -1,0 +1,51 @@
+/* ═══════════════════════════════════════════════
+   ARS Design System — Breadcrumb
+   ═══════════════════════════════════════════════
+   Trail of links + a current-page label. Plain markup;
+   the separator is a decorative <li> child (not part of
+   the link semantics, hence aria-hidden in production).
+
+   Anatomy
+   ───────
+   .breadcrumb           <ol> flex container
+   .breadcrumb-item      navigable crumb (link)
+   .breadcrumb-separator decorative "/" or chevron
+   .breadcrumb-current   current page label (no link)
+   ═══════════════════════════════════════════════ */
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-row);
+  font-size: 13px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb-item {
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color var(--motion-fast) var(--ease-standard);
+}
+
+.breadcrumb-item:hover {
+  color: var(--foreground);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.breadcrumb-item:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.breadcrumb-separator {
+  color: var(--muted-foreground);
+  user-select: none;
+}
+
+.breadcrumb-current {
+  color: var(--foreground);
+  font-weight: 500;
+}

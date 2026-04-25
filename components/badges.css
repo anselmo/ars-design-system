@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════
-   Rapid Loyalty Design System — Status Badges
+   ARS Design System — Status Badges
    ═══════════════════════════════════════════════ */
 
 /*
@@ -23,18 +23,18 @@
 /* ── Variants ── */
 
 .badge-default {
-  border-color: var(--l-rule);
+  border-color: var(--border);
   color: var(--l-black);
 }
 
 .badge-success {
-  border-color: var(--l-rule);
+  border-color: var(--border);
   color: var(--l-black);
   background: var(--l-light);
 }
 
 .badge-warning {
-  border-color: var(--l-rule);
+  border-color: var(--border);
   color: var(--l-mid);
 }
 
@@ -44,7 +44,7 @@
 }
 
 .badge-muted {
-  border-color: var(--l-rule);
+  border-color: var(--border);
   color: var(--l-mid);
   background: var(--l-light);
 }

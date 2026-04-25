@@ -1,0 +1,225 @@
+/* ═══════════════════════════════════════════════
+   ARS Design System — Toast Notifications
+   ═══════════════════════════════════════════════
+   CSS shell. Pair with Radix UI Toast (or any headless
+   lib using [data-state="open|closed"] and Radix swipe
+   data attributes).
+
+   Anatomy
+   ───────
+   .toast-viewport         fixed portal container (bottom-right default)
+   .toast                  individual notification root
+   .toast--success/warning/
+        danger/info        left-edge colored accent bar
+   .toast-title            short heading (14px / 700)
+   .toast-description      detail text (13px / mid)
+   .toast-action           inline "undo"-style action
+   .toast-close            top-right dismiss button
+
+   Auto-dismiss timing, swipe physics, queue management:
+   consumer provides via Radix.
+   ═══════════════════════════════════════════════ */
+
+/* ── Viewport ────────────────────────────────────
+   The fixed container Radix portals into. Default
+   anchor is bottom-right; override via consumer if
+   a different edge is desired. */
+
+.toast-viewport {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-row);
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  z-index: var(--z-toast);
+  padding: 0;
+  outline: none;
+  list-style: none;
+  margin: 0;
+}
+
+/* ── Toast root ──────────────────────────────────
+   Layout choice: flex column with the close button
+   absolutely positioned top-right. Reads cleaner than
+   a 2-column grid because action and description can
+   each flow naturally without spanning rules. */
+
+.toast {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  border: 1px solid var(--border);
+  padding: 16px 20px 16px 23px;
+  box-shadow: var(--shadow-overlay);
+  transition:
+    opacity var(--motion-base) var(--ease-standard),
+    transform var(--motion-base) var(--ease-emphasized);
+}
+
+.toast[data-state="open"] {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.toast[data-state="closed"] {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+/* Swipe-to-dismiss — Radix sets data-swipe stages and
+   exposes --radix-toast-swipe-move-x during drag. */
+
+.toast[data-swipe="move"] {
+  transform: translateX(var(--radix-toast-swipe-move-x, 0));
+}
+
+.toast[data-swipe="cancel"] {
+  transform: translateX(0);
+  transition: transform var(--motion-fast) var(--ease-standard);
+}
+
+.toast[data-swipe="end"] {
+  animation: ds-toast-swipe-out var(--motion-base) var(--ease-emphasized) forwards;
+}
+
+@keyframes ds-toast-swipe-out {
+  to {
+    transform: translateX(calc(100% + 16px));
+    opacity: 0;
+  }
+}
+
+/* ── Variants ────────────────────────────────────
+   Left-edge 3px accent bar via ::before. Body fill
+   stays neutral — color is indicator-only (Swiss
+   restraint, no tinted backgrounds, no leading icon). */
+
+.toast--success::before,
+.toast--warning::before,
+.toast--danger::before,
+.toast--info::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+}
+
+.toast--success::before { background: var(--l-green); }
+.toast--warning::before { background: var(--l-orange); }
+.toast--danger::before  { background: var(--destructive); }
+
+/* --l-blue is #F4FCFF (near-white) — unreadable as a
+   3px indicator on a white surface. Use --l-mid as a
+   neutral, accessible info accent until the palette
+   gains a saturated blue primitive. */
+.toast--info::before    { background: var(--l-mid); }
+
+/* ── Title ───────────────────────────────────── */
+
+.toast-title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--foreground);
+  margin: 0 0 4px;
+  /* Leave room for the close button on the top row */
+  padding-right: 28px;
+}
+
+/* ── Description ─────────────────────────────── */
+
+.toast-description {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+/* ── Action ──────────────────────────────────── */
+
+.toast-action {
+  align-self: flex-end;
+  margin-top: 8px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--foreground);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.toast-action:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* ── Close (CSS-only X, same technique as dialog-close) ── */
+
+.toast-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  color: var(--l-mid);
+  cursor: pointer;
+}
+
+.toast-close:hover {
+  color: var(--foreground);
+}
+
+.toast-close:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.toast-close::before,
+.toast-close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 1.5px;
+  background: currentColor;
+}
+
+.toast-close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.toast-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* ── Reduced motion ──────────────────────────────
+   Drop the slide-in/out transform but keep the
+   opacity fade so dismiss is still perceivable.
+   Disable the swipe-out keyframe (still fades via
+   Radix removing the element). */
+
+@media (prefers-reduced-motion: reduce) {
+  .toast[data-state="closed"] {
+    transform: translateX(0);
+  }
+
+  .toast[data-swipe="end"] {
+    animation-duration: 0ms;
+  }
+}

@@ -1,0 +1,140 @@
+/* ═══════════════════════════════════════════════
+   ARS Design System — Dropdown Menu
+   ═══════════════════════════════════════════════
+   CSS shell. Pair with Radix UI DropdownMenu (or any
+   headless lib that uses [data-state="open|closed"],
+   [data-side], [data-align], [data-highlighted],
+   [data-disabled] attributes).
+
+   Anatomy
+   ───────
+   .dropdown-content       container (renders to portal at trigger)
+   .dropdown-item          single menu row
+   .dropdown-item--danger  destructive variant
+   .dropdown-label         non-interactive section heading
+   .dropdown-separator     hairline divider
+   .dropdown-shortcut      right-aligned ⌘K-style hint
+
+   Open/close, focus, click-outside: consumer provides via Radix.
+   ═══════════════════════════════════════════════ */
+
+/* ── Content container ──────────────────────────── */
+.dropdown-content {
+  min-width: 180px;
+  max-width: 320px;
+  padding: 4px 0;
+  background: var(--background);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-popover);
+  z-index: var(--z-dropdown);
+  overflow: hidden;
+  transition:
+    opacity var(--motion-fast) var(--ease-standard),
+    transform var(--motion-fast) var(--ease-standard);
+}
+
+/* Default open/close — vertical slide */
+.dropdown-content[data-state="open"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-content[data-state="closed"] {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+/* Direction-aware exit transforms.
+   Default vertical handles top + bottom; left/right consumers
+   may override transform if the trigger sits horizontally. */
+.dropdown-content[data-side="top"][data-state="closed"] {
+  transform: translateY(4px);
+}
+
+.dropdown-content[data-side="bottom"][data-state="closed"] {
+  transform: translateY(-4px);
+}
+
+.dropdown-content[data-side="left"][data-state="closed"] {
+  transform: translateX(4px);
+}
+
+.dropdown-content[data-side="right"][data-state="closed"] {
+  transform: translateX(-4px);
+}
+
+/* ── Menu item ──────────────────────────────────── */
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-row);
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--foreground);
+  cursor: pointer;
+  outline: none;
+  transition:
+    background var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
+}
+
+.dropdown-item:hover,
+.dropdown-item[data-highlighted] {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.dropdown-item[data-disabled],
+.dropdown-item:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* Destructive variant — soft red tint on highlight */
+.dropdown-item--danger {
+  color: var(--destructive);
+}
+
+.dropdown-item--danger:hover,
+.dropdown-item--danger[data-highlighted] {
+  background: rgba(217, 28, 24, 0.08);
+  color: var(--destructive);
+}
+
+/* ── Section label ──────────────────────────────── */
+.dropdown-label {
+  padding: 8px 12px 4px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+/* ── Separator ──────────────────────────────────── */
+.dropdown-separator {
+  height: 1px;
+  margin: 4px 0;
+  background: var(--border);
+}
+
+/* ── Shortcut hint ──────────────────────────────── */
+.dropdown-shortcut {
+  margin-left: auto;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--muted-foreground);
+}
+
+/* ── Reduced motion ─────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .dropdown-content[data-state="closed"],
+  .dropdown-content[data-side="top"][data-state="closed"],
+  .dropdown-content[data-side="bottom"][data-state="closed"],
+  .dropdown-content[data-side="left"][data-state="closed"],
+  .dropdown-content[data-side="right"][data-state="closed"] {
+    transform: none;
+  }
+}

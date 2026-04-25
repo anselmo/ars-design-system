@@ -1,0 +1,28 @@
+/* ═══════════════════════════════════════════════
+   ARS Design System — Z-index scale
+   ═══════════════════════════════════════════════
+   Named tiers with 100-unit gaps so layered components
+   inside one tier (e.g. nested popovers) can adjust
+   without colliding with the next tier.
+
+   --z-base       │ 0    │ default flow
+   --z-dropdown   │ 1000 │ menus, selects, comboboxes
+   --z-sticky     │ 1100 │ sticky table headers, sticky topbar
+   --z-overlay    │ 1200 │ modal backdrop, drawer scrim
+   --z-modal      │ 1300 │ modal content, drawer content
+   --z-popover    │ 1400 │ tooltips, popovers (above modals so they can attach)
+   --z-toast      │ 1500 │ notifications — always on top
+
+   Anything outside this scale is wrong. If you're tempted to
+   hardcode 9999, you're stacking incorrectly.
+   ═══════════════════════════════════════════════ */
+
+:root {
+  --z-base: 0;
+  --z-dropdown: 1000;
+  --z-sticky: 1100;
+  --z-overlay: 1200;
+  --z-modal: 1300;
+  --z-popover: 1400;
+  --z-toast: 1500;
+}

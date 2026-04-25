@@ -1,0 +1,62 @@
+---
+title: Dark mode
+description: Opt-in via [data-theme="dark"] on <html>. Same selector Starlight uses, so this docs site re-skins automatically.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Dark mode is opt-in via the `data-theme` attribute on `<html>`:
+
+```html
+<html data-theme="dark">
+```
+
+Set it once at app boot to match user preference. Nothing else to wire up — every semantic alias re-points automatically.
+
+## Programmatic toggle
+
+Read the user's preference at boot, falling back to the OS-level setting:
+
+```tsx
+// in a top-level client effect or _app.tsx
+useEffect(() => {
+  const stored = localStorage.getItem("theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  if (stored === "dark" || (!stored && prefersDark)) {
+    document.documentElement.dataset.theme = "dark";
+  }
+}, []);
+```
+
+<Aside type="tip">
+The theme toggle in the top-right of this docs site is Starlight's built-in toggle, which reads and writes the same `data-theme` attribute. Click it to see the ARS palette flip live — no extra integration code needed.
+</Aside>
+
+## What flips
+
+The dark block re-points the **semantic** aliases only. Surfaces and chrome invert; brand colour stays put.
+
+- Surface & text: `--background`, `--foreground`, `--card`, `--card-foreground`, `--popover`, `--popover-foreground`
+- Primary / secondary / accent: `--primary`, `--primary-foreground`, `--secondary`, `--secondary-foreground`, `--muted`, `--muted-foreground`, `--accent`, `--accent-foreground`
+- Chrome & controls: `--border`, `--input`, `--ring`
+- Sidebar palette: `--sidebar`, `--sidebar-foreground`, `--sidebar-primary`, `--sidebar-primary-foreground`, `--sidebar-accent`, `--sidebar-accent-foreground`, `--sidebar-border`, `--sidebar-ring`
+
+Two one-off RGB values appear inside the dark block — `#262626` for elevated hover surfaces and `#3A3A3A` for borders. They are not new primitives; they exist only inside the dark scope so non-text borders clear the WCAG 1.4.11 3:1 ratio against `--l-black`.
+
+## What doesn't flip
+
+- **Primitives (`--l-*`).** They are physical colours, not theme-aware. `--l-paper` is still `#F7F6F2` whether the theme is light or dark.
+- **Brand colours.** `--l-orange`, `--l-red`, `--l-green`, `--l-blue` retain their values across themes.
+- **Tailwind aliases (`--color-*`).** They intentionally do **not** re-override in dark mode. Use Tailwind's standard `dark:` variant for utilities:
+
+  ```html
+  <div class="bg-paper dark:bg-card text-ink dark:text-foreground">…</div>
+  ```
+
+## Accessibility
+
+Brand colour holds up against the inverted surface:
+
+- **Orange `#FE561A` on `--l-black`** — 6.07:1 (AA pass for normal text).
+- **Red `#D91C18` on `--l-black`** — 3.82:1 (non-text AA pass; large text only).
+- **Focus ring.** `--ring` re-points from `--l-black` (light) to `--l-white` (dark) so the focus indicator stays visible against either surface.

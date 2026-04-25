@@ -3,9 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rapid Loyalty — Design System</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<title>ARS Design System</title>
 <style>
+  /* Barlow — bundled in fonts/ (SIL OFL 1.1, see fonts/OFL.txt). */
+  @font-face { font-family: "Barlow"; font-style: normal; font-weight: 300; font-display: swap; src: url("./fonts/barlow-300.woff2") format("woff2"); }
+  @font-face { font-family: "Barlow"; font-style: normal; font-weight: 400; font-display: swap; src: url("./fonts/barlow-400.woff2") format("woff2"); }
+  @font-face { font-family: "Barlow"; font-style: normal; font-weight: 500; font-display: swap; src: url("./fonts/barlow-500.woff2") format("woff2"); }
+  @font-face { font-family: "Barlow"; font-style: normal; font-weight: 600; font-display: swap; src: url("./fonts/barlow-600.woff2") format("woff2"); }
+  @font-face { font-family: "Barlow"; font-style: normal; font-weight: 700; font-display: swap; src: url("./fonts/barlow-700.woff2") format("woff2"); }
+
   :root {
     --l-white:  #FFFFFF;
     --l-paper:  #F7F6F2;
@@ -18,6 +24,91 @@
     --l-red:    #D91C18;
     --l-blue:   #F4FCFF;
     --l-green:  #55C251;
+
+    /* Motion */
+    --motion-fast: 120ms;
+    --motion-base: 180ms;
+    --motion-slow: 240ms;
+    --ease-standard:  cubic-bezier(0.2, 0, 0, 1);
+    --ease-emphasized: cubic-bezier(0.3, 0, 0, 1);
+
+    /* Semantic aliases used by interactive states */
+    --ring:                var(--l-black);
+    --background:          var(--l-white);
+    --foreground:          var(--l-black);
+    --primary:             var(--l-black);
+    --primary-foreground:  var(--l-white);
+    --muted-foreground:    var(--l-mid);
+    --accent:              var(--l-light);
+    --accent-foreground:   var(--l-black);
+    --destructive:         var(--l-red);
+    --border:              var(--l-rule);
+
+    /* Elevation */
+    --shadow-popover: 0 2px 8px rgba(13, 13, 13, 0.08);
+    --shadow-overlay: 0 4px 16px rgba(13, 13, 13, 0.10);
+    --shadow-modal:   0 8px 32px rgba(13, 13, 13, 0.12);
+
+    /* Z-index scale */
+    --z-base: 0;
+    --z-dropdown: 1000;
+    --z-sticky: 1100;
+    --z-overlay: 1200;
+    --z-modal: 1300;
+    --z-popover: 1400;
+    --z-toast: 1500;
+
+    /* Named spacing rhythms */
+    --space-row:     8px;
+    --space-stack:  12px;
+    --space-shell:  24px;
+    --space-page:   40px;
+    --space-section: 64px;
+  }
+
+  /* ── Dark mode — opt in via <html data-theme="dark"> ──
+     Mirrors tokens/colors.css. --border collapses to --l-dark
+     (~1.4:1 on --l-black) — borders are ornamental hairlines visible
+     only against the page; inside cards/popovers/toasts they vanish.
+     --input (#2A2A2A, ~1.9:1) is held visibly stronger so input
+     controls retain touch-affordance. */
+  :root[data-theme="dark"] {
+    --background:             var(--l-black);
+    --foreground:             var(--l-white);
+    --card:                   var(--l-dark);
+    --card-foreground:        var(--l-white);
+    --popover:                var(--l-dark);
+    --popover-foreground:     var(--l-white);
+    --primary:                var(--l-white);
+    --primary-foreground:     var(--l-black);
+    --secondary:              var(--l-dark);
+    --secondary-foreground:   var(--l-white);
+    --muted:                  var(--l-dark);
+    --muted-foreground:       #9A9A96;
+    --accent:                 #262626;
+    --accent-foreground:      var(--l-white);
+    --destructive:            var(--l-red);
+
+    --border:                 var(--l-dark);
+    --input:                  #2A2A2A;
+    --ring:                   var(--l-white);
+
+    --sidebar:                        var(--l-dark);
+    --sidebar-foreground:             var(--l-white);
+    --sidebar-primary:                var(--l-white);
+    --sidebar-primary-foreground:     var(--l-black);
+    --sidebar-accent:                 #262626;
+    --sidebar-accent-foreground:      var(--l-white);
+    --sidebar-border:                 var(--l-dark);
+    --sidebar-ring:                   var(--l-white);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --motion-fast: 0ms;
+      --motion-base: 0ms;
+      --motion-slow: 0ms;
+    }
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -26,8 +117,8 @@
     font-family: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
     line-height: 1.6;
-    color: var(--l-black);
-    background: var(--l-white);
+    color: var(--foreground);
+    background: var(--background);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -37,7 +128,7 @@
 
   .ds-hero {
     padding: 80px 0 60px;
-    border-bottom: 1.5px solid var(--l-rule);
+    border-bottom: 1.5px solid var(--border);
     margin-bottom: 64px;
   }
 
@@ -72,7 +163,7 @@
 
   .divider {
     border: none;
-    border-top: 1px solid var(--l-rule);
+    border-top: 1px solid var(--border);
     margin: 48px 0;
   }
 
@@ -81,8 +172,8 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: var(--l-white);
-    border-bottom: 1px solid var(--l-rule);
+    background: var(--background);
+    border-bottom: 1px solid var(--border);
     padding: 0 40px;
   }
   .ds-nav-inner {
@@ -133,7 +224,7 @@
   .swatch-color {
     width: 100%;
     aspect-ratio: 1.6;
-    border: 1px solid var(--l-rule);
+    border: 1px solid var(--border);
   }
   .swatch-info {
     padding: 10px 0;
@@ -169,12 +260,12 @@
     color: var(--l-mid);
     text-align: left;
     padding: 8px 16px;
-    border-bottom: 1.5px solid var(--l-rule);
+    border-bottom: 1.5px solid var(--border);
   }
   .token-table td {
     font-size: 13px;
     padding: 10px 16px;
-    border-bottom: 1px solid var(--l-rule);
+    border-bottom: 1px solid var(--border);
     vertical-align: top;
   }
   .token-table tr:hover td {
@@ -190,7 +281,7 @@
 
   /* ── Type specimens ── */
   .type-specimen {
-    border-bottom: 1px solid var(--l-rule);
+    border-bottom: 1px solid var(--border);
     padding: 24px 0;
     display: flex;
     gap: 40px;
@@ -237,7 +328,7 @@
 
   .specimen-block {
     padding: 32px;
-    border: 1px solid var(--l-rule);
+    border: 1px solid var(--border);
     margin-bottom: 24px;
   }
 
@@ -257,10 +348,11 @@
     cursor: pointer;
     transition: all 0.15s;
     white-space: nowrap;
+    position: relative;
   }
   .btn-default  { height: 32px; padding: 0 10px; background: var(--l-black); color: var(--l-white); }
   .btn-default:hover { background: #2a2a2a; }
-  .btn-outline  { height: 32px; padding: 0 10px; background: var(--l-white); color: var(--l-black); border-color: var(--l-rule); }
+  .btn-outline  { height: 32px; padding: 0 10px; background: var(--l-white); color: var(--l-black); border-color: var(--border); }
   .btn-outline:hover { background: var(--l-paper); }
   .btn-secondary { height: 32px; padding: 0 10px; background: var(--l-paper); color: var(--l-black); }
   .btn-secondary:hover { background: var(--l-light); }
@@ -273,6 +365,49 @@
   .btn-xs { height: 24px; padding: 0 8px; font-size: 10px; }
   .btn-sm { height: 28px; padding: 0 10px; font-size: 11px; }
   .btn-lg { height: 36px; padding: 0 10px; font-size: 11px; }
+
+  /* ── Button states ── */
+  .btn:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  .btn:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  .btn--loading {
+    color: transparent;
+    pointer-events: none;
+    cursor: wait;
+  }
+  .btn--loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    margin: -7px 0 0 -7px;
+    border: 2px solid transparent;
+    border-top-color: var(--ring);
+    border-radius: 50%;
+    animation: ds-btn-spin 0.8s linear infinite;
+  }
+  @keyframes ds-btn-spin {
+    to { transform: rotate(360deg); }
+  }
+  .btn-default.btn--loading::after,
+  .btn-destructive.btn--loading::after {
+    border-top-color: var(--primary-foreground);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn--loading::after { animation: none; }
+  }
 
   /* ── Badges (live) ── */
   .badge {
@@ -287,18 +422,18 @@
     border: 1px solid;
     white-space: nowrap;
   }
-  .badge-default   { border-color: var(--l-rule); color: var(--l-black); }
-  .badge-success   { border-color: var(--l-rule); color: var(--l-black); background: var(--l-light); }
-  .badge-warning   { border-color: var(--l-rule); color: var(--l-mid); }
+  .badge-default   { border-color: var(--border); color: var(--l-black); }
+  .badge-success   { border-color: var(--border); color: var(--l-black); background: var(--l-light); }
+  .badge-warning   { border-color: var(--border); color: var(--l-mid); }
   .badge-danger    { border-color: rgba(217,28,24,0.3); color: var(--l-red); }
-  .badge-muted     { border-color: var(--l-rule); color: var(--l-mid); background: var(--l-light); }
+  .badge-muted     { border-color: var(--border); color: var(--l-mid); background: var(--l-light); }
 
   /* ── Inputs (live) ── */
   .input-specimen {
     width: 100%;
     max-width: 400px;
     border: 0;
-    border-bottom: 1.5px solid var(--l-rule);
+    border-bottom: 1.5px solid var(--border);
     background: transparent;
     padding: 8px 0;
     font-family: inherit;
@@ -313,7 +448,7 @@
   .input-bordered {
     width: 100%;
     max-width: 400px;
-    border: 1px solid var(--l-rule);
+    border: 1px solid var(--border);
     background: transparent;
     padding: 6px 10px;
     font-family: inherit;
@@ -324,9 +459,72 @@
   }
   .input-bordered:focus { border-color: var(--l-black); }
 
+  /* ── Input states ── */
+  .input-specimen:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  .input-specimen:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--l-paper);
+    color: var(--l-mid);
+  }
+  .input-specimen:read-only {
+    background: var(--l-paper);
+    border-color: var(--border);
+  }
+  .input-bordered:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  .input-bordered:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--l-paper);
+    color: var(--l-mid);
+  }
+  .input-bordered:read-only {
+    background: var(--l-paper);
+    border-color: var(--border);
+  }
+  .input--error { border-color: var(--l-red); }
+  .input--error:focus { border-color: var(--l-red); }
+  .input--error:focus-visible {
+    outline: 2px solid var(--l-red);
+    outline-offset: 2px;
+  }
+
+  /* ── Form field wrapper ── */
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-width: 400px;
+  }
+  .field__label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--l-mid);
+  }
+  .field__hint {
+    font-size: 12px;
+    color: var(--l-mid);
+    line-height: 1.5;
+  }
+  .field__error {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--l-red);
+    line-height: 1.5;
+  }
+  .field--error .field__hint { display: none; }
+
   /* ── Card specimen ── */
   .card-specimen {
-    border: 1px solid var(--l-rule);
+    border: 1px solid var(--border);
     padding: 24px;
   }
   .card-specimen-header {
@@ -375,7 +573,7 @@
   .sidebar-specimen {
     width: 220px;
     background: var(--l-paper);
-    border-right: 1px solid var(--l-rule);
+    border-right: 1px solid var(--border);
     padding: 16px;
   }
   .sidebar-item {
@@ -390,6 +588,10 @@
   }
   .sidebar-item:hover { background: var(--l-light); color: var(--l-black); }
   .sidebar-item.active { background: var(--l-light); color: var(--l-black); font-weight: 500; }
+  .sidebar-item:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: -2px;
+  }
   .sidebar-icon { width: 16px; height: 16px; background: var(--l-rule); }
 
   /* ── Table specimen ── */
@@ -405,18 +607,18 @@
     color: var(--l-mid);
     text-align: left;
     padding: 8px 16px;
-    border-bottom: 1.5px solid var(--l-rule);
+    border-bottom: 1.5px solid var(--border);
   }
   .table-specimen td {
     font-size: 13px;
     padding: 10px 16px;
-    border-bottom: 1px solid var(--l-rule);
+    border-bottom: 1px solid var(--border);
   }
   .table-specimen tr:hover td { background: var(--l-paper); }
 
   /* ── Page header specimen ── */
   .page-header-specimen {
-    border-bottom: 1px solid var(--l-rule);
+    border-bottom: 1px solid var(--border);
     padding: 20px 24px;
     display: flex;
     justify-content: space-between;
@@ -441,7 +643,7 @@
     justify-content: flex-end;
     gap: 16px;
     height: 48px;
-    border-bottom: 1px solid var(--l-rule);
+    border-bottom: 1px solid var(--border);
     padding: 0 20px;
   }
   .topbar-name {
@@ -457,11 +659,15 @@
     transition: color 0.15s;
   }
   .topbar-action:hover { color: var(--l-black); }
+  .topbar-action:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
 
   /* ── Code block ── */
   .code-block {
     background: var(--l-paper);
-    border: 1px solid var(--l-rule);
+    border: 1px solid var(--border);
     padding: 20px 24px;
     font-family: "SF Mono", "Fira Code", monospace;
     font-size: 12px;
@@ -473,6 +679,931 @@
   .code-block .hl { color: var(--l-black); font-weight: 700; }
   .code-block .cm { color: var(--l-rule); }
   .code-block .or { color: var(--l-orange); }
+
+  /* ── Motion specimens ── */
+  .motion-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .motion-tile {
+    border: 1px solid var(--border);
+    background: var(--l-white);
+    padding: 16px;
+    cursor: pointer;
+  }
+  .motion-bar {
+    height: 8px;
+    background: var(--l-orange);
+    width: 24px;
+    transform: translateX(0);
+  }
+  .motion-tile:hover .motion-bar { transform: translateX(120px); }
+  .motion-tile.fast .motion-bar { transition: transform var(--motion-fast) var(--ease-standard); }
+  .motion-tile.base .motion-bar { transition: transform var(--motion-base) var(--ease-standard); }
+  .motion-tile.slow .motion-bar { transition: transform var(--motion-slow) var(--ease-standard); }
+  .motion-meta {
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    font-family: "SF Mono", "Fira Code", monospace;
+    font-size: 11px;
+    color: var(--l-mid);
+  }
+  .motion-meta strong { color: var(--l-black); font-weight: 700; }
+  .motion-ease-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .motion-ease-grid .motion-tile.standard .motion-bar { transition: transform var(--motion-slow) var(--ease-standard); }
+  .motion-ease-grid .motion-tile.emphasized .motion-bar { transition: transform var(--motion-slow) var(--ease-emphasized); }
+
+  /* ── Elevation specimens ── */
+  .elevation-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 16px;
+    padding: 32px 0 12px;
+    background: var(--l-paper);
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .elevation-card {
+    background: var(--l-white);
+    padding: 20px;
+    border: 1px solid var(--border);
+  }
+  .elevation-card.popover { box-shadow: var(--shadow-popover); }
+  .elevation-card.overlay { box-shadow: var(--shadow-overlay); }
+  .elevation-card.modal   { box-shadow: var(--shadow-modal); }
+  .elevation-card .name {
+    font-size: 12px;
+    font-family: "SF Mono", "Fira Code", monospace;
+    color: var(--l-black);
+    font-weight: 700;
+  }
+  .elevation-card .use {
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--l-mid);
+  }
+  .doctrine-note {
+    margin-top: 24px;
+    border-left: 3px solid var(--l-orange);
+    padding: 12px 16px;
+    background: var(--l-paper);
+    font-size: 13px;
+    color: var(--l-mid);
+  }
+  .doctrine-note strong { color: var(--l-black); font-weight: 700; }
+
+  /* ── Rhythm specimens ── */
+  .rhythm-row { margin-bottom: 20px; }
+  .rhythm-stack {
+    display: flex;
+    flex-direction: column;
+    background: var(--l-paper);
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+  }
+  .rhythm-bar {
+    height: 16px;
+    background: var(--l-black);
+  }
+  .rhythm-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 11px;
+    font-family: "SF Mono", "Fira Code", monospace;
+    color: var(--l-mid);
+  }
+  .rhythm-meta strong { color: var(--l-black); font-weight: 700; }
+
+  /* ══════════════════════════════════════════════════
+     Phase 3a — inlined component CSS
+     Mirrors components/forms.css, dialog.css, dropdown.css,
+     tooltip.css, toast.css for the standalone reference page.
+     ══════════════════════════════════════════════════ */
+
+  /* ── Forms ── */
+  .textarea {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    min-height: 80px;
+    border: 1px solid var(--border);
+    background: transparent;
+    padding: 8px 10px;
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--l-black);
+    outline: none;
+    resize: vertical;
+    transition: border-color var(--motion-fast) var(--ease-standard);
+  }
+  .textarea:focus { border-color: var(--l-black); }
+  .textarea:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .textarea:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--l-paper);
+    color: var(--l-mid);
+  }
+
+  .select {
+    width: 100%;
+    max-width: 400px;
+    height: 32px;
+    border: 1px solid var(--border);
+    background-color: transparent;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none' stroke='%236B6B6B' stroke-width='1.5'><path d='M1 1l4 4 4-4'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding: 0 28px 0 10px;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--l-black);
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: border-color var(--motion-fast) var(--ease-standard);
+  }
+  .select:focus { border-color: var(--l-black); }
+  .select:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--l-paper);
+    color: var(--l-mid);
+  }
+
+  .checkbox {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    vertical-align: middle;
+    transition:
+      background-color var(--motion-fast) var(--ease-standard),
+      border-color var(--motion-fast) var(--ease-standard);
+  }
+  .checkbox:hover:not(:disabled) { border-color: var(--l-mid); }
+  .checkbox:checked,
+  .checkbox[data-state="checked"] {
+    background: var(--primary);
+    border-color: var(--primary);
+  }
+  .checkbox:checked::after,
+  .checkbox[data-state="checked"]::after {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 4px;
+    width: 4px;
+    height: 8px;
+    border-left: 1.5px solid var(--primary-foreground);
+    border-bottom: 1.5px solid var(--primary-foreground);
+    border-top: 0;
+    border-right: 0;
+    transform: rotate(-45deg);
+  }
+  .checkbox:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .checkbox:disabled,
+  .checkbox[data-disabled],
+  .checkbox[aria-disabled="true"] {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .radio {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 50%;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    vertical-align: middle;
+    transition: border-color var(--motion-fast) var(--ease-standard);
+  }
+  .radio:hover:not(:disabled) { border-color: var(--l-mid); }
+  .radio:checked,
+  .radio[data-state="checked"] { border-color: var(--primary); }
+  .radio:checked::after,
+  .radio[data-state="checked"]::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    margin: -4px 0 0 -4px;
+    background: var(--primary);
+    border-radius: 50%;
+  }
+  .radio:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .radio:disabled,
+  .radio[data-disabled],
+  .radio[aria-disabled="true"] {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .switch {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 32px;
+    height: 16px;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: var(--l-rule);
+    cursor: pointer;
+    position: relative;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    vertical-align: middle;
+    transition: background-color var(--motion-fast) var(--ease-standard);
+  }
+  .switch::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    background: var(--l-white);
+    border-radius: 50%;
+    transition: transform var(--motion-fast) var(--ease-standard);
+  }
+  .switch:checked,
+  .switch[data-state="checked"] { background: var(--primary); }
+  .switch:checked::after,
+  .switch[data-state="checked"]::after { transform: translateX(16px); }
+  .switch:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .switch:disabled,
+  .switch[data-disabled],
+  .switch[aria-disabled="true"] {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .file-input {
+    display: inline-block;
+    max-width: 400px;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--l-mid);
+    cursor: pointer;
+    outline: none;
+  }
+  .file-input::file-selector-button {
+    height: 32px;
+    padding: 0 10px;
+    margin-right: 10px;
+    background: var(--l-white);
+    color: var(--l-black);
+    border: 1.5px solid var(--border);
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color var(--motion-fast) var(--ease-standard);
+  }
+  .file-input::file-selector-button:hover { background: var(--l-paper); }
+  .file-input::-webkit-file-upload-button {
+    height: 32px;
+    padding: 0 10px;
+    margin-right: 10px;
+    background: var(--l-white);
+    color: var(--l-black);
+    border: 1.5px solid var(--border);
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color var(--motion-fast) var(--ease-standard);
+  }
+  .file-input::-webkit-file-upload-button:hover { background: var(--l-paper); }
+  .file-input:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .file-input:disabled { opacity: 0.4; cursor: not-allowed; }
+  .file-input:disabled::file-selector-button { cursor: not-allowed; }
+
+  /* ── Dialog ── */
+  .dialog-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(13, 13, 13, 0.4);
+    z-index: var(--z-overlay);
+    transition: opacity var(--motion-base) var(--ease-standard);
+  }
+  .dialog-overlay[data-state="closed"] { opacity: 0; }
+  .dialog-overlay[data-state="open"]   { opacity: 1; }
+
+  .dialog-content {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--background);
+    border: 1px solid var(--border);
+    padding: var(--space-shell);
+    box-shadow: var(--shadow-modal);
+    z-index: var(--z-modal);
+    width: calc(100vw - 32px);
+    max-width: 440px;
+    max-height: calc(100vh - 64px);
+    overflow-y: auto;
+    transition:
+      opacity var(--motion-base) var(--ease-standard),
+      transform var(--motion-base) var(--ease-emphasized);
+  }
+  .dialog-content:focus { outline: none; }
+  .dialog-content[data-state="closed"] {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 8px));
+  }
+  .dialog-content[data-state="open"] {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  .dialog-title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--foreground);
+    margin: 0 0 8px;
+  }
+  .dialog-description {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--muted-foreground);
+    margin: 0 0 20px;
+  }
+  .dialog-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    color: var(--l-mid);
+    cursor: pointer;
+  }
+  .dialog-close:hover { color: var(--foreground); }
+  .dialog-close:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .dialog-close::before,
+  .dialog-close::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 1.5px;
+    background: currentColor;
+  }
+  .dialog-close::before { transform: translate(-50%, -50%) rotate(45deg); }
+  .dialog-close::after  { transform: translate(-50%, -50%) rotate(-45deg); }
+  .dialog-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 24px;
+  }
+
+  /* ── Dropdown ── */
+  .dropdown-content {
+    min-width: 180px;
+    max-width: 320px;
+    padding: 4px 0;
+    background: var(--background);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-popover);
+    z-index: var(--z-dropdown);
+    overflow: hidden;
+    transition:
+      opacity var(--motion-fast) var(--ease-standard),
+      transform var(--motion-fast) var(--ease-standard);
+  }
+  .dropdown-content[data-state="open"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .dropdown-content[data-state="closed"] {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-row);
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--foreground);
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+    transition:
+      background var(--motion-fast) var(--ease-standard),
+      color var(--motion-fast) var(--ease-standard);
+  }
+  .dropdown-item:hover,
+  .dropdown-item[data-highlighted] {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+  .dropdown-item[data-disabled],
+  .dropdown-item:disabled {
+    opacity: 0.4;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+  .dropdown-item--danger { color: var(--destructive); }
+  .dropdown-item--danger:hover,
+  .dropdown-item--danger[data-highlighted] {
+    background: rgba(217, 28, 24, 0.08);
+    color: var(--destructive);
+  }
+  .dropdown-label {
+    padding: 8px 12px 4px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+  .dropdown-separator {
+    height: 1px;
+    margin: 4px 0;
+    background: var(--border);
+  }
+  .dropdown-shortcut {
+    margin-left: auto;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--muted-foreground);
+  }
+
+  /* ── Tooltip ── */
+  .tooltip-content {
+    background: var(--foreground);
+    color: var(--background);
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+    max-width: 240px;
+    box-shadow: var(--shadow-popover);
+    z-index: var(--z-popover);
+    pointer-events: none;
+    user-select: none;
+    transition:
+      opacity var(--motion-fast) var(--ease-standard),
+      transform var(--motion-fast) var(--ease-standard);
+  }
+  .tooltip-content[data-state="instant-open"],
+  .tooltip-content[data-state="delayed-open"] {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  .tooltip-content[data-state="closed"] { opacity: 0; }
+  .tooltip-arrow { fill: var(--foreground); }
+
+  /* ── Toast ── */
+  .toast-viewport {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-row);
+    width: 360px;
+    max-width: calc(100vw - 32px);
+    z-index: var(--z-toast);
+    padding: 0;
+    outline: none;
+    list-style: none;
+    margin: 0;
+  }
+  .toast {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--background);
+    border: 1px solid var(--border);
+    padding: 16px 20px 16px 23px;
+    box-shadow: var(--shadow-overlay);
+    transition:
+      opacity var(--motion-base) var(--ease-standard),
+      transform var(--motion-base) var(--ease-emphasized);
+  }
+  .toast[data-state="open"]   { opacity: 1; transform: translateX(0); }
+  .toast[data-state="closed"] { opacity: 0; transform: translateX(100%); }
+  .toast--success::before,
+  .toast--warning::before,
+  .toast--danger::before,
+  .toast--info::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 3px;
+  }
+  .toast--success::before { background: var(--l-green); }
+  .toast--warning::before { background: var(--l-orange); }
+  .toast--danger::before  { background: var(--destructive); }
+  .toast--info::before    { background: var(--l-mid); }
+  .toast-title {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--foreground);
+    margin: 0 0 4px;
+    padding-right: 28px;
+  }
+  .toast-description {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--muted-foreground);
+    margin: 0;
+  }
+  .toast-action {
+    align-self: flex-end;
+    margin-top: 8px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--foreground);
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+  }
+  .toast-action:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .toast-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    color: var(--l-mid);
+    cursor: pointer;
+  }
+  .toast-close:hover { color: var(--foreground); }
+  .toast-close:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .toast-close::before,
+  .toast-close::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 1.5px;
+    background: currentColor;
+  }
+  .toast-close::before { transform: translate(-50%, -50%) rotate(45deg); }
+  .toast-close::after  { transform: translate(-50%, -50%) rotate(-45deg); }
+
+  /* Phase 3a demos — keep absolutely-positioned floats inside their containers */
+  .dialog-demo, .dropdown-demo, .tooltip-demo, .toast-demo { position: relative; }
+  .dialog-demo { height: 380px; overflow: hidden; }
+  .dialog-demo .dialog-overlay,
+  .dialog-demo .dialog-content { position: absolute; }
+  .dropdown-demo { min-height: 280px; }
+  .tooltip-demo { padding: 32px 16px; min-height: 80px; }
+  .tooltip-demo .tooltip-content { position: absolute; }
+  .toast-demo { height: 320px; overflow: hidden; background: var(--l-paper); border: 1px solid var(--border); }
+  .toast-demo .toast-viewport { position: absolute; bottom: 8px; right: 8px; }
+
+  /* ══════════════════════════════════════════════════
+     Phase 3b — Tier-2 components
+     ══════════════════════════════════════════════════ */
+
+  /* ── Tabs ── */
+  .tabs { display: flex; flex-direction: column; }
+  .tabs[data-orientation="vertical"] { flex-direction: row; }
+  .tabs-list { display: flex; gap: 0; border-bottom: 1px solid var(--border); }
+  .tabs[data-orientation="vertical"] .tabs-list {
+    flex-direction: column;
+    border-right: 1px solid var(--border);
+    border-bottom: none;
+  }
+  .tabs-trigger {
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    cursor: pointer;
+    transition: color var(--motion-fast) var(--ease-standard);
+  }
+  .tabs-trigger:hover { color: var(--foreground); }
+  .tabs-trigger[data-state="active"] { color: var(--foreground); border-bottom-color: var(--primary); }
+  .tabs-trigger:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .tabs-trigger[data-disabled] { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+  .tabs[data-orientation="vertical"] .tabs-trigger {
+    padding: 12px 16px;
+    border-bottom: none;
+    border-right: 2px solid transparent;
+    margin-bottom: 0;
+    margin-right: -1px;
+  }
+  .tabs[data-orientation="vertical"] .tabs-trigger[data-state="active"] { border-right-color: var(--primary); }
+  .tabs-content { padding: 16px 0; outline: none; }
+  .tabs-content[data-state="inactive"] { display: none; }
+
+  /* ── Pagination ── */
+  .pagination {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+  }
+  .pagination-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 8px;
+    background: transparent;
+    color: var(--foreground);
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    transition:
+      background var(--motion-fast) var(--ease-standard),
+      border-color var(--motion-fast) var(--ease-standard);
+  }
+  .pagination-item:hover { background: var(--accent); }
+  .pagination-item[aria-current="page"] {
+    border-color: var(--border);
+    background: var(--accent);
+    font-weight: 700;
+  }
+  .pagination-item:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .pagination-item:disabled,
+  .pagination-item[aria-disabled="true"] { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+  .pagination-prev,
+  .pagination-next {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 12px;
+    background: transparent;
+    color: var(--foreground);
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition:
+      background var(--motion-fast) var(--ease-standard),
+      border-color var(--motion-fast) var(--ease-standard);
+  }
+  .pagination-prev:hover,
+  .pagination-next:hover { background: var(--accent); }
+  .pagination-prev:focus-visible,
+  .pagination-next:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .pagination-prev:disabled,
+  .pagination-prev[aria-disabled="true"],
+  .pagination-next:disabled,
+  .pagination-next[aria-disabled="true"] { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+  .pagination-ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    color: var(--muted-foreground);
+    user-select: none;
+  }
+
+  /* ── Breadcrumb ── */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-row);
+    font-size: 13px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .breadcrumb-item {
+    color: var(--muted-foreground);
+    text-decoration: none;
+    transition: color var(--motion-fast) var(--ease-standard);
+  }
+  .breadcrumb-item:hover {
+    color: var(--foreground);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .breadcrumb-item:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .breadcrumb-separator { color: var(--muted-foreground); user-select: none; }
+  .breadcrumb-current { color: var(--foreground); font-weight: 500; }
+
+  /* ── Alert ── */
+  .alert {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-row);
+    background: var(--background);
+    border: 1px solid var(--border);
+    padding: 12px 16px 12px 19px;
+  }
+  .alert--info::before,
+  .alert--success::before,
+  .alert--warning::before,
+  .alert--danger::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 3px;
+  }
+  .alert--info::before    { background: var(--l-mid); }
+  .alert--success::before { background: var(--l-green); }
+  .alert--warning::before { background: var(--l-orange); }
+  .alert--danger::before  { background: var(--destructive); }
+  .alert-icon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    color: var(--foreground);
+  }
+  .alert-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+  }
+  .alert-title {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--foreground);
+    margin: 0;
+  }
+  .alert-description {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--muted-foreground);
+    margin: 0;
+  }
+  .alert-close {
+    flex-shrink: 0;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--l-mid);
+    cursor: pointer;
+  }
+  .alert-close:hover { color: var(--foreground); }
+  .alert-close:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .alert-close::before,
+  .alert-close::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 1.5px;
+    background: currentColor;
+  }
+  .alert-close::before { transform: translate(-50%, -50%) rotate(45deg); }
+  .alert-close::after  { transform: translate(-50%, -50%) rotate(-45deg); }
+
+  /* ── Empty State ── */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-stack);
+    padding: 48px 24px;
+    text-align: center;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .empty-state-icon {
+    width: 48px;
+    height: 48px;
+    color: var(--l-mid);
+  }
+  .empty-state-title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--foreground);
+    margin: 0;
+  }
+  .empty-state-description {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--muted-foreground);
+    max-width: 360px;
+    margin: 0;
+  }
+  .empty-state-action { margin-top: var(--space-row); }
+
+  /* ── Skeleton ── */
+  .skeleton {
+    display: inline-block;
+    background: var(--l-light);
+    animation: ds-skeleton-pulse 1.4s ease-in-out infinite;
+  }
+  .skeleton--text {
+    height: 1em;
+    width: 100%;
+    vertical-align: middle;
+  }
+  .skeleton--rect {
+    display: block;
+    height: 80px;
+    width: 100%;
+  }
+  .skeleton--circle {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    vertical-align: middle;
+  }
+  @keyframes ds-skeleton-pulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.5; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton { animation: none; }
+  }
 </style>
 </head>
 <body>
@@ -480,11 +1611,15 @@
 <!-- ── Navigation ── -->
 <nav class="ds-nav">
   <div class="ds-nav-inner">
-    <span class="ds-nav-brand">Rapid Loyalty DS</span>
+    <span class="ds-nav-brand">ARS DS</span>
     <a href="#colour">Colour</a>
     <a href="#typography">Typography</a>
     <a href="#spacing">Spacing</a>
+    <a href="#spacing-rhythms">Rhythms</a>
     <a href="#radius">Radius</a>
+    <a href="#motion">Motion</a>
+    <a href="#elevation">Elevation</a>
+    <a href="#z-index">Z-index</a>
     <a href="#semantic">Semantic Tokens</a>
     <a href="#buttons">Buttons</a>
     <a href="#inputs">Inputs</a>
@@ -493,6 +1628,20 @@
     <a href="#tables">Tables</a>
     <a href="#layout">Layout</a>
     <a href="#charts">Charts</a>
+    <a href="#forms">Forms</a>
+    <a href="#dialog">Dialog</a>
+    <a href="#dropdown">Dropdown</a>
+    <a href="#tooltip">Tooltip</a>
+    <a href="#toast">Toast</a>
+    <a href="#tabs">Tabs</a>
+    <a href="#pagination">Pagination</a>
+    <a href="#breadcrumb">Breadcrumb</a>
+    <a href="#alert">Alert</a>
+    <a href="#empty-state">Empty State</a>
+    <a href="#skeleton">Skeleton</a>
+    <button id="theme-toggle" type="button" aria-label="Toggle theme" style="margin-left:auto; padding:4px 8px; font-size:9px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; background:transparent; border:1px solid var(--border); color:var(--foreground); cursor:pointer;">
+      Light
+    </button>
   </div>
 </nav>
 
@@ -502,11 +1651,10 @@
   <div class="ds-hero">
     <p class="section-label">Design System v1.0</p>
     <h1 style="font-size:clamp(3rem,9vw,5rem);font-weight:600;letter-spacing:-0.04em;line-height:0.92;">
-      Rapid Loyalty
+      ARS Design System
     </h1>
     <p style="font-size:1rem;font-weight:300;color:var(--l-mid);margin-top:20px;max-width:560px;line-height:1.7;">
-      Swiss-inspired design system for the Travel Loyalty Platform management console.
-      Zero border-radius. Barlow typeface. Restrained palette. Built on shadcn/ui primitives with Tailwind CSS.
+      Swiss-inspired design system. Zero border-radius. Barlow typeface. Restrained palette. Built on shadcn/ui primitives with Tailwind CSS.
     </p>
   </div>
 
@@ -995,7 +2143,7 @@
     <p class="section-label">04</p>
     <h2 class="section-title">Spacing</h2>
     <p class="section-desc">
-      Tailwind's default 4px grid. These are the most commonly used values across the platform.
+      Tailwind's default 4px grid. These are the most commonly used values across the system.
     </p>
 
     <div class="space-bar"><div class="space-block" style="width:4px;"></div><span class="space-label">4px — 1 (gap-1, p-1)</span></div>
@@ -1031,6 +2179,58 @@
   </section>
 
   <!-- ══════════════════════════════════════════════════ -->
+  <!-- SPACING RHYTHMS                                    -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section id="spacing-rhythms">
+    <p class="section-label">04b</p>
+    <h2 class="section-title">Spacing Rhythms</h2>
+    <p class="section-desc">
+      Named rhythm tokens for repeated semantic spacing. Reach for these in chrome
+      before raw px or <code>gap-N</code> — they keep the design system self-documenting.
+    </p>
+
+    <div class="rhythm-row">
+      <div class="rhythm-stack" style="gap: var(--space-row);">
+        <div class="rhythm-bar"></div>
+        <div class="rhythm-bar"></div>
+      </div>
+      <div class="rhythm-meta"><span><strong>--space-row</strong> · 8px</span><span>in-row controls (icon + label, badge + text)</span></div>
+    </div>
+
+    <div class="rhythm-row">
+      <div class="rhythm-stack" style="gap: var(--space-stack);">
+        <div class="rhythm-bar"></div>
+        <div class="rhythm-bar"></div>
+      </div>
+      <div class="rhythm-meta"><span><strong>--space-stack</strong> · 12px</span><span>stacked related items (sidebar items, list rows)</span></div>
+    </div>
+
+    <div class="rhythm-row">
+      <div class="rhythm-stack" style="gap: var(--space-shell);">
+        <div class="rhythm-bar"></div>
+        <div class="rhythm-bar"></div>
+      </div>
+      <div class="rhythm-meta"><span><strong>--space-shell</strong> · 24px</span><span>card padding, page-header padding, sidebar gutter</span></div>
+    </div>
+
+    <div class="rhythm-row">
+      <div class="rhythm-stack" style="gap: var(--space-page);">
+        <div class="rhythm-bar"></div>
+        <div class="rhythm-bar"></div>
+      </div>
+      <div class="rhythm-meta"><span><strong>--space-page</strong> · 40px</span><span>page side padding (.ds-page horizontal)</span></div>
+    </div>
+
+    <div class="rhythm-row">
+      <div class="rhythm-stack" style="gap: var(--space-section);">
+        <div class="rhythm-bar"></div>
+        <div class="rhythm-bar"></div>
+      </div>
+      <div class="rhythm-meta"><span><strong>--space-section</strong> · 64px</span><span>between major sections</span></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
   <!-- RADIUS                                             -->
   <!-- ══════════════════════════════════════════════════ -->
   <section id="radius">
@@ -1057,14 +2257,129 @@
   </section>
 
   <!-- ══════════════════════════════════════════════════ -->
+  <!-- MOTION                                             -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section id="motion">
+    <p class="section-label">06</p>
+    <h2 class="section-title">Motion</h2>
+    <p class="section-desc">
+      Three durations and two easings cover the system. Motion is functional, never decorative.
+      Hover any tile below to play the transition. All values respect <code>prefers-reduced-motion</code>.
+    </p>
+
+    <p class="specimen-label">Durations</p>
+    <div class="motion-grid">
+      <div class="motion-tile fast">
+        <div class="motion-bar"></div>
+        <div class="motion-meta"><strong>--motion-fast</strong><span>120ms</span></div>
+        <div class="motion-meta"><span>hover, focus rings, button press</span></div>
+      </div>
+      <div class="motion-tile base">
+        <div class="motion-bar"></div>
+        <div class="motion-meta"><strong>--motion-base</strong><span>180ms</span></div>
+        <div class="motion-meta"><span>open/close, dropdown reveal</span></div>
+      </div>
+      <div class="motion-tile slow">
+        <div class="motion-bar"></div>
+        <div class="motion-meta"><strong>--motion-slow</strong><span>240ms</span></div>
+        <div class="motion-meta"><span>modal/drawer slide, larger transforms</span></div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <p class="specimen-label">Easings</p>
+    <div class="motion-ease-grid">
+      <div class="motion-tile standard">
+        <div class="motion-bar"></div>
+        <div class="motion-meta"><strong>--ease-standard</strong><span>cubic-bezier(.2, 0, 0, 1)</span></div>
+        <div class="motion-meta"><span>default — slight ease-out</span></div>
+      </div>
+      <div class="motion-tile emphasized">
+        <div class="motion-bar"></div>
+        <div class="motion-meta"><strong>--ease-emphasized</strong><span>cubic-bezier(.3, 0, 0, 1)</span></div>
+        <div class="motion-meta"><span>entrances that want lift</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- ELEVATION                                          -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section id="elevation">
+    <p class="section-label">07</p>
+    <h2 class="section-title">Elevation</h2>
+    <p class="section-desc">
+      Three shadow tiers reserved for floating surfaces. All tints derive from
+      <code>--l-black</code> at varying alpha — never pure #000.
+    </p>
+
+    <div class="elevation-grid">
+      <div class="elevation-card popover">
+        <div class="name">--shadow-popover</div>
+        <div class="use">tooltips, dropdown menus (lowest lift)</div>
+      </div>
+      <div class="elevation-card overlay">
+        <div class="name">--shadow-overlay</div>
+        <div class="use">toasts, sticky notifications (medium)</div>
+      </div>
+      <div class="elevation-card modal">
+        <div class="name">--shadow-modal</div>
+        <div class="use">dialogs, drawers (strongest, still restrained)</div>
+      </div>
+    </div>
+
+    <div class="doctrine-note">
+      <strong>Doctrine.</strong> Static surfaces (cards, tables, sidebar, page-header)
+      use NO shadow — depth comes from rule borders and paper layers. Shadows are
+      reserved for floating surfaces only.
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- Z-INDEX                                            -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section id="z-index">
+    <p class="section-label">08</p>
+    <h2 class="section-title">Z-index</h2>
+    <p class="section-desc">
+      Named tiers with 100-unit gaps so layered components inside one tier (e.g. nested
+      popovers) can adjust without colliding with the next. Anything outside this scale is wrong —
+      if you are tempted to hardcode 9999, you are stacking incorrectly.
+    </p>
+
+    <table class="token-table">
+      <thead>
+        <tr><th>Token</th><th>Value</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>--z-base</code></td><td>0</td><td>Default flow</td></tr>
+        <tr><td><code>--z-dropdown</code></td><td>1000</td><td>Menus, selects, comboboxes</td></tr>
+        <tr><td><code>--z-sticky</code></td><td>1100</td><td>Sticky table headers, sticky topbar</td></tr>
+        <tr><td><code>--z-overlay</code></td><td>1200</td><td>Modal backdrop, drawer scrim</td></tr>
+        <tr><td><code>--z-modal</code></td><td>1300</td><td>Modal content, drawer content</td></tr>
+        <tr><td><code>--z-popover</code></td><td>1400</td><td>Tooltips, popovers (above modals so they can attach)</td></tr>
+        <tr><td><code>--z-toast</code></td><td>1500</td><td>Notifications — always on top</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
   <!-- BUTTONS                                            -->
   <!-- ══════════════════════════════════════════════════ -->
   <section id="buttons">
-    <p class="section-label">06</p>
+    <p class="section-label">09</p>
     <h2 class="section-title">Buttons</h2>
     <p class="section-desc">
       Six variants, four sizes. All buttons use 11px uppercase bold type with 0.06em tracking.
       Built with class-variance-authority (CVA) on Base UI primitives.
+    </p>
+    <p class="section-desc" style="border-left:3px solid var(--border);padding-left:12px;">
+      <strong style="color:var(--l-black);font-weight:700;">Accessibility.</strong>
+      Body text and the focus ring meet WCAG AA on all surfaces. Brand-colour caveats:
+      <code>--l-orange</code> and <code>--l-green</code> fail AA at body sizes — use them
+      as accent fills, large text, or non-text indicators only. See <code>tokens/colors.css</code>
+      for full guidance.
     </p>
 
     <p class="specimen-label">Variants</p>
@@ -1087,6 +2402,51 @@
         <button class="btn btn-default">Default — 32px</button>
         <button class="btn btn-default btn-lg">LG — 36px</button>
       </div>
+    </div>
+
+    <p class="specimen-label">States</p>
+    <div class="specimen-block">
+      <div class="specimen-row">
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;">
+          <button class="btn btn-default">Default</button>
+          <span style="font-size:11px;color:var(--l-mid);">Default</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;">
+          <button class="btn btn-default">Hover me</button>
+          <span style="font-size:11px;color:var(--l-mid);">Hover (pointer)</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;">
+          <button class="btn btn-default" tabindex="0">Tab to me</button>
+          <span style="font-size:11px;color:var(--l-mid);">Tab to see :focus-visible ring</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;">
+          <button class="btn btn-default" disabled>Disabled</button>
+          <span style="font-size:11px;color:var(--l-mid);">Disabled</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;">
+          <button class="btn btn-default btn--loading" aria-busy="true">Saving</button>
+          <span style="font-size:11px;color:var(--l-mid);">Loading</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;">
+          <button class="btn btn-outline" aria-disabled="true">Aria-disabled</button>
+          <span style="font-size:11px;color:var(--l-mid);">aria-disabled outline</span>
+        </div>
+      </div>
+      <div class="specimen-row" style="margin-top:24px;">
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;">
+          <button class="btn btn-destructive">Delete</button>
+          <span style="font-size:11px;color:var(--l-mid);">Destructive default</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;">
+          <button class="btn btn-destructive btn--loading" aria-busy="true">Deleting</button>
+          <span style="font-size:11px;color:var(--l-mid);">Destructive loading (white spinner)</span>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--l-mid);margin-top:16px;">
+        <code>:focus-visible</code> 2px ring at 2px offset · <code>:active</code> translateY(1px) ·
+        <code>:disabled</code>/<code>aria-disabled</code> opacity 0.4 · <code>.btn--loading</code>
+        hides label and shows spinner; respects <code>prefers-reduced-motion</code>.
+      </p>
     </div>
 
     <p class="specimen-label">Token Reference</p>
@@ -1117,7 +2477,7 @@
   <!-- INPUTS                                             -->
   <!-- ══════════════════════════════════════════════════ -->
   <section id="inputs">
-    <p class="section-label">07</p>
+    <p class="section-label">10</p>
     <h2 class="section-title">Inputs</h2>
     <p class="section-desc">
       Two input styles: underline (login, hero forms) and bordered (data entry, filters).
@@ -1136,13 +2496,66 @@
       <input class="input-bordered" type="text" placeholder="Enter campaign name">
       <p style="font-size:11px;color:var(--l-mid);margin-top:16px;">border border-rule, focus: border-ink. 13px text. Used in forms, filter bars, settings.</p>
     </div>
+
+    <p class="specimen-label">States</p>
+    <div class="specimen-block">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:840px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <span style="font-size:11px;color:var(--l-mid);">Default — tab here for focus ring</span>
+          <input class="input-bordered" type="text" placeholder="Enter value">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <span style="font-size:11px;color:var(--l-mid);">Disabled</span>
+          <input class="input-bordered" type="text" value="Disabled" disabled>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <span style="font-size:11px;color:var(--l-mid);">Read only</span>
+          <input class="input-bordered" type="text" value="Read only" readonly>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <span style="font-size:11px;color:var(--l-mid);">Error (<code>.input--error</code>)</span>
+          <input class="input-bordered input--error" type="text" placeholder="Invalid email">
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--l-mid);margin-top:20px;">
+        <code>:focus-visible</code> 2px ring at 2px offset · <code>:disabled</code> paper bg, mid text, opacity 0.5 ·
+        <code>:read-only</code> paper bg, full opacity · <code>.input--error</code> red border + red ring on focus.
+      </p>
+    </div>
+
+    <p class="specimen-label">Form Field Wrapper</p>
+    <div class="specimen-block">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;">
+        <div class="field">
+          <label class="field__label" for="ref-field-email">Customer email</label>
+          <input id="ref-field-email" class="input-bordered" type="email" placeholder="name@example.com">
+          <p class="field__hint">We'll send the receipt here.</p>
+        </div>
+        <div class="field field--error">
+          <label class="field__label" for="ref-field-email-err">Customer email</label>
+          <input id="ref-field-email-err" class="input-bordered input--error" type="email" value="not-an-email" aria-invalid="true">
+          <p class="field__hint">We'll send the receipt here.</p>
+          <p class="field__error">Enter a valid email address.</p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="ref-field-disabled">Tenant slug</label>
+          <input id="ref-field-disabled" class="input-bordered" type="text" value="acme-co" disabled>
+          <p class="field__hint">Locked after onboarding.</p>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--l-mid);margin-top:20px;">
+        <code>.field</code> stacks <code>.field__label</code> · input · <code>.field__hint</code> with 6px gap.
+        Add <code>.field--error</code> to swap the hint slot for <code>.field__error</code> (the hint stays in the
+        DOM, hidden by CSS).
+      </p>
+    </div>
   </section>
 
   <!-- ══════════════════════════════════════════════════ -->
   <!-- STATUS BADGES                                      -->
   <!-- ══════════════════════════════════════════════════ -->
   <section id="badges">
-    <p class="section-label">08</p>
+    <p class="section-label">11</p>
     <h2 class="section-title">Status Badges</h2>
     <p class="section-desc">
       Custom status badges (not shadcn Badge) map domain statuses to five semantic variants.
@@ -1239,7 +2652,7 @@
   <!-- CARDS                                              -->
   <!-- ══════════════════════════════════════════════════ -->
   <section id="cards">
-    <p class="section-label">09</p>
+    <p class="section-label">12</p>
     <h2 class="section-title">Cards &amp; Metrics</h2>
     <p class="section-desc">
       Metric cards use ds-label for the header and ds-card-num for the value.
@@ -1290,7 +2703,7 @@
   <!-- TABLES                                             -->
   <!-- ══════════════════════════════════════════════════ -->
   <section id="tables">
-    <p class="section-label">10</p>
+    <p class="section-label">13</p>
     <h2 class="section-title">Data Tables</h2>
     <p class="section-desc">
       Built on TanStack React Table. 9px uppercase label headers, 13px body cells,
@@ -1332,7 +2745,7 @@
           </tr>
         </tbody>
       </table>
-      <div style="display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:10px 16px;border-top:1px solid var(--l-rule);">
+      <div style="display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:10px 16px;border-top:1px solid var(--border);">
         <span style="font-size:12px;color:var(--l-mid);">1–3 of 142</span>
         <span style="font-size:12px;color:var(--l-mid);">Page 1 / 48</span>
         <div style="display:flex;gap:4px;">
@@ -1347,7 +2760,7 @@
   <!-- LAYOUT                                             -->
   <!-- ══════════════════════════════════════════════════ -->
   <section id="layout">
-    <p class="section-label">11</p>
+    <p class="section-label">14</p>
     <h2 class="section-title">Layout Patterns</h2>
     <p class="section-desc">
       Two-column shell: paper sidebar + white main area. Fixed top bar with user info and tenant switcher.
@@ -1376,7 +2789,7 @@
     <div class="specimen-block" style="padding:0;overflow:hidden;display:flex;">
       <div class="sidebar-specimen">
         <div style="margin-bottom:20px;">
-          <p style="font-size:14px;font-weight:700;letter-spacing:-0.01em;">Rapid Loyalty</p>
+          <p style="font-size:14px;font-weight:700;letter-spacing:-0.01em;">Acme</p>
           <p style="font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--l-mid);margin-top:2px;">Partner Console</p>
         </div>
         <div class="sidebar-item active">
@@ -1422,7 +2835,7 @@
   <!-- CHARTS                                             -->
   <!-- ══════════════════════════════════════════════════ -->
   <section id="charts">
-    <p class="section-label">12</p>
+    <p class="section-label">15</p>
     <h2 class="section-title">Charts &amp; Data Viz</h2>
     <p class="section-desc">
       Built with Recharts. Charts use CSS variables directly for consistency.
@@ -1496,15 +2909,493 @@
   </section>
 
   <!-- ══════════════════════════════════════════════════ -->
+  <!-- FORMS                                              -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section id="forms">
+    <p class="section-label">16</p>
+    <h2 class="section-title">Forms</h2>
+    <p class="section-desc">
+      Form controls for textarea, select, checkbox, radio, switch, and file input.
+      Each style is written against both native HTML form controls and Radix
+      <code>data-state="checked|unchecked|indeterminate"</code> markup so consumers
+      can choose either. Radio thumbs and switch thumbs are the only sanctioned
+      <code>border-radius: 50%</code> exceptions in the system.
+    </p>
+
+    <p class="specimen-label">Controls</p>
+    <div class="specimen-block">
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 40px;">
+
+        <div class="field">
+          <label class="field__label">Textarea</label>
+          <textarea class="textarea" rows="3" placeholder="Tell us more..."></textarea>
+        </div>
+        <div class="field">
+          <label class="field__label">Textarea — disabled</label>
+          <textarea class="textarea" rows="3" placeholder="Tell us more..." disabled></textarea>
+        </div>
+
+        <div class="field">
+          <label class="field__label">Select</label>
+          <select class="select">
+            <option>Choose...</option>
+            <option>Annual plan</option>
+            <option>Monthly plan</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field__label">Select — disabled</label>
+          <select class="select" disabled>
+            <option>Choose...</option>
+            <option>Annual plan</option>
+            <option>Monthly plan</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="field__label">Checkbox</label>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;">
+              <input type="checkbox" class="checkbox">
+              Native unchecked
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;">
+              <input type="checkbox" class="checkbox" checked>
+              Native checked
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;">
+              <button type="button" role="checkbox" aria-checked="true" class="checkbox" data-state="checked"></button>
+              Radix-style (<code>data-state="checked"</code>)
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field__label">Radio Group</label>
+          <div role="radiogroup" style="display:flex;flex-direction:column;gap:10px;">
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;">
+              <input type="radio" name="ds-radio-demo" class="radio">
+              Annual
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;">
+              <input type="radio" name="ds-radio-demo" class="radio" checked>
+              Monthly
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;">
+              <input type="radio" name="ds-radio-demo" class="radio">
+              Trial
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field__label">Switch</label>
+          <div style="display:flex;align-items:center;gap:24px;">
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;">
+              <button type="button" role="switch" aria-checked="false" class="switch" data-state="unchecked"></button>
+              Off
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;">
+              <button type="button" role="switch" aria-checked="true" class="switch" data-state="checked"></button>
+              On
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field__label">File Input</label>
+          <input type="file" class="file-input">
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- DIALOG                                             -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section id="dialog">
+    <p class="section-label">17</p>
+    <h2 class="section-title">Dialog</h2>
+    <p class="section-desc">
+      A centered modal panel with a tinted backdrop. Pair this CSS shell with
+      <code>@radix-ui/react-dialog</code> to get focus trapping, escape-to-close,
+      click-outside dismissal, and scroll lock for free. Drives off
+      <code>data-state="open|closed"</code> on both the overlay and content.
+    </p>
+
+    <p class="specimen-label">Open State</p>
+    <p style="font-size:12px;color:var(--l-mid);margin-bottom:12px;">
+      Rendered statically in the open state. Pair with <code>@radix-ui/react-dialog</code>
+      for trapping focus, escape-to-close, and click-outside dismissal.
+    </p>
+
+    <div class="dialog-demo">
+      <div class="dialog-overlay" data-state="open"></div>
+      <div class="dialog-content" data-state="open">
+        <button class="dialog-close" aria-label="Close"></button>
+        <h2 class="dialog-title">Confirm subscription change</h2>
+        <p class="dialog-description">
+          You're moving from the Monthly plan to the Annual plan. The new rate will apply
+          at your next billing cycle.
+        </p>
+        <div class="dialog-actions">
+          <button class="btn btn-ghost">Cancel</button>
+          <button class="btn btn-default">Confirm change</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- DROPDOWN                                           -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section id="dropdown">
+    <p class="section-label">18</p>
+    <h2 class="section-title">Dropdown Menu</h2>
+    <p class="section-desc">
+      Menu items, labels, separators, shortcuts, and a destructive variant.
+      State-driven via <code>data-state</code>, <code>data-side</code>,
+      <code>data-highlighted</code>, and <code>data-disabled</code> for direct
+      Radix <code>DropdownMenu</code> compatibility.
+    </p>
+
+    <p class="specimen-label">Open State</p>
+    <p style="font-size:12px;color:var(--l-mid);margin-bottom:12px;">
+      Rendered statically with <code>data-state="open"</code>. The "Settings" row
+      shows the highlighted hover state; "Switch organization" is disabled.
+    </p>
+
+    <div class="dropdown-demo">
+      <button class="btn btn-outline" type="button" aria-haspopup="menu" aria-expanded="true">Account &#x25BE;</button>
+      <div class="dropdown-content" data-state="open" data-side="bottom" role="menu" style="margin-top:4px;width:220px;">
+        <div class="dropdown-label">Profile</div>
+        <button class="dropdown-item" type="button" role="menuitem">View profile</button>
+        <button class="dropdown-item" type="button" role="menuitem" data-highlighted>
+          Settings <span class="dropdown-shortcut">&#8984;,</span>
+        </button>
+        <button class="dropdown-item" type="button" role="menuitem" data-disabled disabled>Switch organization</button>
+        <div class="dropdown-separator"></div>
+        <button class="dropdown-item dropdown-item--danger" type="button" role="menuitem">Sign out</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- TOOLTIP                                            -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section id="tooltip">
+    <p class="section-label">19</p>
+    <h2 class="section-title">Tooltip</h2>
+    <p class="section-desc">
+      Inverted contrast (dark bg, white text). Hover/focus delay handled by Radix
+      in production. Three placements shown below via <code>data-side</code>.
+    </p>
+
+    <p class="specimen-label">Sides</p>
+    <div class="specimen-block">
+      <div style="display:flex;gap:48px;flex-wrap:wrap;">
+
+        <div class="tooltip-demo" style="display:flex;flex-direction:column;align-items:center;gap:24px;">
+          <div class="tooltip-content" data-state="instant-open" data-side="top" style="bottom:calc(100% - 12px);left:50%;transform:translateX(-50%);">
+            Top
+          </div>
+          <button class="btn btn-ghost" type="button">Hover me</button>
+          <span style="font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--l-mid);">data-side="top"</span>
+        </div>
+
+        <div class="tooltip-demo" style="display:flex;flex-direction:column;align-items:center;gap:24px;">
+          <button class="btn btn-ghost" type="button">Hover me</button>
+          <div class="tooltip-content" data-state="instant-open" data-side="bottom" style="top:calc(100% - 12px);left:50%;transform:translateX(-50%);">
+            Bottom
+          </div>
+          <span style="font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--l-mid);">data-side="bottom"</span>
+        </div>
+
+        <div class="tooltip-demo" style="display:flex;align-items:center;gap:12px;padding-right:120px;">
+          <button class="btn btn-ghost" type="button">Hover me</button>
+          <div class="tooltip-content" data-state="instant-open" data-side="right" style="left:calc(100% - 80px);top:50%;transform:translateY(-50%);">
+            Right
+          </div>
+          <span style="font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--l-mid);margin-left:96px;">data-side="right"</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- TOAST                                              -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section id="toast">
+    <p class="section-label">20</p>
+    <h2 class="section-title">Toast</h2>
+    <p class="section-desc">
+      Notification stack with four variants — success, warning, danger, info.
+      Each carries a 3px left-edge accent bar; the body fill stays neutral so
+      colour reads as a status indicator, not a tinted surface. Pair with
+      <code>@radix-ui/react-toast</code> for queue management and swipe physics.
+    </p>
+
+    <p class="specimen-label">Variants</p>
+    <p style="font-size:12px;color:var(--l-mid);margin-bottom:12px;">
+      Rendered statically in the open state, stacked inside a contained viewport.
+      In production the viewport is fixed to the bottom-right of the screen.
+    </p>
+
+    <div class="toast-demo">
+      <ol class="toast-viewport">
+        <li class="toast toast--success" data-state="open">
+          <button class="toast-close" aria-label="Close"></button>
+          <div class="toast-title">Saved</div>
+          <p class="toast-description">Your changes were synced 2 seconds ago.</p>
+        </li>
+        <li class="toast toast--warning" data-state="open">
+          <button class="toast-close" aria-label="Close"></button>
+          <div class="toast-title">Quota nearing limit</div>
+          <p class="toast-description">You've used 92% of this month's allotment.</p>
+          <button class="toast-action" type="button">Upgrade</button>
+        </li>
+        <li class="toast toast--danger" data-state="open">
+          <button class="toast-close" aria-label="Close"></button>
+          <div class="toast-title">Sync failed</div>
+          <p class="toast-description">We couldn't reach the server. Click to retry.</p>
+        </li>
+        <li class="toast toast--info" data-state="open">
+          <button class="toast-close" aria-label="Close"></button>
+          <div class="toast-title">New feature</div>
+          <p class="toast-description">Bulk export is now available in Beta.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- TABS                                               -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section id="tabs">
+    <p class="section-label">21</p>
+    <h2 class="section-title">Tabs</h2>
+    <p class="section-desc">
+      Pair with <code>@radix-ui/react-tabs</code>. <code>[data-state="active"]</code> triggers the underline.
+    </p>
+
+    <p class="specimen-label">Horizontal</p>
+    <div class="specimen-block">
+      <div class="tabs" data-orientation="horizontal">
+        <div class="tabs-list" role="tablist">
+          <button class="tabs-trigger" role="tab" data-state="active">Overview</button>
+          <button class="tabs-trigger" role="tab" data-state="inactive">Activity</button>
+          <button class="tabs-trigger" role="tab" data-state="inactive">Settings</button>
+        </div>
+        <div class="tabs-content" role="tabpanel" data-state="active">
+          <p style="font-size:13px;color:var(--muted-foreground);">Overview panel — top-line metrics, summary cards, and the most recent activity feed land here.</p>
+        </div>
+        <div class="tabs-content" role="tabpanel" data-state="inactive">
+          <p style="font-size:13px;color:var(--muted-foreground);">Activity panel.</p>
+        </div>
+        <div class="tabs-content" role="tabpanel" data-state="inactive">
+          <p style="font-size:13px;color:var(--muted-foreground);">Settings panel.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="specimen-label">Vertical</p>
+    <div class="specimen-block">
+      <div class="tabs" data-orientation="vertical" style="min-height:160px;">
+        <div class="tabs-list" role="tablist">
+          <button class="tabs-trigger" role="tab" data-state="active">Overview</button>
+          <button class="tabs-trigger" role="tab" data-state="inactive">Activity</button>
+          <button class="tabs-trigger" role="tab" data-state="inactive">Settings</button>
+        </div>
+        <div class="tabs-content" role="tabpanel" data-state="active" style="padding-left:24px;">
+          <p style="font-size:13px;color:var(--muted-foreground);">Overview — vertical orientation puts the rail on the left and accents the active trigger with a right-edge underline.</p>
+        </div>
+        <div class="tabs-content" role="tabpanel" data-state="inactive" style="padding-left:24px;">
+          <p style="font-size:13px;color:var(--muted-foreground);">Activity panel.</p>
+        </div>
+        <div class="tabs-content" role="tabpanel" data-state="inactive" style="padding-left:24px;">
+          <p style="font-size:13px;color:var(--muted-foreground);">Settings panel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- PAGINATION                                         -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section id="pagination">
+    <p class="section-label">22</p>
+    <h2 class="section-title">Pagination</h2>
+    <p class="section-desc">
+      Plain markup; <code>[aria-current="page"]</code> marks the active page.
+    </p>
+
+    <div class="specimen-block">
+      <nav class="pagination" aria-label="Pagination">
+        <button class="pagination-prev" type="button">Prev</button>
+        <button class="pagination-item" type="button">1</button>
+        <button class="pagination-item" type="button" aria-current="page">2</button>
+        <button class="pagination-item" type="button">3</button>
+        <button class="pagination-item" type="button">4</button>
+        <button class="pagination-item" type="button">5</button>
+        <span class="pagination-ellipsis" aria-hidden="true">…</span>
+        <button class="pagination-item" type="button">12</button>
+        <button class="pagination-next" type="button">Next</button>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- BREADCRUMB                                         -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section id="breadcrumb">
+    <p class="section-label">23</p>
+    <h2 class="section-title">Breadcrumb</h2>
+    <p class="section-desc">
+      Trail of links + a current-page label. The separator is decorative (<code>aria-hidden</code>) and not part of the link semantics.
+    </p>
+
+    <div class="specimen-block">
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb">
+          <li><a class="breadcrumb-item" href="#">Dashboard</a></li>
+          <li class="breadcrumb-separator" aria-hidden="true">/</li>
+          <li><a class="breadcrumb-item" href="#">Campaigns</a></li>
+          <li class="breadcrumb-separator" aria-hidden="true">/</li>
+          <li class="breadcrumb-current">Q2 promotion</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- ALERT                                              -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section id="alert">
+    <p class="section-label">24</p>
+    <h2 class="section-title">Alert</h2>
+    <p class="section-desc">
+      Inline message banner (in-flow). Distinct from <code>.toast</code> (floating, queued).
+    </p>
+
+    <div class="specimen-block" style="display:flex;flex-direction:column;gap:12px;">
+      <div class="alert alert--info">
+        <div class="alert-body">
+          <p class="alert-title">Maintenance window</p>
+          <p class="alert-description">Read-only mode tonight 22:00–02:00 UTC.</p>
+        </div>
+      </div>
+      <div class="alert alert--success">
+        <div class="alert-body">
+          <p class="alert-title">Sync complete</p>
+          <p class="alert-description">9,318 rows synced from the upstream warehouse.</p>
+        </div>
+      </div>
+      <div class="alert alert--warning">
+        <div class="alert-body">
+          <p class="alert-title">Quota at 84%</p>
+          <p class="alert-description">Upgrade or expect throttling within 6 hours.</p>
+        </div>
+        <button class="alert-close" type="button" aria-label="Dismiss"></button>
+      </div>
+      <div class="alert alert--danger">
+        <div class="alert-body">
+          <p class="alert-title">Delivery failed</p>
+          <p class="alert-description">Two recipients bounced. Click to view the bounce log.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- EMPTY STATE                                        -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section id="empty-state">
+    <p class="section-label">25</p>
+    <h2 class="section-title">Empty State</h2>
+    <p class="section-desc">
+      Centered panel for empty results, first-run, and 404 surfaces.
+    </p>
+
+    <div class="specimen-block">
+      <div class="empty-state">
+        <div class="empty-state-icon">
+          <div style="width:48px;height:48px;background:var(--l-rule);"></div>
+        </div>
+        <h3 class="empty-state-title">No campaigns yet</h3>
+        <p class="empty-state-description">Create your first campaign to start tracking performance, audiences, and ROI.</p>
+        <div class="empty-state-action">
+          <button class="btn btn-default">Create campaign</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- SKELETON                                           -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section id="skeleton">
+    <p class="section-label">26</p>
+    <h2 class="section-title">Skeleton</h2>
+    <p class="section-desc">
+      Loading placeholders. Honors <code>prefers-reduced-motion</code> (animation: none).
+    </p>
+
+    <div class="specimen-block">
+      <!-- Row 1: avatar + two text lines -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+        <span class="skeleton skeleton--circle"></span>
+        <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
+          <span class="skeleton skeleton--text" style="width:60%;"></span>
+          <span class="skeleton skeleton--text" style="width:40%;"></span>
+        </div>
+      </div>
+
+      <!-- Row 2: card image placeholder -->
+      <div style="margin-bottom:24px;">
+        <span class="skeleton skeleton--rect" style="height:120px;"></span>
+      </div>
+
+      <!-- Row 3: paragraph copy -->
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <span class="skeleton skeleton--text" style="width:100%;"></span>
+        <span class="skeleton skeleton--text" style="width:80%;"></span>
+        <span class="skeleton skeleton--text" style="width:50%;"></span>
+      </div>
+    </div>
+
+    <p style="font-size:12px;color:var(--muted-foreground);">Pulse pauses for users with <code>prefers-reduced-motion: reduce</code>.</p>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
   <!-- FOOTER                                             -->
   <!-- ══════════════════════════════════════════════════ -->
-  <footer style="border-top:1.5px solid var(--l-rule);padding:40px 0;margin-top:40px;">
-    <p style="font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--l-mid);margin-bottom:8px;">Rapid Loyalty Design System</p>
+  <footer style="border-top:1.5px solid var(--border);padding:40px 0;margin-top:40px;">
+    <p style="font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--l-mid);margin-bottom:8px;">ARS Design System</p>
     <p style="font-size:13px;color:var(--l-mid);font-weight:300;">
-      Travel Loyalty Platform &middot; Swiss-inspired, zero-radius, Barlow typeface &middot; Built on shadcn/ui + Tailwind CSS v4
+      Swiss-inspired, zero-radius, Barlow typeface &middot; Built on shadcn/ui + Tailwind CSS v4
     </p>
   </footer>
 
 </div>
+
+<script>
+  (() => {
+    const KEY = "ars-theme";
+    const root = document.documentElement;
+    const btn = document.getElementById("theme-toggle");
+    const apply = (t) => {
+      if (t === "dark") root.dataset.theme = "dark"; else delete root.dataset.theme;
+      btn.textContent = t === "dark" ? "Dark" : "Light";
+    };
+    apply(localStorage.getItem(KEY) || "");
+    btn.addEventListener("click", () => {
+      const next = root.dataset.theme === "dark" ? "" : "dark";
+      localStorage.setItem(KEY, next);
+      apply(next);
+    });
+  })();
+</script>
 </body>
 </html>

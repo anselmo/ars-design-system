@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════
-   Rapid Loyalty Design System — Data Tables
+   ARS Design System — Data Tables
    ═══════════════════════════════════════════════ */
 
 /*
@@ -21,13 +21,13 @@
   color: var(--l-mid);
   text-align: left;
   padding: 8px 16px;
-  border-bottom: 1.5px solid var(--l-rule);
+  border-bottom: 1.5px solid var(--border);
 }
 
 .table td {
   font-size: 13px;
   padding: 10px 16px;
-  border-bottom: 1px solid var(--l-rule);
+  border-bottom: 1px solid var(--border);
 }
 
 .table tr:hover td {

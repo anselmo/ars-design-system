@@ -1,0 +1,96 @@
+/* ═══════════════════════════════════════════════
+   ARS Design System — Tabs
+   ═══════════════════════════════════════════════
+   CSS shell. Pair with @radix-ui/react-tabs (or any
+   headless lib that exposes [data-state="active|inactive"]
+   and [data-orientation="horizontal|vertical"]).
+
+   Anatomy
+   ───────
+   .tabs                Tabs.Root, owns orientation
+   .tabs-list           Tabs.List, horizontal/vertical bar
+   .tabs-trigger        Tabs.Trigger, 11px uppercase label
+   .tabs-content        Tabs.Content, panel for active tab
+
+   Active tab is signaled with a 2px primary-color underline
+   (or right border in vertical mode), merged into the list's
+   own divider for a single accented line.
+   ═══════════════════════════════════════════════ */
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs[data-orientation="vertical"] {
+  flex-direction: row;
+}
+
+.tabs-list {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.tabs[data-orientation="vertical"] .tabs-list {
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+  border-bottom: none;
+}
+
+.tabs-trigger {
+  padding: 8px 16px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  transition: color var(--motion-fast) var(--ease-standard);
+}
+
+.tabs-trigger:hover {
+  color: var(--foreground);
+}
+
+.tabs-trigger[data-state="active"] {
+  color: var(--foreground);
+  border-bottom-color: var(--primary);
+}
+
+.tabs-trigger:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.tabs-trigger[data-disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.tabs[data-orientation="vertical"] .tabs-trigger {
+  padding: 12px 16px;
+  border-bottom: none;
+  border-right: 2px solid transparent;
+  margin-bottom: 0;
+  margin-right: -1px;
+}
+
+.tabs[data-orientation="vertical"] .tabs-trigger[data-state="active"] {
+  border-right-color: var(--primary);
+}
+
+.tabs-content {
+  padding: 16px 0;
+  outline: none;
+}
+
+.tabs-content[data-state="inactive"] {
+  display: none;
+}

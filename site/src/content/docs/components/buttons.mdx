@@ -1,0 +1,81 @@
+---
+title: Buttons
+description: Six variants, four sizes. Pure CSS, no JS.
+---
+
+The `.btn` class is the base. Compose it with one variant class and an optional size modifier. All buttons render 11px uppercase bold type with 0.06em tracking.
+
+## Variants
+
+| Variant       | Class              | Background                  | Label                         |
+| ------------- | ------------------ | --------------------------- | ----------------------------- |
+| Default       | `.btn-default`     | `--l-black` (#0D0D0D)       | `--l-white` (#FFFFFF)         |
+| Outline       | `.btn-outline`     | `--l-white` (#FFFFFF)       | `--l-black` (#0D0D0D)         |
+| Secondary     | `.btn-secondary`   | `--l-paper` (#F7F6F2)       | `--l-black` (#0D0D0D)         |
+| Ghost         | `.btn-ghost`       | transparent                 | `--l-black` (#0D0D0D)         |
+| Destructive   | `.btn-destructive` | `rgba(217, 28, 24, 0.1)`    | `--l-red` (#D91C18)           |
+| Link          | `.btn-link`        | transparent                 | `--l-black`, underlined       |
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Variants</p>
+  <div style={{display:"flex",gap:"8px",flexWrap:"wrap"}}>
+    <button class="btn btn-default">Default</button>
+    <button class="btn btn-outline">Outline</button>
+    <button class="btn btn-secondary">Secondary</button>
+    <button class="btn btn-ghost">Ghost</button>
+    <button class="btn btn-destructive">Destructive</button>
+    <button class="btn btn-link">Link</button>
+  </div>
+</div>
+
+## Sizes
+
+Heights step in 4px increments. Default is 32px; the modifier classes only override height (and font-size on `xs`).
+
+| Size      | Class       | Height | Font size |
+| --------- | ----------- | ------ | --------- |
+| Extra sm  | `.btn-xs`   | 24px   | 10px      |
+| Small     | `.btn-sm`   | 28px   | 11px      |
+| Default   | (none)      | 32px   | 11px      |
+| Large     | `.btn-lg`   | 36px   | 11px      |
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Sizes</p>
+  <div style={{display:"flex",gap:"8px",flexWrap:"wrap",alignItems:"center"}}>
+    <button class="btn btn-default btn-xs">Extra small</button>
+    <button class="btn btn-default btn-sm">Small</button>
+    <button class="btn btn-default">Default</button>
+    <button class="btn btn-default btn-lg">Large</button>
+  </div>
+</div>
+
+## States
+
+- **`:focus-visible`** — 2px outline using `--ring`, with a 2px offset. Mouse users skip the ring.
+- **`:active:not(:disabled)`** — 1px `translateY` press, only when the button is interactive.
+- **`:disabled` / `[aria-disabled="true"]`** — opacity 0.4, `cursor: not-allowed`, `pointer-events: none`.
+- **`.btn--loading`** — CSS-only spinner. Label is set to `transparent`, a 14px ring rotates over the centre at 0.8s linear infinite. The spinner freezes (animation: none) under `prefers-reduced-motion: reduce`, so the loading state remains visible without motion.
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Disabled and loading</p>
+  <div style={{display:"flex",gap:"8px",flexWrap:"wrap",alignItems:"center"}}>
+    <button class="btn btn-default" disabled>Disabled</button>
+    <button class="btn btn-outline" disabled>Disabled outline</button>
+    <button class="btn btn-default btn--loading" aria-busy="true">Saving</button>
+    <button class="btn btn-destructive btn--loading" aria-busy="true">Deleting</button>
+  </div>
+</div>
+
+## Usage
+
+Plain HTML — no JavaScript required for any of the visual states above:
+
+```html
+<button class="btn btn-default">Save changes</button>
+```
+
+For the loading state, add the `.btn--loading` modifier and pair it with `aria-busy="true"`:
+
+```html
+<button class="btn btn-default btn--loading" aria-busy="true">…</button>
+```

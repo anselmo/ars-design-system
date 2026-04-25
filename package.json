@@ -1,19 +1,39 @@
 {
   "name": "@ars/design-system",
   "version": "1.0.0",
-  "description": "Rapid Loyalty Design System — Swiss-inspired, zero-radius, Barlow typeface. Built on shadcn/ui + Tailwind CSS v4.",
+  "description": "ARS Design System — Swiss-inspired, zero-radius, Barlow typeface. CSS-only, framework-agnostic, pairs with Tailwind v4 and shadcn/ui.",
   "main": "index.css",
+  "style": "index.css",
+  "exports": {
+    ".": "./index.css",
+    "./tokens/*": "./tokens/*",
+    "./components/*": "./components/*",
+    "./fonts/*": "./fonts/*",
+    "./examples/*": "./examples/*",
+    "./reference.html": "./reference.html"
+  },
   "files": [
     "index.css",
     "tokens/",
     "components/",
-    "reference.html"
+    "fonts/",
+    "examples/",
+    "reference.html",
+    "README.md"
   ],
   "keywords": [
+    "ars",
     "design-system",
-    "rapid-loyalty",
     "css",
-    "tokens"
+    "tokens",
+    "barlow",
+    "swiss-design",
+    "tailwind",
+    "shadcn"
   ],
-  "license": "UNLICENSED"
+  "repository": "github:anselmo/ars-design-system",
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "restricted"
+  }
 }

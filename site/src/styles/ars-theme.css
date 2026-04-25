@@ -1,0 +1,121 @@
+/* ═══════════════════════════════════════════════
+   ARS Design System — Starlight theme overrides
+   ═══════════════════════════════════════════════
+   Imports the full @ars/design-system stylesheet so every
+   .btn / .badge / .dialog / etc. class is available inside
+   MDX content and React playgrounds, then re-points
+   Starlight's CSS variables to the ARS palette so the docs
+   chrome (sidebar, top nav, body, search) inherit the brand.
+   ═══════════════════════════════════════════════ */
+
+@import "@ars/design-system";
+
+/* ── Light theme (Starlight default) ── */
+:root {
+  /* Palette: re-point Starlight's accent + neutrals to ARS tokens */
+  --sl-color-accent-low: var(--l-paper);
+  --sl-color-accent: var(--l-orange);
+  --sl-color-accent-high: var(--l-orange);
+
+  --sl-color-white: var(--l-black);            /* Starlight uses this for "primary text" — invert per their convention */
+  --sl-color-gray-1: var(--l-black);
+  --sl-color-gray-2: #2A2A2A;
+  --sl-color-gray-3: var(--l-mid);
+  --sl-color-gray-4: #9A9A96;
+  --sl-color-gray-5: var(--l-rule);
+  --sl-color-gray-6: var(--l-light);
+  --sl-color-gray-7: var(--l-paper);
+  --sl-color-black: var(--l-white);            /* and "primary background" */
+
+  /* Typography */
+  --sl-font: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --sl-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Sizes — slightly tighter than Starlight defaults to match ARS density */
+  --sl-text-base: 15px;
+  --sl-line-height: 1.6;
+
+  /* Zero-radius doctrine bleeds into Starlight's UI */
+  --sl-content-pad-x: 1.5rem;
+}
+
+/* ── Dark theme — Starlight already toggles via [data-theme="dark"] ── */
+:root[data-theme="dark"] {
+  --sl-color-accent-low: #1F1F1F;
+  --sl-color-accent: var(--l-orange);
+  --sl-color-accent-high: var(--l-orange);
+
+  --sl-color-white: var(--l-white);
+  --sl-color-gray-1: var(--l-white);
+  --sl-color-gray-2: #E5E5E5;
+  --sl-color-gray-3: #9A9A96;
+  --sl-color-gray-4: var(--l-mid);
+  --sl-color-gray-5: #1F1F1F;
+  --sl-color-gray-6: #262626;
+  --sl-color-gray-7: var(--l-dark);
+  --sl-color-black: var(--l-black);
+}
+
+/* ── Zero-radius enforcement on Starlight's chrome ── */
+.sidebar,
+.right-sidebar,
+.content,
+.card,
+.tip,
+.note,
+.caution,
+.danger,
+input,
+button,
+[class*="rounded"],
+[class*="radius"] {
+  border-radius: 0 !important;
+}
+
+/* ── Apply Barlow to body + headings explicitly so Starlight's reset doesn't override ── */
+html,
+body {
+  font-family: var(--sl-font);
+}
+
+/* ── Headings: ARS uses tight letter-spacing on display + heading scales ── */
+h1, h2, h3 { letter-spacing: -0.01em; }
+
+/* ── Code blocks: keep Starlight's monospace but tone the surface to paper ── */
+:not(pre) > code {
+  background: var(--l-paper);
+  border: 1px solid var(--l-rule);
+  padding: 1px 4px;
+  font-size: 0.92em;
+}
+
+:root[data-theme="dark"] :not(pre) > code {
+  background: var(--l-dark);
+  border-color: var(--l-dark);
+}
+
+/* ── Component playground container styling ── */
+.ars-playground {
+  border: 1px solid var(--l-rule);
+  background: var(--l-paper);
+  padding: 32px 24px;
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+:root[data-theme="dark"] .ars-playground {
+  background: var(--l-dark);
+  border-color: var(--l-dark);
+}
+
+.ars-playground-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--l-mid);
+  margin-bottom: -8px;
+}

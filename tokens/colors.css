@@ -1,9 +1,9 @@
 /* ═══════════════════════════════════════════════
-   Rapid Loyalty Design System — Colour Tokens
+   ARS Design System — Colour Tokens
    ═══════════════════════════════════════════════ */
 
 /*
- * Nine primitive colour tokens form the entire palette.
+ * Eleven primitive colour tokens form the entire palette.
  * No grays beyond mid — the system relies on white, paper,
  * light, and rule to create hierarchy through surface
  * contrast rather than colour variety.
@@ -68,6 +68,79 @@
   --color-green:  #55C251;
 }
 
+/* ═══════════════════════════════════════════════
+   Dark mode — opt in via <html data-theme="dark">
+   ═══════════════════════════════════════════════
+   Only the SEMANTIC aliases re-point. Primitives stay as-is
+   (they are physical colours, not theme-aware). Brand colours
+   (orange, red, green, blue) keep their values — orange #FE561A
+   on --l-black is ~6.07:1 (AA pass), red #D91C18 on --l-black
+   is ~3.82:1 (non-text AA pass), so contrast holds.
+
+   Border / separator strategy
+   ───────────────────────────
+   --border collapses to --l-dark (#1A1A1A) — the same colour as the
+   card / popover / muted surface fill. The intent: borders are NOT
+   structural lines in dark mode; they're ornamental hairlines only
+   visible against the pure-black page background (~1.4:1 on --l-black).
+   Inside cards/dropdowns/toasts they vanish entirely — the surface
+   contrast (--l-dark vs --l-black) carries the boundary work alone.
+   Swiss restraint: surfaces speak for themselves.
+
+   --input (#2A2A2A, ~1.9:1 on --l-black) is held visibly stronger
+   than --border because input controls need touch-affordance — a
+   near-invisible input edge reads as broken. Same split shadcn/ui
+   uses: structural borders soft, control borders prominent.
+
+   In-content dividers (.dropdown-separator, tabs-list bottom rule,
+   table row rules) all reference --border, so they inherit the same
+   ambient hairline treatment. If a future component needs a sharper
+   in-card divider, introduce a --separator token then; do not over-
+   engineer it now.
+
+   --accent (#262626) is a one-off RGB value, NOT a new primitive.
+   It exists only inside this dark block to give a slightly-elevated
+   surface for hover states against --l-black.
+
+   Tailwind aliases (--color-*) intentionally don't re-override:
+   consumers using Tailwind v4 should use the standard `dark:`
+   variant for utilities, NOT this attribute.
+   ═══════════════════════════════════════════════ */
+
+:root[data-theme="dark"] {
+  /* Surface & text */
+  --background:             var(--l-black);
+  --foreground:             var(--l-white);
+  --card:                   var(--l-dark);
+  --card-foreground:        var(--l-white);
+  --popover:                var(--l-dark);
+  --popover-foreground:     var(--l-white);
+  --primary:                var(--l-white);
+  --primary-foreground:     var(--l-black);
+  --secondary:              var(--l-dark);
+  --secondary-foreground:   var(--l-white);
+  --muted:                  var(--l-dark);
+  --muted-foreground:       #9A9A96;
+  --accent:                 #262626;
+  --accent-foreground:      var(--l-white);
+  --destructive:            var(--l-red);
+
+  /* Chrome & controls — borders collapse to --l-dark (ornamental); input held stronger for control affordance */
+  --border:                 var(--l-dark);
+  --input:                  #2A2A2A;
+  --ring:                   var(--l-white);
+
+  /* Sidebar */
+  --sidebar:                        var(--l-dark);
+  --sidebar-foreground:             var(--l-white);
+  --sidebar-primary:                var(--l-white);
+  --sidebar-primary-foreground:     var(--l-black);
+  --sidebar-accent:                 #262626;
+  --sidebar-accent-foreground:      var(--l-white);
+  --sidebar-border:                 var(--l-dark);
+  --sidebar-ring:                   var(--l-white);
+}
+
 /*
  * Usage Guidelines
  * ────────────────
@@ -82,4 +155,41 @@
  * --l-red     │ Error & destructive   │ Error messages, negative values, reversed/rejected badges, destructive buttons
  * --l-blue    │ Light blue tint       │ Info highlights, selected states, soft informational backgrounds
  * --l-green   │ Positive & gains      │ Positive numbers, upward metrics, gains, growth indicators
+ */
+
+/*
+ * Accessibility — WCAG 2.1 AA compliance
+ * ──────────────────────────────────────
+ * Body & secondary text on white/paper/light surfaces all clear AA (mid is 5.33:1
+ * on white, 4.93:1 on paper). Black text and the focus ring (--l-black) clear
+ * AAA on every surface.
+ *
+ * Three brand-color caveats — verified against WCAG 2.1 contrast ratios:
+ *
+ *   --l-orange   Fails AA normal text (3.20:1 on white). USE for: large text
+ *                ≥18pt or ≥14pt-bold, button backgrounds with large white labels,
+ *                icons, chart strokes, accent borders.
+ *                AVOID: body-size orange text on light surfaces.
+ *
+ *   --l-green    Fails AA at all sizes (2.28:1 on white). USE for: non-text
+ *                indicators only — status dots, large icons, decorative fills
+ *                with no text inside.
+ *                AVOID: green text on any surface, white text on green fills.
+ *                For success status text, prefer black text inside a light
+ *                green-tinted background, or use --l-black + a leading icon.
+ *
+ *   --l-rule     Fails WCAG 1.4.11 non-text contrast (1.43:1 on white). USE for:
+ *                purely decorative dividers, table internal grid lines, badge
+ *                outlines.
+ *                AVOID: load-bearing structural borders that separate unrelated
+ *                content. For those, reach for --l-mid (3.5:1+ on white).
+ *
+ * If brand evolves to require strict AA-clean primitives, the recommended
+ * minimal-deviation overrides are:
+ *   --l-orange  #FE561A  →  #CC4400   (4.78:1 white, 4.42:1 paper)
+ *   --l-green   #55C251  →  #2E8B2B   (4.34:1 white, 4.01:1 paper)
+ *   --l-rule    #D8D8D4  →  #9A9A96   (3.0:1 white — clears 1.4.11)
+ *
+ * Do not change these without an explicit brand decision — they are visible
+ * across the entire system.
  */

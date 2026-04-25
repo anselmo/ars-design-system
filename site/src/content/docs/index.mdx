@@ -1,0 +1,32 @@
+---
+title: ARS Design System
+description: Swiss-inspired, zero-radius, Barlow-only design system — pure CSS, optional React layer, framework-agnostic.
+---
+
+ARS is a flat stylesheet bundle: design tokens as CSS custom properties plus a small set of component classes. It is **not** a behavior-shipping UI library — components are static CSS hooks, and a separate optional React package adds a thin Radix wrapper layer when you need it.
+
+The CSS package works in any framework or none at all. Drop it into Vue, Svelte, Astro, plain HTML, or even HTML email.
+
+## Two packages
+
+| Package                      | What it ships                                                            | When to use                                                |
+| ---------------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| `@ars/design-system`         | All tokens, component classes, bundled Barlow font, base reset           | Vue, Svelte, Astro, plain HTML, email — and React          |
+| `@ars/design-system-react`   | Thin Radix wrappers that apply the matching CSS classes (39 components)  | Opt-in for React apps that want behavior on top of the CSS |
+
+The CSS package is the source of truth. The React package only adds behavior — it does not duplicate styles.
+
+## Design principles
+
+- **Zero radius everywhere.** Every `--radius-*` token is `0px`. No exceptions.
+- **Barlow is the sole typeface.** Hierarchy comes from weight and scale, never from font family.
+- **11 colour primitives + semantic aliases.** No grays beyond `--l-mid`.
+- **Hierarchy through surface contrast.** White → paper → light → rule layers do the work, not depth.
+- **Overlay-only shadows.** Cards, tables, and sidebars use borders. Shadows are reserved for floating overlays (popovers, dropdowns, dialogs).
+
+## Quick links
+
+- [Install →](/install)
+- [Dark mode →](/dark-mode)
+- [Colors →](/tokens/colors)
+- [Typography →](/tokens/typography)

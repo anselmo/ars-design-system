@@ -1,2 +1,10 @@
 node_modules/
 .superpowers/
+.claude/
+
+# build outputs
+dist/
+.astro/
+
+# logs
+*.log

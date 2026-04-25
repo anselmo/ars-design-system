@@ -1,0 +1,88 @@
+---
+title: Dialog
+description: Modal dialog. CSS shell pairs with @radix-ui/react-dialog or any headless lib using [data-state].
+---
+
+The dialog ships as a CSS shell — anatomy classes, transitions, and `[data-state]` hooks. Behaviour (focus trap, escape key, scroll lock, click-outside) is the consumer's job. Use the React package for that, or wire your own.
+
+## Anatomy
+
+| Class                  | Purpose                                       |
+| ---------------------- | --------------------------------------------- |
+| `.dialog-overlay`      | Full-viewport tinted backdrop, fades in/out.  |
+| `.dialog-content`      | Centered panel, slides + fades in/out.        |
+| `.dialog-title`        | Heading inside the panel.                     |
+| `.dialog-description`  | Subtitle / lead paragraph under the title.    |
+| `.dialog-close`        | Absolutely positioned top-right close (X).    |
+| `.dialog-actions`      | Right-aligned button row at the bottom.       |
+
+The overlay and content both react to `[data-state="open"]` / `[data-state="closed"]` — open transitions fade and slide the panel into place, closed reverses it. Under `prefers-reduced-motion: reduce`, the slide is removed.
+
+## React playground (live)
+
+This is a real `<Dialog>` from `@ars/design-system-react`. Click the button to open it. Focus trap, escape-to-close, and click-outside dismissal are all handled by Radix.
+
+import DialogDemo from "../../../components/DialogDemo.tsx";
+
+<DialogDemo client:load />
+
+## React usage
+
+```tsx
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+  DialogActions,
+} from "@ars/design-system-react";
+
+<Dialog>
+  <DialogTrigger asChild>
+    <button className="btn btn-default">Open</button>
+  </DialogTrigger>
+  <DialogContent>
+    <DialogTitle>Confirm subscription change</DialogTitle>
+    <DialogDescription>
+      You're moving from Monthly to Annual. New rate applies at next billing.
+    </DialogDescription>
+    <DialogActions>
+      <DialogClose asChild>
+        <button className="btn btn-ghost">Cancel</button>
+      </DialogClose>
+      <button className="btn btn-default">Confirm</button>
+    </DialogActions>
+  </DialogContent>
+</Dialog>;
+```
+
+`DialogContent` auto-portals and auto-renders the `.dialog-overlay`, so consumers never have to remember either. `DialogActions` is a plain `<div className="dialog-actions">` helper — not a Radix primitive — for the bottom button row.
+
+## CSS-only usage (any framework)
+
+If you're not using React, render the markup yourself and toggle `data-state` from your own state machine:
+
+```html
+<div class="dialog-overlay" data-state="open"></div>
+<div class="dialog-content" data-state="open">
+  <button class="dialog-close" aria-label="Close"></button>
+  <h2 class="dialog-title">…</h2>
+  <p class="dialog-description">…</p>
+  <div class="dialog-actions">
+    <button class="btn btn-ghost">Cancel</button>
+    <button class="btn btn-default">Confirm</button>
+  </div>
+</div>
+```
+
+Going this route, you wire your own focus trap, escape-to-close, click-outside dismissal, and scroll lock. That's exactly what the React package adds on top of these classes.
+
+## States and tokens used
+
+- `--shadow-modal` — panel elevation.
+- `--z-overlay` — overlay stacking (sits below the panel).
+- `--z-modal` — content stacking (sits above the overlay).
+- `--space-shell` — interior padding of the panel.
+- `--motion-base` — duration of overlay opacity and panel slide+fade transitions.

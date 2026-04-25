@@ -2,7 +2,7 @@
 
 ## Overview
 
-Add a dark mode theme to the Rapid Loyalty Design System. The dark palette uses warm-tinted darks that echo the light mode's warm `--l-paper` character, maintaining Swiss-style sharpness (zero radius, Barlow typeface, uppercase micro-type).
+Add a dark mode theme to the ARS Design System. The dark palette uses warm-tinted darks that echo the light mode's warm `--l-paper` character, maintaining Swiss-style sharpness (zero radius, Barlow typeface, uppercase micro-type).
 
 ## Activation Mechanism
 

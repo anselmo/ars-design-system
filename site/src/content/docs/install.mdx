@@ -1,0 +1,129 @@
+---
+title: Install
+description: Install @ars/design-system + the optional React wrapper package.
+---
+
+## CSS package
+
+The package is not yet on a public registry. For local development, link it via a relative path in your `package.json`:
+
+```json
+{
+  "dependencies": {
+    "@ars/design-system": "file:../ars-design-system"
+  }
+}
+```
+
+Once published:
+
+```bash
+pnpm add @ars/design-system
+```
+
+A single CSS import brings in tokens, fonts, components, and the base reset:
+
+```css
+@import "@ars/design-system";
+```
+
+That is the whole API. Apply classes in markup:
+
+```html
+<button class="btn btn-default">Save changes</button>
+<span class="badge badge-success">Active</span>
+<h1 class="ds-heading">Dashboard overview</h1>
+```
+
+## Framework setup
+
+### Vite / Next.js / Astro / Remix
+
+Import once in your root CSS file (`app.css`, `globals.css`, etc.):
+
+```css
+@import "@ars/design-system";
+```
+
+If your bundler can't resolve the bare specifier, point at the file directly:
+
+```css
+@import "../ars-design-system/index.css";
+```
+
+### Tailwind CSS v4
+
+Tailwind v4 reads `@theme` from your CSS. The package exposes `--color-*` aliases that drop straight in:
+
+```css
+@import "tailwindcss";
+@import "@ars/design-system";
+
+@theme {
+  --color-paper: var(--color-paper);
+  --color-rule: var(--color-rule);
+  --color-mid: var(--color-mid);
+  --color-ink: var(--color-ink);
+  --color-dark: var(--color-dark);
+  --color-orange: var(--color-orange);
+  --color-red: var(--color-red);
+  --color-light: var(--color-light);
+  --color-blue: var(--color-blue);
+  --color-green: var(--color-green);
+  --font-sans: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+```
+
+You can then use `bg-paper`, `text-ink`, `border-rule`, `text-orange`, `font-sans`, and the rest as Tailwind utilities.
+
+### shadcn/ui pairing
+
+Tokens are shadcn-compatible — `--primary`, `--primary-foreground`, `--secondary`, `--muted`, `--accent`, `--destructive`, `--border`, `--input`, `--ring`, plus the `--sidebar-*` family. Bring your own shadcn components and they inherit the theme. No shadcn integration code ships in this package.
+
+### Plain HTML
+
+```html
+<link rel="stylesheet" href="./node_modules/@ars/design-system/index.css">
+```
+
+Or, when linking locally:
+
+```html
+<link rel="stylesheet" href="../ars-design-system/index.css">
+```
+
+## React package (optional)
+
+`@ars/design-system-react` is a sibling package of thin Radix UI wrappers. The CSS package is still the source of truth — these wrappers only add behavior.
+
+```bash
+pnpm add @ars/design-system @ars/design-system-react
+pnpm add @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-tooltip @radix-ui/react-toast \
+         @radix-ui/react-switch @radix-ui/react-checkbox @radix-ui/react-radio-group \
+         @radix-ui/react-select @radix-ui/react-tabs
+```
+
+Every Radix package is a peer dep so consumers control the version.
+
+Wrap your app root with the providers required for tooltips and toasts:
+
+```tsx
+import { ToastProvider, ToastViewport, TooltipProvider } from "@ars/design-system-react";
+
+export default function Root({ children }) {
+  return (
+    <TooltipProvider>
+      <ToastProvider>
+        {children}
+        <ToastViewport />
+      </ToastProvider>
+    </TooltipProvider>
+  );
+}
+```
+
+The package ships **39 components + 2 types** (`ToastVariant`, `ToastProps`). Bundle size is **ESM 10.93 KB / CJS 14.73 KB**. Radix is a peer dep so consumers control versions and avoid duplicate React contexts.
+
+## Bundled font
+
+Barlow ships inside the package as five `woff2` weights (300, 400, 500, 600, 700) under `fonts/`. They register automatically via `@font-face` in `tokens/fonts.css`. **No Google Fonts `<link>` tag is required.** Barlow is licensed under SIL OFL 1.1 — see `fonts/OFL.txt` in the package root.

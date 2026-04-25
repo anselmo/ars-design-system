@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════
-   Rapid Loyalty Design System — Inputs
+   ARS Design System — Inputs
    ═══════════════════════════════════════════════ */
 
 /*
@@ -13,32 +13,95 @@
   width: 100%;
   max-width: 400px;
   border: 0;
-  border-bottom: 1.5px solid var(--l-rule);
+  border-bottom: 1.5px solid var(--border);
   background: transparent;
   padding: 8px 0;
   font-family: inherit;
   font-size: 15px;
   outline: none;
   color: var(--l-black);
-  transition: border-color 0.15s;
+  transition: border-color var(--motion-fast) var(--ease-standard);
 }
 .input-underline::placeholder { color: var(--l-rule); }
 .input-underline:focus { border-color: var(--l-black); }
+.input-underline:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.input-underline:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--l-paper);
+  color: var(--l-mid);
+}
+.input-underline:read-only {
+  background: var(--l-paper);
+  border-color: var(--border);
+}
 
 /* ── Bordered Input ── */
 .input-bordered {
   width: 100%;
   max-width: 400px;
-  border: 1px solid var(--l-rule);
+  border: 1px solid var(--border);
   background: transparent;
   padding: 6px 10px;
   font-family: inherit;
   font-size: 13px;
   outline: none;
   color: var(--l-black);
-  transition: border-color 0.15s;
+  transition: border-color var(--motion-fast) var(--ease-standard);
 }
 .input-bordered:focus { border-color: var(--l-black); }
+.input-bordered:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.input-bordered:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--l-paper);
+  color: var(--l-mid);
+}
+.input-bordered:read-only {
+  background: var(--l-paper);
+  border-color: var(--border);
+}
+
+/* ── Error Modifier ── */
+.input--error { border-color: var(--l-red); }
+.input--error:focus { border-color: var(--l-red); }
+.input--error:focus-visible {
+  outline: 2px solid var(--l-red);
+  outline-offset: 2px;
+}
+
+/* ── Form Field Wrapper ── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 400px;
+}
+.field__label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--l-mid);
+}
+.field__hint {
+  font-size: 12px;
+  color: var(--l-mid);
+  line-height: 1.5;
+}
+.field__error {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--l-red);
+  line-height: 1.5;
+}
+.field--error .field__hint { display: none; }
 
 /*
  * Underline: border-b-[1.5px] border-rule, focus: border-ink.
@@ -46,4 +109,18 @@
  *
  * Bordered:  border border-rule, focus: border-ink.
  *            13px text. Used in forms, filter bars, settings.
+ *
+ * States (both inputs):
+ *   :focus           │ border-color → ink (or red when .input--error)
+ *   :focus-visible   │ outline 2px ring (red when .input--error), offset 2px
+ *   :disabled        │ opacity 0.5, paper bg, mid text, not-allowed cursor
+ *   :read-only       │ paper bg, rule border (selectable, no opacity change)
+ *   .input--error    │ border-color → red; pairs with :focus-visible (red ring)
+ *
+ * Field wrapper:
+ *   .field           │ vertical stack: label → input → hint/error (gap 6px)
+ *   .field__label    │ mirrors .ds-label (9px / 700 / 0.16em / uppercase / mid)
+ *   .field__hint     │ 12px / mid — help text below input
+ *   .field__error    │ 12px / 500 / red — replaces hint when .field--error
+ *   .field--error    │ hides .field__hint so error message takes its slot
  */
