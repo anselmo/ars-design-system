@@ -1,0 +1,46 @@
+---
+title: Z-index
+description: Seven named stacking tiers with 100-unit gaps. No magic numbers.
+---
+
+Named z-index tokens replace magic numbers. The 100-unit gaps between tiers leave room for nested components within one tier (e.g. a popover inside a modal) without overflowing into the next tier.
+
+## Stacking tiers
+
+| Token          | Value  | Reserved for                                    |
+| -------------- | ------ | ----------------------------------------------- |
+| `--z-base`     | `0`    | Default document flow                           |
+| `--z-dropdown` | `1000` | Menus, selects, comboboxes                      |
+| `--z-sticky`   | `1100` | Sticky table headers, sticky topbar             |
+| `--z-overlay`  | `1200` | Modal backdrop, drawer scrim                    |
+| `--z-modal`    | `1300` | Modal content, drawer content                   |
+| `--z-popover`  | `1400` | Tooltips, popovers (above modals so they can attach) |
+| `--z-toast`    | `1500` | Notifications — always on top                  |
+
+## Usage
+
+```css
+.my-dropdown {
+  z-index: var(--z-dropdown);
+}
+
+.my-modal-backdrop {
+  z-index: var(--z-overlay);
+}
+
+.my-modal-content {
+  z-index: var(--z-modal);
+}
+
+.my-tooltip {
+  z-index: var(--z-popover);
+}
+```
+
+## Why popovers sit above modals
+
+`--z-popover` (`1400`) is intentionally higher than `--z-modal` (`1300`). Tooltips and contextual popovers can be triggered from within a dialog — they must render above the dialog's stacking context.
+
+## Hardcoded values are wrong
+
+If you find yourself writing `z-index: 9999` or any value not in the table above, reach for the correct token instead. Hardcoded values cause ordering collisions across components.

@@ -1,0 +1,49 @@
+---
+title: Elevation
+description: Overlay-only shadow doctrine. Three tiers for floating surfaces; static surfaces use borders instead.
+---
+
+Shadows in this system are reserved for **floating surfaces only** — elements that sit above the page rail. Static surfaces (cards, tables, sidebars, page headers) get borders, not shadows. Surface contrast (`--l-white` → `--l-paper` → `--l-light` → `--l-rule`) does the boundary work without depth illusions.
+
+All shadow colours tint with `--l-black` (`#0D0D0D`) at low alpha for palette consistency. No pure `#000000` or off-spec greys.
+
+## Shadow tokens
+
+| Token              | Value                              | Reserved for                              |
+| ------------------ | ---------------------------------- | ----------------------------------------- |
+| `--shadow-popover` | `0 2px 8px rgba(13,13,13,0.08)`   | Tooltips, dropdown menus (lowest lift)    |
+| `--shadow-overlay` | `0 4px 16px rgba(13,13,13,0.10)`  | Toasts, sticky notifications (medium)     |
+| `--shadow-modal`   | `0 8px 32px rgba(13,13,13,0.12)`  | Dialogs, drawers (strongest, restrained)  |
+
+## Usage
+
+```css
+.my-dropdown {
+  box-shadow: var(--shadow-popover);
+}
+
+.my-dialog {
+  box-shadow: var(--shadow-modal);
+}
+```
+
+## What not to do
+
+```css
+/* Wrong — cards are static surfaces */
+.card {
+  box-shadow: var(--shadow-popover);
+}
+
+/* Wrong — tables never get elevation */
+.table {
+  box-shadow: var(--shadow-overlay);
+}
+
+/* Wrong — inset shadows are not part of the system */
+.input {
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+```
+
+Use `border: 1px solid var(--border)` for static surfaces that need a visible edge.

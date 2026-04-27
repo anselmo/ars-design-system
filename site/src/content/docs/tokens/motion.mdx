@@ -1,0 +1,54 @@
+---
+title: Motion
+description: Three durations and two easings. Motion is functional, never decorative.
+---
+
+The system uses three duration tokens and two easing curves. No component should invent new values outside this scale.
+
+All three durations collapse to `0ms` under `prefers-reduced-motion: reduce` — the tokens are wired to the media query, so consuming code needs no extra guard.
+
+## Duration tokens
+
+| Token           | Value   | Use cases                                               |
+| --------------- | ------- | ------------------------------------------------------- |
+| `--motion-fast` | `120ms` | Hover fills, focus rings, button press, colour change   |
+| `--motion-base` | `180ms` | Open/close, dropdown reveal, accordion expand           |
+| `--motion-slow` | `240ms` | Modal/drawer slide-in, larger transforms                |
+
+## Easing tokens
+
+| Token                | Curve                         | Use                                          |
+| -------------------- | ----------------------------- | -------------------------------------------- |
+| `--ease-standard`    | `cubic-bezier(0.2, 0, 0, 1)` | Default — slight ease-out for most transitions |
+| `--ease-emphasized`  | `cubic-bezier(0.3, 0, 0, 1)` | Entrances that want a stronger deceleration  |
+
+Both curves are ease-out variants. No ease-in or bounce — Swiss restraint.
+
+## Usage
+
+```css
+.my-element {
+  transition: background var(--motion-fast) var(--ease-standard);
+}
+
+.my-panel {
+  transition: transform var(--motion-base) var(--ease-emphasized);
+}
+```
+
+## Reduced-motion guard
+
+The `prefers-reduced-motion: reduce` block is in `tokens/motion.css` and overrides the three duration tokens to `0ms`. Because the tokens carry the guard, every `transition` or `animation` that references them is automatically safe:
+
+```css
+/* tokens/motion.css */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 0ms;
+    --motion-base: 0ms;
+    --motion-slow: 0ms;
+  }
+}
+```
+
+Components that use CSS `animation` directly (e.g. `.btn--loading` spinner, `.skeleton` pulse) add their own `prefers-reduced-motion` guard inside the component file.

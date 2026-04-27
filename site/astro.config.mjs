@@ -27,6 +27,9 @@ export default defineConfig({
           items: [
             { label: "Colors", slug: "tokens/colors" },
             { label: "Typography", slug: "tokens/typography" },
+            { label: "Motion", slug: "tokens/motion" },
+            { label: "Elevation", slug: "tokens/elevation" },
+            { label: "Z-index", slug: "tokens/z-index" },
           ],
         },
         {
