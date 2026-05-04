@@ -1,0 +1,67 @@
+---
+title: Spacing
+description: Five named rhythm tokens over Tailwind's 4px grid. Use tokens before raw values.
+---
+
+Spacing has two layers. The 4px grid (Tailwind utilities) handles ad-hoc layout. Five named rhythm tokens sit on top of the grid to give repeated chrome measurements a single source of truth.
+
+## Named rhythm tokens
+
+| Token              | Value  | Where it applies                                          |
+| ------------------ | ------ | --------------------------------------------------------- |
+| `--space-row`      | `8px`  | Between in-row controls: icon + label, badge + text       |
+| `--space-stack`    | `12px` | Between stacked related items: sidebar items, list rows   |
+| `--space-shell`    | `24px` | Card padding, page-header padding, sidebar gutter         |
+| `--space-page`     | `40px` | Page side padding (`.ds-page` horizontal margins)         |
+| `--space-section`  | `64px` | Between major page sections                               |
+
+When building chrome (sidebars, headers, cards), reach for the named token before reaching for a raw Tailwind class. This keeps the cadence consistent across the system without needing to remember the equivalent Tailwind step.
+
+## Usage
+
+```css
+.sidebar-item {
+  gap: var(--space-row);
+  padding: var(--space-stack) var(--space-shell);
+}
+
+.card {
+  padding: var(--space-shell);
+}
+
+.page-section + .page-section {
+  margin-top: var(--space-section);
+}
+```
+
+## Tailwind 4px grid reference
+
+The named tokens map to specific Tailwind steps. When you need a value not covered by a token, pick the grid step directly — never invent an off-grid value.
+
+| Step | px   | Tailwind class  | Maps to                    |
+| ---- | ---- | --------------- | -------------------------- |
+| 1    | 4px  | `gap-1`, `p-1`  | —                          |
+| 2    | 8px  | `gap-2`, `p-2`  | `--space-row`              |
+| 3    | 12px | `gap-3`, `p-3`  | `--space-stack`            |
+| 4    | 16px | `gap-4`, `p-4`  | —                          |
+| 5    | 20px | `px-5`          | Top bar horizontal padding |
+| 6    | 24px | `px-6`          | `--space-shell`            |
+| 8    | 32px | —               | Section gaps               |
+| 10   | 40px | —               | `--space-page`             |
+| 12   | 48px | —               | Section dividers           |
+| 16   | 64px | —               | `--space-section`          |
+| 20   | 80px | —               | Page top / bottom          |
+
+## Fixed component heights
+
+Heights are not tokens — they're documented here for reference. These values are fixed by the component system and should not be overridden.
+
+| Component          | Height | Tailwind class |
+| ------------------ | ------ | -------------- |
+| Top bar            | 48px   | `h-12`         |
+| Table header row   | 36px   | `h-9`          |
+| Button (lg)        | 36px   | `h-9`          |
+| Button (default)   | 32px   | `h-8`          |
+| Button (sm)        | 28px   | `h-7`          |
+| Button (xs)        | 24px   | `h-6`          |
+| Pagination button  | 28px   | `h-7 w-7`      |

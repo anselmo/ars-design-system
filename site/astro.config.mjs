@@ -30,12 +30,15 @@ export default defineConfig({
             { label: "Motion", slug: "tokens/motion" },
             { label: "Elevation", slug: "tokens/elevation" },
             { label: "Z-index", slug: "tokens/z-index" },
+            { label: "Spacing", slug: "tokens/spacing" },
           ],
         },
         {
           label: "Components",
           items: [
             { label: "Buttons", slug: "components/buttons" },
+            { label: "Badges", slug: "components/badges" },
+            { label: "Inputs", slug: "components/inputs" },
             { label: "Dialog (React)", slug: "components/dialog" },
           ],
         },

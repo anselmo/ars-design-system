@@ -1,0 +1,64 @@
+---
+title: Badges
+description: Five status variants. 11px uppercase bold, border-only treatment.
+---
+
+The `.badge` class is the base. Pair it with one variant class. All badges render 11px uppercase bold type with `0.08em` tracking and a `1px` border — no fill by default.
+
+## Variants
+
+| Variant    | Class            | Border                    | Background   | Text        |
+| ---------- | ---------------- | ------------------------- | ------------ | ----------- |
+| Default    | `.badge-default` | `--border`                | —            | `--l-black` |
+| Success    | `.badge-success` | `--border`                | `--l-light`  | `--l-black` |
+| Warning    | `.badge-warning` | `--border`                | —            | `--l-mid`   |
+| Danger     | `.badge-danger`  | `rgba(217, 28, 24, 0.3)` | —            | `--l-red`   |
+| Muted      | `.badge-muted`   | `--border`                | `--l-light`  | `--l-mid`   |
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Variants</p>
+  <div style={{display:"flex",gap:"8px",flexWrap:"wrap",alignItems:"center"}}>
+    <span class="badge badge-default">Default</span>
+    <span class="badge badge-success">Success</span>
+    <span class="badge badge-warning">Warning</span>
+    <span class="badge badge-danger">Danger</span>
+    <span class="badge badge-muted">Muted</span>
+  </div>
+</div>
+
+## Status mapping
+
+Map domain statuses to the nearest semantic variant. The table below covers common cases:
+
+| Variant    | Statuses                                                               |
+| ---------- | ---------------------------------------------------------------------- |
+| `success`  | ACTIVE, COMPLETED, APPROVED, LIVE, PAID                                |
+| `warning`  | PENDING, SUBMITTED, IN REVIEW, PAUSED, CALCULATING, REVIEW, SUSPENDED |
+| `danger`   | REVERSED, REJECTED, EXPIRED, DISPUTED                                  |
+| `muted`    | DRAFT, CLOSED, ARCHIVED, CANCELLED, CONSUMED, INITIATED               |
+| `default`  | SCHEDULED, INVOICED                                                    |
+
+## Usage
+
+```html
+<span class="badge badge-success">Active</span>
+<span class="badge badge-warning">Pending</span>
+<span class="badge badge-danger">Rejected</span>
+<span class="badge badge-muted">Draft</span>
+<span class="badge badge-default">Scheduled</span>
+```
+
+## Tokens used
+
+| Property          | Token / value         |
+| ----------------- | --------------------- |
+| Font size         | `11px`                |
+| Font weight       | `700`                 |
+| Letter spacing    | `0.08em`              |
+| Padding           | `2px 8px`             |
+| Border width      | `1px solid`           |
+| `warning` text    | `--l-mid` (`#6B6B6B`) |
+| `danger` border   | `rgba(217,28,24,0.3)` |
+| `danger` text     | `--l-red` (`#D91C18`) |
+| `success` fill    | `--l-light` (`#EFEFEB`) |
+| `muted` fill      | `--l-light` (`#EFEFEB`) |

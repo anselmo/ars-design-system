@@ -1,0 +1,104 @@
+---
+title: Inputs
+description: Two text input styles — underline for hero forms, bordered for data entry.
+---
+
+Two input classes cover distinct contexts. Both cap at `max-width: 400px` by default. The `.field` wrapper composes either input with a label, hint, and error message.
+
+## Input styles
+
+| Class               | Border treatment                  | Font size | Padding       | Context                         |
+| ------------------- | --------------------------------- | --------- | ------------- | ------------------------------- |
+| `.input-underline`  | Bottom only — `1.5px solid`       | `15px`    | `8px 0`       | Login forms, hero search fields |
+| `.input-bordered`   | Full — `1px solid var(--border)`  | `13px`    | `6px 10px`    | Data entry, filters, settings   |
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Underline input</p>
+  <div style={{display:"flex",flexDirection:"column",gap:"16px",maxWidth:"400px"}}>
+    <input class="input-underline" type="text" placeholder="Email address" />
+    <input class="input-underline" type="text" placeholder="Read-only" readonly value="read-only value" />
+    <input class="input-underline" type="text" placeholder="Disabled" disabled />
+  </div>
+</div>
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Bordered input</p>
+  <div style={{display:"flex",flexDirection:"column",gap:"8px",maxWidth:"400px"}}>
+    <input class="input-bordered" type="text" placeholder="Filter by name" />
+    <input class="input-bordered input--error" type="text" value="bad value" />
+    <input class="input-bordered" type="text" placeholder="Disabled" disabled />
+  </div>
+</div>
+
+## Error modifier
+
+`.input--error` overrides the border and focus ring to `--l-red` (`#D91C18`) on both input styles.
+
+```html
+<input class="input-bordered input--error" type="text" value="Invalid value" />
+```
+
+## Field wrapper
+
+`.field` stacks label → input → hint/error in a vertical column with `6px` gaps.
+
+| Class           | Role                                                     |
+| --------------- | -------------------------------------------------------- |
+| `.field`        | Wrapper — `flex-direction: column`, `gap: 6px`           |
+| `.field__label` | 9px / 700 / `0.16em` uppercase, `--l-mid` — matches `.ds-label` |
+| `.field__hint`  | 12px / `--l-mid` — help text shown when no error         |
+| `.field__error` | 12px / 500 / `--l-red` — error message                  |
+| `.field--error` | Applied to `.field` to hide `.field__hint` and show `.field__error` |
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Field wrapper</p>
+  <div style={{display:"flex",flexDirection:"column",gap:"20px",maxWidth:"400px"}}>
+    <div class="field">
+      <label class="field__label">Email address</label>
+      <input class="input-bordered" type="email" placeholder="you@acme.com" />
+      <span class="field__hint">We'll send a confirmation to this address.</span>
+    </div>
+    <div class="field field--error">
+      <label class="field__label">Email address</label>
+      <input class="input-bordered input--error" type="email" value="not-an-email" />
+      <span class="field__hint">We'll send a confirmation to this address.</span>
+      <span class="field__error">Enter a valid email address.</span>
+    </div>
+  </div>
+</div>
+
+## States
+
+Both `.input-underline` and `.input-bordered` share the same state behaviour:
+
+| State              | Effect                                                          |
+| ------------------ | --------------------------------------------------------------- |
+| `:focus`           | Border colour → `--l-black` (or `--l-red` with `.input--error`) |
+| `:focus-visible`   | `2px` outline using `--ring` (or `--l-red` with `.input--error`), offset `2px` |
+| `:disabled`        | Opacity `0.5`, `--l-paper` background, `--l-mid` text, `not-allowed` cursor |
+| `:read-only`       | `--l-paper` background, `--border` border — selectable, no opacity change |
+
+## Usage
+
+```html
+<!-- Underline — hero / login -->
+<input class="input-underline" type="email" placeholder="Email address" />
+
+<!-- Bordered — data entry -->
+<input class="input-bordered" type="text" placeholder="Search" />
+
+<!-- Field with label and hint -->
+<div class="field">
+  <label class="field__label">Name</label>
+  <input class="input-bordered" type="text" />
+  <span class="field__hint">Your full name as it appears on your ID.</span>
+</div>
+
+<!-- Field in error state -->
+<div class="field field--error">
+  <label class="field__label">Name</label>
+  <input class="input-bordered input--error" type="text" />
+  <span class="field__hint">Your full name as it appears on your ID.</span>
+  <span class="field__error">Name is required.</span>
+</div>
+```
