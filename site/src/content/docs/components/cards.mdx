@@ -1,0 +1,74 @@
+---
+title: Cards
+description: Bordered metric panel with header label, large number, and optional unit suffix.
+---
+
+`.card` is a 1px-bordered panel for metric displays. Hierarchy is built with the `.card-header` micro-label and `.card-num` for the large number.
+
+## Classes
+
+| Class              | Purpose                                                                  |
+| ------------------ | ------------------------------------------------------------------------ |
+| `.card`            | Bordered panel — `1px solid var(--border)`, `24px` padding               |
+| `.card-header`     | Micro-label — 9px / 700 / `0.16em` tracking / uppercase / `--l-mid`      |
+| `.card-num`        | Large metric — `2.5rem` / 500 / `-0.04em` tracking / `line-height: 1`    |
+| `.card-num-suffix` | Unit suffix — `0.4em` (relative) / 400 / normal tracking / `--l-mid`     |
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Metric cards</p>
+  <div style={{display:"flex",gap:"16px",flexWrap:"wrap"}}>
+    <div class="card" style={{minWidth:"160px"}}>
+      <div class="card-header">Total orders</div>
+      <div class="card-num">1,284</div>
+    </div>
+    <div class="card" style={{minWidth:"160px"}}>
+      <div class="card-header">Revenue</div>
+      <div class="card-num">84,320<span class="card-num-suffix">USD</span></div>
+    </div>
+    <div class="card" style={{minWidth:"160px"}}>
+      <div class="card-header">Active users</div>
+      <div class="card-num">392</div>
+    </div>
+  </div>
+</div>
+
+For brand-accent numerals, use the standalone colour variants from `tokens/typography.css`:
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Accent numerals</p>
+  <div style={{display:"flex",gap:"16px",flexWrap:"wrap"}}>
+    <div class="card" style={{minWidth:"160px"}}>
+      <div class="card-header">Growth</div>
+      <div class="ds-card-num-orange">+18%</div>
+    </div>
+    <div class="card" style={{minWidth:"160px"}}>
+      <div class="card-header">Returns</div>
+      <div class="ds-card-num-red">−4.2%</div>
+    </div>
+  </div>
+</div>
+
+`.ds-card-num-orange` and `.ds-card-num-red` are self-contained: same `2.5rem / 500 / -0.04em` scale with `--l-orange` or `--l-red` colour applied.
+
+## Usage
+
+```html
+<div class="card">
+  <div class="card-header">Revenue</div>
+  <div class="card-num">84,320<span class="card-num-suffix">USD</span></div>
+</div>
+
+<!-- Accent colour variants -->
+<div class="card">
+  <div class="card-header">Growth</div>
+  <div class="ds-card-num-orange">+18%</div>
+</div>
+```
+
+## Tokens used
+
+- `--border` — card border
+- `--l-white` — card background
+- `--l-mid` — `.card-header` and `.card-num-suffix` colour
+- `--l-orange` — `.ds-card-num-orange` (via `tokens/typography.css`)
+- `--l-red` — `.ds-card-num-red` (via `tokens/typography.css`)

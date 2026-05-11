@@ -1,0 +1,78 @@
+---
+title: Tables
+description: Single-class data table. 9px uppercase headers, 13px cells, paper-tinted hover row.
+---
+
+Add `.table` to a standard `<table>` element. No extra wrapper or child classes are required — all selectors target native `th`, `td`, and `tr` descendants.
+
+## Elements
+
+| Selector             | Role                                                                             |
+| -------------------- | -------------------------------------------------------------------------------- |
+| `.table`             | Sets `width: 100%` and `border-collapse: collapse`                               |
+| `.table th`          | 9px / 700 / `0.16em` tracking / uppercase / `--l-mid`, `8px 16px` padding, `1.5px` bottom border |
+| `.table td`          | 13px, `10px 16px` padding, `1px` bottom border                                   |
+| `.table tr:hover td` | Row hover — background switches to `--l-paper`                                   |
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Data table</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Order #1042</td>
+        <td>Completed</td>
+        <td>2026-05-08</td>
+        <td>320.00</td>
+      </tr>
+      <tr>
+        <td>Order #1041</td>
+        <td>Pending</td>
+        <td>2026-05-07</td>
+        <td>84.50</td>
+      </tr>
+      <tr>
+        <td>Order #1040</td>
+        <td>Cancelled</td>
+        <td>2026-05-06</td>
+        <td>0.00</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## Usage
+
+```html
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Order #1042</td>
+      <td>Completed</td>
+      <td>320.00</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+For pagination below a table, see [Pagination](/components/pagination).
+
+## Tokens used
+
+- `--border` — header bottom border and row dividers
+- `--l-mid` — header text colour
+- `--l-paper` — row hover background

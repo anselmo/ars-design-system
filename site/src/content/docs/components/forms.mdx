@@ -1,0 +1,129 @@
+---
+title: Forms
+description: Textarea, select, checkbox, radio, switch, and file input. CSS-only with Radix data-state interop.
+---
+
+Six form controls sharing the same focus ring, error, and disabled conventions. Each control supports both native HTML states (`:checked`, `:disabled`) and Radix UI `data-state` attributes — use whichever fits your stack.
+
+## Controls
+
+| Class         | Tag / role                                        | Size          | Notes                                                   |
+| ------------- | ------------------------------------------------- | ------------- | ------------------------------------------------------- |
+| `.textarea`   | `<textarea>`                                      | 13px, min-h 80px | 1px border, vertical resize                          |
+| `.select`     | `<select>`                                        | 13px, h-32px  | Native select, custom SVG chevron (`--l-mid` stroke)    |
+| `.checkbox`   | `<input type="checkbox">` or `role="checkbox"`    | 16×16px       | Sharp square, CSS-only checkmark, indeterminate support |
+| `.radio`      | `<input type="radio">` or `role="radio"`          | 16×16px       | Circle (zero-radius exception), 8px dot on check        |
+| `.switch`     | `<input type="checkbox" role="switch">` or Radix  | 32×16px       | Circular thumb slides 16px on checked                   |
+| `.file-input` | `<input type="file">`                             | —             | `::file-selector-button` styled like `.btn-outline`     |
+
+## Text controls
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Textarea and select</p>
+  <div style={{display:"flex",flexDirection:"column",gap:"12px",maxWidth:"400px"}}>
+    <textarea class="textarea" placeholder="Enter a description…" rows="3"></textarea>
+    <select class="select">
+      <option>Option A</option>
+      <option>Option B</option>
+      <option>Option C</option>
+    </select>
+    <textarea class="textarea" placeholder="Disabled" rows="2" disabled></textarea>
+    <select class="select" disabled><option>Disabled</option></select>
+  </div>
+</div>
+
+## Selection controls
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Checkbox, radio, switch</p>
+  <div style={{display:"flex",flexDirection:"column",gap:"16px"}}>
+    <div style={{display:"flex",gap:"16px",alignItems:"center"}}>
+      <button class="checkbox" role="checkbox" data-state="unchecked" type="button" aria-label="Unchecked"></button>
+      <button class="checkbox" role="checkbox" data-state="checked" type="button" aria-label="Checked"></button>
+      <button class="checkbox" role="checkbox" data-state="indeterminate" type="button" aria-label="Indeterminate"></button>
+      <button class="checkbox" role="checkbox" data-state="unchecked" type="button" aria-label="Disabled" disabled></button>
+    </div>
+    <div style={{display:"flex",gap:"16px",alignItems:"center"}}>
+      <button class="radio" role="radio" data-state="unchecked" type="button" aria-label="Unchecked"></button>
+      <button class="radio" role="radio" data-state="checked" type="button" aria-label="Checked"></button>
+      <button class="radio" role="radio" data-state="unchecked" type="button" aria-label="Disabled" disabled></button>
+    </div>
+    <div style={{display:"flex",gap:"16px",alignItems:"center"}}>
+      <button class="switch" role="switch" data-state="unchecked" type="button" aria-label="Off"></button>
+      <button class="switch" role="switch" data-state="checked" type="button" aria-label="On"></button>
+      <button class="switch" role="switch" data-state="unchecked" type="button" aria-label="Disabled" disabled></button>
+    </div>
+  </div>
+</div>
+
+The `.radio` circle and the switch thumb are the only two `border-radius: 50%` shapes in the system. Everything else is sharp.
+
+## File input
+
+<div class="ars-playground">
+  <p class="ars-playground-label">File input</p>
+  <div style={{display:"flex",flexDirection:"column",gap:"12px"}}>
+    <input type="file" class="file-input" />
+    <input type="file" class="file-input" disabled />
+  </div>
+</div>
+
+The `::file-selector-button` matches `.btn-outline`: 11px / 700 / 0.06em tracking / uppercase, height 32px, 1.5px border.
+
+## Error state
+
+`.input--error` applies on `.textarea` and `.select`. Border switches to `--l-red`; `:focus-visible` ring switches to `--l-red`.
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Error state</p>
+  <div style={{display:"flex",flexDirection:"column",gap:"12px",maxWidth:"400px"}}>
+    <textarea class="textarea input--error" placeholder="Error state" rows="2"></textarea>
+    <select class="select input--error"><option>Error state</option></select>
+  </div>
+</div>
+
+## States
+
+| State                                 | Effect                                                             |
+| ------------------------------------- | ------------------------------------------------------------------ |
+| `:focus-visible`                      | 2px `--ring` outline, 2px offset                                   |
+| `.input--error` + `:focus-visible`    | 2px `--l-red` outline (textarea, select)                           |
+| `:disabled` / `[data-disabled]` / `[aria-disabled="true"]` | Opacity 0.4–0.5, `not-allowed` cursor        |
+| `:checked` / `[data-state="checked"]` | Both selectors fire the same styles on checkbox, radio, switch     |
+| `[data-state="indeterminate"]`        | Checkbox only — horizontal 1.5px dash over `--primary` fill        |
+
+## Usage
+
+```html
+<!-- Textarea -->
+<textarea class="textarea" rows="4" placeholder="Notes…"></textarea>
+
+<!-- Select -->
+<select class="select">
+  <option>Choose one…</option>
+  <option value="a">Option A</option>
+</select>
+
+<!-- Checkbox — Radix-compatible button -->
+<button class="checkbox" role="checkbox" data-state="unchecked" type="button" aria-checked="false"></button>
+
+<!-- Radio — native -->
+<input type="radio" class="radio" name="plan" value="monthly" />
+
+<!-- Switch — Radix-compatible button -->
+<button class="switch" role="switch" data-state="unchecked" type="button" aria-checked="false"></button>
+
+<!-- File input -->
+<input type="file" class="file-input" />
+```
+
+## Tokens used
+
+- `--border` — control borders (default)
+- `--ring` — `:focus-visible` outline
+- `--primary` / `--primary-foreground` — checked fill (checkbox, radio, switch track)
+- `--l-red` — `.input--error` border and focus ring
+- `--l-rule` — switch track (unchecked)
+- `--l-white` — switch thumb
+- `--l-mid` — select chevron stroke, disabled text
+- `--motion-fast` / `--ease-standard` — colour and transform transitions
