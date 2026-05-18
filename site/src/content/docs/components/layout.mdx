@@ -1,0 +1,129 @@
+---
+title: Layout
+description: Two-column shell — sidebar, top bar, and page header. Pure CSS, no JS.
+---
+
+The layout shell composes three independent pieces: a fixed sidebar (`.sidebar`), a top-bar strip (`.topbar`), and an in-flow page header (`.page-header`). No grid magic — assemble them however your framework handles shell structure.
+
+## Page header
+
+The page header sits at the top of the main content column, below the topbar. A bottom border separates it from page content.
+
+| Class           | Purpose                                              |
+| --------------- | ---------------------------------------------------- |
+| `.page-header`  | Flex row: title block left, optional actions right. |
+
+The `h1` inside `.page-header` renders 24px (1.5rem) / 700 / -0.01em tracking. The `p` below it renders 13px / 300 / `--l-mid`.
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Page header</p>
+  <div class="page-header" style={{border:"1px solid var(--border)"}}>
+    <div>
+      <h1 style={{fontSize:"1.5rem",fontWeight:700,letterSpacing:"-0.01em",margin:0}}>Dashboard overview</h1>
+      <p style={{fontSize:"13px",fontWeight:300,color:"var(--l-mid)",marginTop:"4px",marginBottom:0}}>Activity for the last 30 days</p>
+    </div>
+    <button class="btn btn-default btn-sm">Export</button>
+  </div>
+</div>
+
+## Top bar
+
+A 48px horizontal strip that sits at the very top of the viewport. Right-aligned by default.
+
+| Class            | Purpose                                                       |
+| ---------------- | ------------------------------------------------------------- |
+| `.topbar`        | Flex row, height 48px, bottom border.                        |
+| `.topbar-name`   | User or tenant label — 13px / 400.                           |
+| `.topbar-action` | 11px uppercase bold `--l-mid`, hover to `--l-black`, with focus ring. |
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Top bar</p>
+  <div class="topbar" style={{border:"1px solid var(--border)"}}>
+    <span class="topbar-name">Acme Inc</span>
+    <span class="topbar-action">Settings</span>
+    <span class="topbar-action">Sign out</span>
+  </div>
+</div>
+
+## Sidebar
+
+A 220px vertical column with paper background.
+
+| Class                | Purpose                                                         |
+| -------------------- | --------------------------------------------------------------- |
+| `.sidebar`           | 220px, `--l-paper` background, right border.                   |
+| `.sidebar-brand`     | 14px / 700 / -0.01em. Brand name or logo text.                 |
+| `.sidebar-brand-sub` | 9px / 700 / 0.16em uppercase, `--l-mid`. Sub-brand or tagline. |
+| `.sidebar-item`      | 13px nav item, hover + `.active` fills `--l-light`.            |
+| `.sidebar-icon`      | 16×16 icon placeholder. Fill with your own SVG.                |
+
+`.sidebar-item.active` sets `font-weight: 500` and fills `--l-light`. The `:hover` state is the same fill — no double-animation.
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Sidebar</p>
+  <div class="sidebar" style={{minHeight:"180px"}}>
+    <div style={{marginBottom:"16px"}}>
+      <div class="sidebar-brand">Acme</div>
+      <div class="sidebar-brand-sub">Design System</div>
+    </div>
+    <div class="sidebar-item active">
+      <div class="sidebar-icon"></div>
+      Dashboard
+    </div>
+    <div class="sidebar-item">
+      <div class="sidebar-icon"></div>
+      Activity
+    </div>
+    <div class="sidebar-item">
+      <div class="sidebar-icon"></div>
+      Settings
+    </div>
+  </div>
+</div>
+
+## Usage
+
+```html
+<!-- Two-column shell (structure is yours to wire) -->
+<aside class="sidebar">
+  <div class="sidebar-brand">Acme</div>
+  <div class="sidebar-brand-sub">Product</div>
+  <nav>
+    <a class="sidebar-item active" href="/dashboard">Dashboard</a>
+    <a class="sidebar-item" href="/activity">Activity</a>
+    <a class="sidebar-item" href="/settings">Settings</a>
+  </nav>
+</aside>
+
+<main>
+  <header class="topbar">
+    <span class="topbar-name">Jane Smith</span>
+    <button class="topbar-action">Sign out</button>
+  </header>
+
+  <div class="page-header">
+    <div>
+      <h1>Dashboard overview</h1>
+      <p>Activity for the last 30 days</p>
+    </div>
+    <button class="btn btn-default btn-sm">Export</button>
+  </div>
+
+  <!-- page content -->
+</main>
+```
+
+## Tokens used
+
+| Property             | Token / value                         |
+| -------------------- | ------------------------------------- |
+| Sidebar background   | `--l-paper` (`#F7F6F2`)               |
+| Sidebar border       | `--border`                            |
+| Topbar height        | `48px`                                |
+| Topbar border        | `--border`                            |
+| Page-header border   | `--border`                            |
+| Page-header padding  | `20px 24px`                           |
+| Active/hover fill    | `--l-light` (`#EFEFEB`)               |
+| Action / sub-brand colour | `--l-mid` (`#6B6B6B`)            |
+| Focus ring           | `--ring`                              |
+| Transition           | `--motion-fast` + `--ease-standard`   |

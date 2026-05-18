@@ -1,0 +1,86 @@
+---
+title: Charts
+description: Token reference for data visualisation. Orange primary line, gray secondary, no radius.
+---
+
+The system ships token guidelines for charts rather than a chart component. Wire the tokens into your chart library — the reference implementation uses [Recharts](https://recharts.org/).
+
+## Token reference
+
+| Role                  | Token                | Hex / value           | Notes                                          |
+| --------------------- | -------------------- | --------------------- | ---------------------------------------------- |
+| Primary line / area   | `--l-orange`         | `#FE561A`             | Key metrics, earnings, primary series          |
+| Area fill             | `--l-orange` + 10% α | `rgba(254,86,26,0.1)` | Gradient fill under line                       |
+| Secondary line        | `--l-rule`           | `#D8D8D4`             | Dashed stroke, event counts, comparison series |
+| Grid lines            | `--l-light`          | `#EFEFEB`             | Horizontal only — vertical grid lines omitted  |
+| Axis labels           | `--l-mid`            | `#6B6B6B`             | 11px Barlow, no weight                         |
+| Tooltip background    | `--l-white`          | `#FFFFFF`             | 1px `--l-rule` border, zero radius             |
+| Negative values       | `--l-red`            | `#D91C18`             | Burns, losses, negative deltas                 |
+| Donut segments        | orange, rule, light, mid | —                 | Max 4 segments; use opacity variants for more  |
+| Bar fills             | `--l-orange`         | `#FE561A`             | Horizontal bars, zero radius                   |
+| Progress track        | `--l-light`          | `#EFEFEB`             | Background track                               |
+| Progress fill         | `--l-orange`         | `#FE561A`             | Budget consumption                             |
+
+## Design rules
+
+- **Orange is the single primary data colour.** Only one series gets `--l-orange`. Secondary and tertiary series step through `--l-rule`, `--l-light`, and `--l-mid` (with opacity variants if more than four segments are needed).
+- **Zero radius everywhere.** Bar corners, tooltip containers, and progress tracks all use `border-radius: 0`. Circles (donut segments, data points) are the only exception — they use `border-radius: 50%`.
+- **Horizontal-only grid.** Vertical grid lines add noise without aiding reading. Horizontal lines at the major tick marks only.
+- **No axis line — just labels.** Suppress the default axis border line in your chart library; use `--l-mid` labels at 11px instead.
+
+## Recharts usage
+
+```tsx
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
+
+const chartTokens = {
+  orange: "var(--l-orange)",   // #FE561A
+  rule:   "var(--l-rule)",     // #D8D8D4
+  light:  "var(--l-light)",    // #EFEFEB
+  mid:    "var(--l-mid)",      // #6B6B6B
+};
+
+<LineChart data={data}>
+  <CartesianGrid
+    horizontal
+    vertical={false}
+    stroke={chartTokens.light}
+    strokeWidth={1}
+  />
+  <XAxis
+    tick={{ fontSize: 11, fill: chartTokens.mid, fontFamily: "Barlow" }}
+    axisLine={false}
+    tickLine={false}
+  />
+  <YAxis
+    tick={{ fontSize: 11, fill: chartTokens.mid, fontFamily: "Barlow" }}
+    axisLine={false}
+    tickLine={false}
+  />
+  <Tooltip
+    contentStyle={{
+      background: "var(--l-white)",
+      border: `1px solid ${chartTokens.rule}`,
+      borderRadius: 0,
+      fontSize: 12,
+    }}
+  />
+  <Line
+    type="monotone"
+    dataKey="value"
+    stroke={chartTokens.orange}
+    strokeWidth={2}
+    dot={false}
+  />
+</LineChart>
+```
+
+## CSS progress bar (no JS)
+
+A simple progress indicator using only CSS tokens:
+
+```html
+<div style="background: var(--l-light); height: 4px;">
+  <div style="background: var(--l-orange); height: 4px; width: 68%;"></div>
+</div>
+```

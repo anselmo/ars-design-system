@@ -1,0 +1,113 @@
+---
+title: Alert
+description: Inline message banner. Static, in-flow. Four semantic variants with left-edge accent bars.
+---
+
+`.alert` is for persistent inline messaging — form submission errors, page-level warnings, confirmations. For ephemeral notifications that float above content, use Toast instead.
+
+## Anatomy
+
+| Class               | Purpose                                                     |
+| ------------------- | ----------------------------------------------------------- |
+| `.alert`            | Flex row container. Relative-positioned for the accent bar. |
+| `.alert--info`      | Left-edge bar: `--l-mid` (gray).                           |
+| `.alert--success`   | Left-edge bar: `--l-green`.                                |
+| `.alert--warning`   | Left-edge bar: `--l-orange`.                               |
+| `.alert--danger`    | Left-edge bar: `--destructive` (`--l-red`).                |
+| `.alert-icon`       | Optional 16×16 leading icon slot.                          |
+| `.alert-body`       | Wraps title + description. Takes remaining width.           |
+| `.alert-title`      | 13px / 700 heading.                                        |
+| `.alert-description`| 13px / 400, `--muted-foreground`.                          |
+| `.alert-close`      | Optional dismiss button (CSS X).                           |
+
+The left-edge bar is a 3px `::before` pseudo-element. Left padding is 19px (16px + 3px) to clear it.
+
+## Variants
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Variants</p>
+  <div style={{display:"flex",flexDirection:"column",gap:"8px"}}>
+    <div class="alert alert--info">
+      <div class="alert-body">
+        <p class="alert-title">Note</p>
+        <p class="alert-description">This is an informational message.</p>
+      </div>
+    </div>
+    <div class="alert alert--success">
+      <div class="alert-body">
+        <p class="alert-title">Success</p>
+        <p class="alert-description">Your changes have been saved.</p>
+      </div>
+    </div>
+    <div class="alert alert--warning">
+      <div class="alert-body">
+        <p class="alert-title">Warning</p>
+        <p class="alert-description">This action cannot be undone.</p>
+      </div>
+    </div>
+    <div class="alert alert--danger">
+      <div class="alert-body">
+        <p class="alert-title">Error</p>
+        <p class="alert-description">Something went wrong. Please try again.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+## With icon and close button
+
+<div class="ars-playground">
+  <p class="ars-playground-label">With icon and close</p>
+  <div class="alert alert--warning">
+    <div class="alert-icon">
+      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+        <path d="M8 2L14 13H2L8 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M8 6V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="8" cy="11" r="0.5" fill="currentColor" stroke="currentColor"/>
+      </svg>
+    </div>
+    <div class="alert-body">
+      <p class="alert-title">Scheduled maintenance</p>
+      <p class="alert-description">The system will be unavailable on Sunday from 02:00–04:00 UTC.</p>
+    </div>
+    <button class="alert-close" aria-label="Dismiss"></button>
+  </div>
+</div>
+
+## Usage
+
+```html
+<!-- Minimal — no icon, no close button -->
+<div class="alert alert--success">
+  <div class="alert-body">
+    <p class="alert-title">Saved</p>
+    <p class="alert-description">Your profile has been updated.</p>
+  </div>
+</div>
+
+<!-- Full anatomy -->
+<div class="alert alert--danger">
+  <div class="alert-icon"><!-- 16×16 SVG --></div>
+  <div class="alert-body">
+    <p class="alert-title">Submission failed</p>
+    <p class="alert-description">Check required fields and try again.</p>
+  </div>
+  <button class="alert-close" aria-label="Dismiss"></button>
+</div>
+```
+
+## Tokens used
+
+| Property            | Token / value                     |
+| ------------------- | --------------------------------- |
+| Background          | `--background`                    |
+| Border              | `1px solid --border`              |
+| Padding             | `12px 16px 12px 19px`             |
+| Info bar            | `--l-mid` (`#6B6B6B`)             |
+| Success bar         | `--l-green` (`#55C251`)           |
+| Warning bar         | `--l-orange` (`#FE561A`)          |
+| Danger bar          | `--destructive` → `--l-red`       |
+| Title               | 13px / 700 / `--foreground`       |
+| Description         | 13px / 400 / `--muted-foreground` |
+| Close colour        | `--l-mid`, hover → `--foreground` |
+| Close focus ring    | `--ring`                          |
