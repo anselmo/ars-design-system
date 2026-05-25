@@ -1,0 +1,80 @@
+---
+title: Pagination
+description: Numbered page navigation. Pure CSS, no JavaScript dependency.
+---
+
+Plain `<nav>`/`<a>`/`<button>` markup. No Radix dependency. The active page is marked with `[aria-current="page"]`. Disabled prev/next use `disabled` or `[aria-disabled="true"]`.
+
+## Anatomy
+
+| Class                  | Role                                           |
+| ---------------------- | ---------------------------------------------- |
+| `.pagination`          | Flex container, `gap: 4px`, `font-size: 13px`  |
+| `.pagination-item`     | Numbered page button, `28×28px` min target     |
+| `.pagination-prev`     | "Prev" button, 11px uppercase bold             |
+| `.pagination-next`     | "Next" button, 11px uppercase bold             |
+| `.pagination-ellipsis` | Non-interactive `…` marker                     |
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Default</p>
+  <nav class="pagination" aria-label="Pagination">
+    <button class="pagination-prev" disabled aria-disabled="true">Prev</button>
+    <button class="pagination-item" aria-current="page">1</button>
+    <button class="pagination-item">2</button>
+    <button class="pagination-item">3</button>
+    <span class="pagination-ellipsis">…</span>
+    <button class="pagination-item">8</button>
+    <button class="pagination-next">Next</button>
+  </nav>
+</div>
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Mid-range active page</p>
+  <nav class="pagination" aria-label="Pagination">
+    <button class="pagination-prev">Prev</button>
+    <button class="pagination-item">1</button>
+    <span class="pagination-ellipsis">…</span>
+    <button class="pagination-item">4</button>
+    <button class="pagination-item" aria-current="page">5</button>
+    <button class="pagination-item">6</button>
+    <span class="pagination-ellipsis">…</span>
+    <button class="pagination-item">12</button>
+    <button class="pagination-next">Next</button>
+  </nav>
+</div>
+
+## States
+
+- **`[aria-current="page"]`** — border `1px solid --border`, background `--accent`, font-weight 700.
+- **`:hover`** — background `--accent` on items, prev, and next.
+- **`:focus-visible`** — 2px `--ring` outline, 2px offset.
+- **`:disabled` / `[aria-disabled="true"]`** — opacity 0.4, `cursor: not-allowed`, `pointer-events: none`.
+
+## Usage
+
+```html
+<nav class="pagination" aria-label="Pagination">
+  <button class="pagination-prev" disabled aria-disabled="true">Prev</button>
+
+  <button class="pagination-item" aria-current="page">1</button>
+  <button class="pagination-item">2</button>
+  <button class="pagination-item">3</button>
+  <span class="pagination-ellipsis">…</span>
+  <button class="pagination-item">10</button>
+
+  <button class="pagination-next">Next</button>
+</nav>
+```
+
+Use `<a>` elements instead of `<button>` when each page is a distinct URL. The classes apply identically to anchor elements.
+
+## Tokens used
+
+| Property              | Token                                       |
+| --------------------- | ------------------------------------------- |
+| Active border         | `--border`                                  |
+| Hover / active fill   | `--accent`                                  |
+| Item colour           | `--foreground`                              |
+| Ellipsis colour       | `--muted-foreground`                        |
+| Focus ring            | `--ring`                                    |
+| Transition            | `--motion-fast`, `--ease-standard`          |

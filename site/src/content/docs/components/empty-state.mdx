@@ -1,0 +1,76 @@
+---
+title: Empty State
+description: Centered panel for empty result sets, first-run onboarding, and "nothing found" surfaces.
+---
+
+`.empty-state` is a centered flex column that stacks an icon slot, title, description, and optional action. Use it inside `.card`, a table container, or a full-page surface.
+
+## Anatomy
+
+| Class                      | Element   | Role                                                       |
+| -------------------------- | --------- | ---------------------------------------------------------- |
+| `.empty-state`             | container | Centered column, max-width 480px, `padding: 48px 24px`    |
+| `.empty-state-icon`        | icon slot | 48×48 — consumer fills with an SVG or icon component       |
+| `.empty-state-title`       | heading   | 18px / 700 / −0.01em tracking                             |
+| `.empty-state-description` | body      | 14px / 400, muted, max-width 360px                         |
+| `.empty-state-action`      | CTA wrap  | Wraps a `.btn`; adds `margin-top: --space-row` above it    |
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Default</p>
+  <div class="empty-state">
+    <div class="empty-state-icon">
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="8" y="8" width="32" height="32" rx="0"/>
+        <path d="M16 24h16M24 16v16"/>
+      </svg>
+    </div>
+    <p class="empty-state-title">No results found</p>
+    <p class="empty-state-description">Try adjusting your search or filters to find what you're looking for.</p>
+    <div class="empty-state-action">
+      <button class="btn btn-default">Clear filters</button>
+    </div>
+  </div>
+</div>
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Without action</p>
+  <div class="empty-state">
+    <div class="empty-state-icon">
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="24" cy="24" r="14"/>
+        <path d="M24 18v6l4 4"/>
+      </svg>
+    </div>
+    <p class="empty-state-title">Nothing here yet</p>
+    <p class="empty-state-description">Activity will appear here once it's been recorded.</p>
+  </div>
+</div>
+
+## Usage
+
+```html
+<div class="empty-state">
+  <div class="empty-state-icon">
+    <!-- SVG or icon -->
+  </div>
+  <p class="empty-state-title">No results found</p>
+  <p class="empty-state-description">
+    Try adjusting your search or filters.
+  </p>
+  <div class="empty-state-action">
+    <button class="btn btn-default">Clear filters</button>
+  </div>
+</div>
+```
+
+Omit `.empty-state-action` when there is no primary CTA.
+
+## Tokens used
+
+| Property            | Token                |
+| ------------------- | -------------------- |
+| Icon colour         | `--l-mid`            |
+| Title colour        | `--foreground`       |
+| Description colour  | `--muted-foreground` |
+| Column gap          | `--space-stack`      |
+| Action top margin   | `--space-row`        |
