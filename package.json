@@ -9,6 +9,8 @@
     "./tokens/*": "./tokens/*",
     "./components/*": "./components/*",
     "./fonts/*": "./fonts/*",
+    "./icons/sprite.svg": "./icons/sprite.svg",
+    "./icons/README.md": "./icons/README.md",
     "./examples/*": "./examples/*",
     "./reference.html": "./reference.html"
   },
@@ -17,6 +19,7 @@
     "tokens/",
     "components/",
     "fonts/",
+    "icons/",
     "examples/",
     "reference.html",
     "README.md"
