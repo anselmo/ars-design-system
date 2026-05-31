@@ -1604,6 +1604,34 @@
   @media (prefers-reduced-motion: reduce) {
     .skeleton { animation: none; }
   }
+
+  /* ── Icons ── */
+  .icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    stroke: currentColor;
+    vertical-align: middle;
+    flex-shrink: 0;
+    line-height: 0;
+    pointer-events: none;
+  }
+  .icon-xs { width: 12px; height: 12px; }
+  .icon-sm { width: 16px; height: 16px; }
+  .icon-md { width: 20px; height: 20px; }
+  .icon-lg { width: 24px; height: 24px; }
+  .icon-xl { width: 48px; height: 48px; }
+
+  @keyframes ds-icon-spin {
+    to { transform: rotate(360deg); }
+  }
+  .icon-loading {
+    animation: ds-icon-spin 1s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .icon-loading { animation: none; }
+  }
 </style>
 </head>
 <body>
