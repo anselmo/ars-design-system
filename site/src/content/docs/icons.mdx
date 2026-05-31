@@ -1,0 +1,134 @@
+---
+title: Icons
+description: Curated Iconoir icon set for ARS Design System
+---
+
+ARS ships with 68 curated [Iconoir](https://iconoir.com/) icons as an SVG sprite. Iconoir's minimalist, stroke-based style pairs naturally with ARS's Swiss design and zero-radius aesthetic.
+
+## Setup
+
+Copy the sprite into your HTML once (typically in your root layout):
+
+```html
+<body>
+  <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Copy contents of node_modules/@ars/design-system/icons/sprite.svg -->
+  </svg>
+  
+  <!-- rest of your app -->
+</body>
+```
+
+## Usage
+
+Reference icons with `<svg><use>`:
+
+```html
+<!-- With design system icon slots -->
+<svg class="icon empty-state-icon">
+  <use href="#icon-search"/>
+</svg>
+
+<!-- Standalone with size variant -->
+<svg class="icon icon-lg">
+  <use href="#icon-check-circle"/>
+</svg>
+```
+
+## Size Variants
+
+| Class | Size | Use Case |
+|-------|------|----------|
+| `.icon-xs` | 12px | Inline text icons, dense UI |
+| `.icon-sm` | 16px | Default, sidebar, alerts |
+| `.icon-md` | 20px | Form labels, buttons |
+| `.icon-lg` | 24px | Page headers, prominent actions |
+| `.icon-xl` | 48px | Empty states, hero sections |
+
+## Dark Mode
+
+Icons inherit color via `currentColor`, so they automatically adapt to theme changes:
+
+```html
+<!-- Inherits from semantic color token -->
+<svg class="icon" style="color: var(--muted-foreground)">
+  <use href="#icon-info-circle"/>
+</svg>
+```
+
+## Framework Examples
+
+### React
+
+```tsx
+function EmptyState() {
+  return (
+    <div className="empty-state">
+      <svg className="icon empty-state-icon">
+        <use href="#icon-search"/>
+      </svg>
+      <h3 className="empty-state-title">No results</h3>
+    </div>
+  )
+}
+```
+
+### Astro
+
+```astro
+---
+// Sprite is in your root layout.astro <body>
+---
+<div class="empty-state">
+  <svg class="icon empty-state-icon">
+    <use href="#icon-search"/>
+  </svg>
+  <h3 class="empty-state-title">No results</h3>
+</div>
+```
+
+### Vue
+
+```vue
+<template>
+  <div class="empty-state">
+    <svg class="icon empty-state-icon">
+      <use href="#icon-search"/>
+    </svg>
+    <h3 class="empty-state-title">No results</h3>
+  </div>
+</template>
+```
+
+## Icon Reference
+
+### Navigation & Layout (8 icons)
+menu, menu-scale, nav-arrow-left, nav-arrow-right, nav-arrow-up, nav-arrow-down, home, more-horiz
+
+### Actions & Controls (12 icons)
+plus, minus, edit, trash, copy, download, upload, check, xmark, search, filter, refresh-double
+
+### Status & Alerts (8 icons)
+info-circle, check-circle, warning-triangle, cancel, bell, bell-notification, eye, eye-close
+
+### Forms & Data Entry (10 icons)
+calendar, clock, folder, folder-open, file, page, attachment, link, unlink, emoji
+
+### User & Account (6 icons)
+user, user-circle, settings, shield-check, log-in, log-out
+
+### Commerce & Business (6 icons)
+cart, credit-card, coins, receipt, percentage, gift
+
+### Communication (5 icons)
+mail, mail-open, message, send, phone
+
+### Media & Content (5 icons)
+image, play, pause, bookmark, star
+
+### System & Feedback (8 icons)
+help-circle, question-mark, loading, hourglass, thumbs-up, thumbs-down, heart, flag
+
+---
+
+**Source:** Icons from [Iconoir](https://iconoir.com/) (MIT License)
