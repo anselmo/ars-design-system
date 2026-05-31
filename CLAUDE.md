@@ -49,6 +49,9 @@ components/                 ← Component CSS (18 files, all theme-aware via sem
   skeleton.css              ← .skeleton + --text/rect/circle (pulse, prefers-reduced-motion guard)
 
 fonts/                      ← Bundled Barlow woff2 (300/400/500/600/700) + OFL.txt
+icons/                      ← Curated Iconoir SVG sprite (68 icons)
+  sprite.svg                ← All icons as <symbol> elements with icon-* IDs
+  README.md                 ← Consumer setup instructions
 examples/                   ← tailwind-v4-setup.css + README — canonical Tailwind v4 @theme example
 reference.html              ← Self-contained visual spec (inlines ALL CSS + dark-mode toggle)
 
@@ -130,6 +133,21 @@ Each CSS file has a header block documenting its tokens and intent. Keep them in
 ## `reference.html` is the living visual contract
 
 `reference.html` inlines every token and component sample so it opens standalone in any browser (no `index.css` import). It includes a `[data-theme="dark"]` toggle (the only `<script>` in the file). Every PR that adds a token, component, or state must update `reference.html` to demo it.
+
+## Icon Usage
+
+The design system ships with 68 Iconoir icons as an SVG sprite. Consumers copy-paste `icons/sprite.svg` into their HTML once, then reference via `<svg class="icon"><use href="#icon-name"/></svg>`.
+
+**Icon CSS:**
+- Base class: `.icon` (16×16, `fill: currentColor`, `stroke: currentColor`)
+- Size variants: `.icon-xs` (12px), `.icon-sm` (16px), `.icon-md` (20px), `.icon-lg` (24px), `.icon-xl` (48px)
+- Animated: `.icon-loading` (spinning, respects `prefers-reduced-motion`)
+
+**Icon color inheritance:**
+Icons use `currentColor` so they inherit from parent context. Existing icon slot classes (`.empty-state-icon`, `.alert-icon`, `.sidebar-icon`) already set appropriate sizes and colors for their contexts.
+
+**Naming convention:**
+Sprite IDs use `icon-{name}` format where name is Iconoir's kebab-case name (e.g., `icon-nav-arrow-left`, `icon-check-circle`).
 
 ## Workspace scripts
 
