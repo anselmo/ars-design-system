@@ -592,7 +592,7 @@
     outline: 2px solid var(--ring);
     outline-offset: -2px;
   }
-  .sidebar-icon { width: 16px; height: 16px; background: var(--l-rule); }
+  .sidebar-icon { width: 16px; height: 16px; color: var(--muted-foreground); }
 
   /* ── Table specimen ── */
   .table-specimen {
@@ -2916,19 +2916,19 @@
           <p style="font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--l-mid);margin-top:2px;">Partner Console</p>
         </div>
         <div class="sidebar-item active">
-          <div class="sidebar-icon"></div> Dashboard
+          <svg class="icon sidebar-icon"><use href="#icon-home"/></svg> Dashboard
         </div>
         <div class="sidebar-item">
-          <div class="sidebar-icon"></div> Campaigns
+          <svg class="icon sidebar-icon"><use href="#icon-home"/></svg> Campaigns
         </div>
         <div class="sidebar-item">
-          <div class="sidebar-icon"></div> Members
+          <svg class="icon sidebar-icon"><use href="#icon-home"/></svg> Members
         </div>
         <div class="sidebar-item">
-          <div class="sidebar-icon"></div> Settlement
+          <svg class="icon sidebar-icon"><use href="#icon-home"/></svg> Settlement
         </div>
         <div class="sidebar-item">
-          <div class="sidebar-icon"></div> Reports
+          <svg class="icon sidebar-icon"><use href="#icon-home"/></svg> Reports
         </div>
       </div>
       <div style="flex:1;padding:20px;background:white;">
@@ -3443,9 +3443,7 @@
 
     <div class="specimen-block">
       <div class="empty-state">
-        <div class="empty-state-icon">
-          <div style="width:48px;height:48px;background:var(--l-rule);"></div>
-        </div>
+        <svg class="icon empty-state-icon"><use href="#icon-search"/></svg>
         <h3 class="empty-state-title">No campaigns yet</h3>
         <p class="empty-state-description">Create your first campaign to start tracking performance, audiences, and ROI.</p>
         <div class="empty-state-action">
