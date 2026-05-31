@@ -8,6 +8,7 @@ A flat stylesheet bundle: design tokens as CSS custom properties plus a small se
 
 - **Tokens** — 11 colour primitives (`--l-*`) + semantic aliases + Tailwind aliases (`--color-*`) + dark-mode block; Barlow type scale; named spacing rhythms; zero-radius enforcement; motion, elevation, and z-index scales; bundled font faces
 - **Components (18)** — buttons, badges, inputs, forms, cards, tables, layout shell, charts, dialog, dropdown, tooltip, toast, tabs, pagination, breadcrumb, alert, empty-state, skeleton
+- **Icons (68)** — curated Iconoir SVG sprite with size variants and loading animation
 - **`reference.html`** — self-contained visual spec with built-in dark-mode toggle, opens in any browser
 - **React wrappers** (`@ars/design-system-react`) — thin Radix UI primitives styled with the CSS classes; opt-in via the sibling package
 - **Docs site** (`site/`) — Astro Starlight site with searchable docs, token references, and live React playgrounds
@@ -69,6 +70,7 @@ That's the whole API. Apply classes in markup:
 | `.alert`           | `--info`, `--success`, `--warning`, `--danger` + `.alert-title`/`description`/`close` — inline message banner | `components/alert.css` |
 | `.empty-state`     | `.empty-state-icon`/`title`/`description`/`action` — centered panel | `components/empty-state.css` |
 | `.skeleton`        | `--text`, `--rect`, `--circle` — pulse, honors `prefers-reduced-motion` | `components/skeleton.css` |
+| `.icon`            | base class + size variants (`xs`, `sm`, `md`, `lg`, `xl`) + `.icon-loading` spinner — use with Iconoir sprite | `components/icons.css` |
 
 ### Typography classes
 
@@ -101,6 +103,36 @@ That's the whole API. Apply classes in markup:
 ### Bundled font
 
 Barlow ships with the package — five weights (300, 400, 500, 600, 700) as `woff2` under `fonts/`. They register automatically via `@font-face` in `tokens/fonts.css`. **No Google Fonts `<link>` is needed.** Barlow is licensed under SIL OFL 1.1; see `fonts/OFL.txt`.
+
+### Icons
+
+68 curated Iconoir icons ship as an SVG sprite (`icons/sprite.svg`). Copy the sprite once into your HTML, then reference via `<use href="#icon-name"/>`:
+
+```html
+<!-- Copy icons/sprite.svg contents once into your HTML -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <!-- sprite symbols -->
+</svg>
+
+<!-- Use throughout your app -->
+<svg class="icon icon-md"><use href="#icon-search"/></svg>
+<button class="btn btn-default">
+  <svg class="icon icon-sm"><use href="#icon-check"/></svg>
+  Save
+</button>
+```
+
+**Size variants:**
+- `.icon-xs` — 12px
+- `.icon-sm` — 16px (default via `.icon`)
+- `.icon-md` — 20px
+- `.icon-lg` — 24px
+- `.icon-xl` — 48px
+
+**Animation:**
+- `.icon-loading` — spinning animation, respects `prefers-reduced-motion`
+
+Icons inherit `currentColor` from their parent, so they match surrounding text. See `icons/README.md` for the complete icon list and setup instructions.
 
 ## Framework setup
 
@@ -336,6 +368,7 @@ open node_modules/@ars/design-system/reference.html
 
 ## Versioning & support
 
-- Version: **1.0.0**
+- Version: **1.0.1**
 - Internal package — license: `UNLICENSED`
 - Bundled Barlow font: SIL OFL 1.1 (`fonts/OFL.txt`)
+- Bundled icons: Iconoir (MIT license)

@@ -1,6 +1,6 @@
 {
   "name": "@ars/design-system",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ARS Design System — Swiss-inspired, zero-radius, Barlow typeface. CSS-only, framework-agnostic, pairs with Tailwind v4 and shadcn/ui.",
   "main": "index.css",
   "style": "index.css",
