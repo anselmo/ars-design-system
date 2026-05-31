@@ -134,6 +134,8 @@ Each CSS file has a header block documenting its tokens and intent. Keep them in
 
 `reference.html` inlines every token and component sample so it opens standalone in any browser (no `index.css` import). It includes a `[data-theme="dark"]` toggle (the only `<script>` in the file). Every PR that adds a token, component, or state must update `reference.html` to demo it.
 
+**Published at:** https://anselmo.github.io/ars-design-system/reference.html
+
 ## Icon Usage
 
 The design system ships with 68 Iconoir icons as an SVG sprite. Consumers copy-paste `icons/sprite.svg` into their HTML once, then reference via `<svg class="icon"><use href="#icon-name"/></svg>`.
@@ -160,8 +162,13 @@ pnpm --filter @ars/design-system-docs build   # static docs site build
 
 ## Versioning
 
-- `@ars/design-system` — `1.0.0` (UNLICENSED; bundled Barlow under SIL OFL 1.1)
+- `@ars/design-system` — `1.0.1` (UNLICENSED; bundled Barlow under SIL OFL 1.1, bundled Iconoir icons under MIT)
 - `@ars/design-system-react` — `0.1.0` (UNLICENSED)
 - `@ars/design-system-docs` — `0.1.0` (private workspace, not published)
 
 The package is not yet on a public registry. Local consumers use `file:` linking; published distribution will be GitHub Packages or npm public — TBD.
+
+## Links
+
+- Repository: https://github.com/anselmo/ars-design-system
+- Visual reference: https://anselmo.github.io/ars-design-system/reference.html

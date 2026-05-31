@@ -344,6 +344,10 @@ The site builds to `site/dist/` as static HTML + Pagefind search index — deplo
 
 `reference.html` at the package root is a self-contained spec page — open it directly in a browser. It inlines every token and component sample and does **not** import `index.css`, so it works as a frozen visual reference even if the CSS changes.
 
+**View online:**  
+https://anselmo.github.io/ars-design-system/reference.html
+
+**View locally:**
 ```sh
 open node_modules/@ars/design-system/reference.html
 ```
