@@ -117,5 +117,5 @@
 .sidebar-icon {
   width: 16px;
   height: 16px;
-  background: var(--l-rule);
+  color: var(--muted-foreground);
 }
