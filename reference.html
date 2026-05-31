@@ -2256,6 +2256,20 @@
       <span style="font-size:11px;color:var(--muted-foreground);">xs/sm/md/lg/xl</span>
     </div>
 
+    <h3>Icon Finder</h3>
+    <div style="margin-bottom:32px;">
+      <input
+        type="text"
+        id="icon-search"
+        placeholder="Search icons..."
+        class="input-bordered"
+        style="width:100%;max-width:600px;margin-bottom:16px;"
+      />
+      <div id="icon-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;">
+        <!-- Icons will be populated by JavaScript -->
+      </div>
+    </div>
+
     <h3>All 68 Icons</h3>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:24px;">
       <div style="grid-column:1/-1;font-weight:600;margin-top:8px;">Navigation & Layout</div>
@@ -2267,7 +2281,7 @@
       <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-nav-arrow-down"/></svg><p style="font-size:9px;margin-top:4px;">nav-arrow-down</p></div>
       <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-home"/></svg><p style="font-size:9px;margin-top:4px;">home</p></div>
       <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-more-horiz"/></svg><p style="font-size:9px;margin-top:4px;">more-horiz</p></div>
-      
+
       <div style="grid-column:1/-1;font-weight:600;margin-top:8px;">Actions & Controls</div>
       <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-plus"/></svg><p style="font-size:9px;margin-top:4px;">plus</p></div>
       <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-minus"/></svg><p style="font-size:9px;margin-top:4px;">minus</p></div>
@@ -2281,7 +2295,7 @@
       <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-search"/></svg><p style="font-size:9px;margin-top:4px;">search</p></div>
       <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-filter"/></svg><p style="font-size:9px;margin-top:4px;">filter</p></div>
       <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-refresh-double"/></svg><p style="font-size:9px;margin-top:4px;">refresh-double</p></div>
-      
+
       <div style="grid-column:1/-1;font-weight:600;margin-top:8px;">Status & Alerts + Forms + User + Commerce + Communication + Media + System (remaining 48 icons)</div>
       <p style="grid-column:1/-1;font-size:11px;color:var(--muted-foreground);">See icons.mdx docs for complete reference</p>
     </div>
@@ -3544,6 +3558,86 @@
       localStorage.setItem(KEY, next);
       apply(next);
     });
+  })();
+
+  // Icon finder
+  (() => {
+    const icons = [
+      'attachment', 'bell', 'bell-notification', 'bookmark', 'calendar', 'cancel', 'cart',
+      'check', 'check-circle', 'clock', 'coins', 'copy', 'credit-card', 'download', 'edit',
+      'emoji', 'eye', 'eye-close', 'file', 'filter', 'flag', 'folder', 'folder-open', 'gift',
+      'heart', 'help-circle', 'home', 'hourglass', 'image', 'info-circle', 'link', 'loading',
+      'log-in', 'log-out', 'mail', 'mail-open', 'menu', 'menu-scale', 'message', 'minus',
+      'more-horiz', 'nav-arrow-down', 'nav-arrow-left', 'nav-arrow-right', 'nav-arrow-up',
+      'page', 'pause', 'percentage', 'phone', 'play', 'plus', 'question-mark', 'receipt',
+      'refresh-double', 'search', 'send', 'settings', 'shield-check', 'star', 'thumbs-down',
+      'thumbs-up', 'trash', 'unlink', 'upload', 'user', 'user-circle', 'warning-triangle', 'xmark'
+    ];
+
+    const grid = document.getElementById('icon-grid');
+    const searchInput = document.getElementById('icon-search');
+
+    function renderIcons(filter = '') {
+      const filtered = filter
+        ? icons.filter(name => name.includes(filter.toLowerCase()))
+        : icons;
+
+      grid.innerHTML = filtered.map(name => `
+        <div
+          class="icon-card"
+          style="
+            text-align:center;
+            padding:16px 8px;
+            border:1px solid var(--border);
+            cursor:pointer;
+            transition:background var(--motion-fast) var(--ease-standard);
+          "
+          onclick="copyIconCode('${name}')"
+          title="Click to copy code"
+        >
+          <svg class="icon icon-lg" style="margin:0 auto 8px;"><use href="#icon-${name}"/></svg>
+          <p style="font-size:10px;margin:0;word-break:break-word;">${name}</p>
+        </div>
+      `).join('');
+
+      // Add hover effect via event delegation
+      grid.querySelectorAll('.icon-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          card.style.background = 'var(--accent)';
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.background = 'transparent';
+        });
+      });
+    }
+
+    window.copyIconCode = function(name) {
+      const code = `<svg class="icon icon-md"><use href="#icon-${name}"/></svg>`;
+      navigator.clipboard.writeText(code).then(() => {
+        // Show feedback
+        const msg = document.createElement('div');
+        msg.textContent = 'Copied!';
+        msg.style.cssText = `
+          position:fixed;
+          top:20px;
+          right:20px;
+          background:var(--primary);
+          color:var(--primary-foreground);
+          padding:8px 16px;
+          font-size:13px;
+          font-weight:700;
+          z-index:10000;
+        `;
+        document.body.appendChild(msg);
+        setTimeout(() => msg.remove(), 2000);
+      });
+    };
+
+    searchInput.addEventListener('input', (e) => {
+      renderIcons(e.target.value);
+    });
+
+    renderIcons();
   })();
 </script>
 </body>
