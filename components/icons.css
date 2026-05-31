@@ -26,7 +26,11 @@
   width: 16px;
   height: 16px;
   fill: currentColor;
+  stroke: currentColor;
   vertical-align: middle;
+  flex-shrink: 0;
+  line-height: 0;
+  pointer-events: none;
 }
 
 /* ── Size variants ───────────────────────────────
@@ -44,12 +48,12 @@
    Spinning animation for loading states. Applied
    with .icon-loading modifier. */
 
-@keyframes spin {
+@keyframes ds-icon-spin {
   to { transform: rotate(360deg); }
 }
 
 .icon-loading {
-  animation: spin 1s linear infinite;
+  animation: ds-icon-spin 1s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
