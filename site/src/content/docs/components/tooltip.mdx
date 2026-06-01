@@ -1,0 +1,78 @@
+---
+title: Tooltip
+description: Inverted-contrast label that appears on hover. CSS shell pairs with @radix-ui/react-tooltip.
+---
+
+The tooltip renders with inverted contrast — dark background, light text — so it registers immediately against ARS's light surfaces. This is the only context in the system where a dark surface is the default. Open/close timing, hover delay, and positioning are handled by the consumer's headless library.
+
+## Anatomy
+
+| Class               | Purpose                                                    |
+| ------------------- | ---------------------------------------------------------- |
+| `.tooltip-content`  | The popover bubble; inverted contrast, fades on `[data-state]` |
+| `.tooltip-arrow`    | Fill color for the Radix-injected SVG arrow element        |
+
+## React playground (live)
+
+import TooltipDemo from "../../../components/TooltipDemo.tsx";
+
+<TooltipDemo client:load />
+
+## React usage
+
+Wrap the app (or feature subtree) with `TooltipProvider` once. Radix requires a provider ancestor for any `Tooltip`.
+
+```tsx
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipArrow,
+} from "@ars/design-system-react";
+
+// Mount TooltipProvider at the app root:
+<TooltipProvider>
+  <App />
+</TooltipProvider>
+
+// Then at the usage site:
+<Tooltip>
+  <TooltipTrigger asChild>
+    <button className="btn btn-default">Save</button>
+  </TooltipTrigger>
+  <TooltipContent>
+    Save all changes
+    <TooltipArrow />
+  </TooltipContent>
+</Tooltip>
+```
+
+`TooltipContent` auto-portals (wraps `Radix.Portal` internally) and defaults `sideOffset={4}`. `TooltipArrow` is optional — many tooltips omit the arrow and rely on position alone. Use `side="top" | "right" | "bottom" | "left"` on `TooltipContent` to control placement.
+
+## CSS-only usage (any framework)
+
+Radix sets `[data-state]` and `[data-side]` on the content element. Wire these from your own state machine:
+
+```html
+<div class="tooltip-content" data-state="delayed-open" data-side="top">
+  Save all changes
+</div>
+```
+
+Valid `data-state` values the CSS responds to: `delayed-open`, `instant-open` (both show the tooltip), `closed` (hides it). The direction-aware micro-displacement uses `data-side` on the closed state.
+
+## States and tokens used
+
+- `[data-state="delayed-open"]` / `[data-state="instant-open"]` — `opacity: 1`, `transform: translate(0, 0)`.
+- `[data-state="closed"]` — `opacity: 0`; combined with a 2px directional `translateY`/`translateX` based on `[data-side]`.
+- Under `prefers-reduced-motion: reduce` — directional transform is removed; fade remains.
+
+| Token              | Role                             |
+| ------------------ | -------------------------------- |
+| `--foreground`     | Bubble background (inverted)     |
+| `--background`     | Bubble text (inverted)           |
+| `--shadow-popover` | Bubble elevation                 |
+| `--z-popover`      | Stacking tier (above modals)     |
+| `--motion-fast`    | Fade + transform duration        |
+| `--ease-standard`  | Transition easing                |

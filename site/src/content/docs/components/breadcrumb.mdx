@@ -1,0 +1,69 @@
+---
+title: Breadcrumb
+description: Trail of page-hierarchy links. Pure CSS, no JS.
+---
+
+The `.breadcrumb` class is an `<ol>` flex container. Each navigable crumb is `.breadcrumb-item`; the divider glyph is `.breadcrumb-separator`; the non-linked current page is `.breadcrumb-current`.
+
+## Anatomy
+
+| Class                   | Element       | Purpose                                          |
+| ----------------------- | ------------- | ------------------------------------------------ |
+| `.breadcrumb`           | `<ol>`        | Flex row container                               |
+| `.breadcrumb-item`      | `<a>`         | Navigable crumb — muted foreground, hover to ink |
+| `.breadcrumb-separator` | `<li>` / text | Decorative divider (add `aria-hidden="true"`)    |
+| `.breadcrumb-current`   | `<span>`      | Current page label — foreground, weight 500      |
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Default</p>
+  <ol class="breadcrumb">
+    <li><a class="breadcrumb-item" href="#">Home</a></li>
+    <li class="breadcrumb-separator" aria-hidden="true">/</li>
+    <li><a class="breadcrumb-item" href="#">Settings</a></li>
+    <li class="breadcrumb-separator" aria-hidden="true">/</li>
+    <li><span class="breadcrumb-current">Profile</span></li>
+  </ol>
+</div>
+
+<div class="ars-playground">
+  <p class="ars-playground-label">Deeper trail</p>
+  <ol class="breadcrumb">
+    <li><a class="breadcrumb-item" href="#">Home</a></li>
+    <li class="breadcrumb-separator" aria-hidden="true">/</li>
+    <li><a class="breadcrumb-item" href="#">Reports</a></li>
+    <li class="breadcrumb-separator" aria-hidden="true">/</li>
+    <li><a class="breadcrumb-item" href="#">Annual</a></li>
+    <li class="breadcrumb-separator" aria-hidden="true">/</li>
+    <li><span class="breadcrumb-current">Summary</span></li>
+  </ol>
+</div>
+
+## Usage
+
+```html
+<ol class="breadcrumb">
+  <li><a class="breadcrumb-item" href="/dashboard">Dashboard</a></li>
+  <li class="breadcrumb-separator" aria-hidden="true">/</li>
+  <li><a class="breadcrumb-item" href="/dashboard/settings">Settings</a></li>
+  <li class="breadcrumb-separator" aria-hidden="true">/</li>
+  <li><span class="breadcrumb-current">Profile</span></li>
+</ol>
+```
+
+Add `aria-label="Breadcrumb"` to the `<ol>` for screen-reader context. Each separator should carry `aria-hidden="true"` so assistive technology skips the decorative glyph.
+
+## States
+
+- **`:hover`** on `.breadcrumb-item` — color transitions from `--muted-foreground` to `--foreground` with a 2px offset underline.
+- **`:focus-visible`** on `.breadcrumb-item` — 2px outline using `--ring`, 2px offset.
+
+## Tokens used
+
+| Token                 | Role                             |
+| --------------------- | -------------------------------- |
+| `--muted-foreground`  | Default crumb and separator text |
+| `--foreground`        | Hover crumb and current-page text|
+| `--ring`              | Focus outline                    |
+| `--motion-fast`       | Hover color transition duration  |
+| `--ease-standard`     | Transition easing                |
+| `--space-row`         | Gap between crumbs               |

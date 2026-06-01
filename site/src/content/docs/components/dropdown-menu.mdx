@@ -1,0 +1,95 @@
+---
+title: Dropdown Menu
+description: Contextual menu that opens from a trigger. CSS shell pairs with @radix-ui/react-dropdown-menu.
+---
+
+The dropdown ships as a CSS shell. Open/close, focus management, positioning, and click-outside are handled by the consumer's headless library. The React package wraps Radix UI DropdownMenu; the CSS classes work with any headless lib that sets `[data-state]`, `[data-side]`, `[data-highlighted]`, and `[data-disabled]` attributes.
+
+## Anatomy
+
+| Class                    | Purpose                                                        |
+| ------------------------ | -------------------------------------------------------------- |
+| `.dropdown-content`      | Portal-mounted container; slides and fades on `[data-state]`   |
+| `.dropdown-item`         | Single menu row; highlighted via `[data-highlighted]`          |
+| `.dropdown-item--danger` | Destructive variant — red text, soft red highlight on hover    |
+| `.dropdown-label`        | Non-interactive section heading (9px uppercase micro-type)     |
+| `.dropdown-separator`    | 1px hairline divider                                           |
+| `.dropdown-shortcut`     | Right-aligned keyboard-hint span inside an item                |
+
+## React playground (live)
+
+import DropdownMenuDemo from "../../../components/DropdownMenuDemo.tsx";
+
+<DropdownMenuDemo client:load />
+
+## React usage
+
+```tsx
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+} from "@ars/design-system-react";
+
+<DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <button className="btn btn-default">Account</button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuLabel>My account</DropdownMenuLabel>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem>
+      Profile
+      <DropdownMenuShortcut>⌘P</DropdownMenuShortcut>
+    </DropdownMenuItem>
+    <DropdownMenuItem>Settings</DropdownMenuItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem variant="danger">Sign out</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+`DropdownMenuContent` auto-portals (wraps `Radix.Portal` internally) and defaults `sideOffset={4}`. `DropdownMenuItem` accepts `variant="danger"` to append `.dropdown-item--danger`. `DropdownMenuShortcut` is a plain `<span className="dropdown-shortcut">` — not a Radix primitive — for keyboard-hint glyphs.
+
+## CSS-only usage (any framework)
+
+Toggle `data-state="open"` / `data-state="closed"` via your own state. `data-side` is optional — the closed-state transforms are direction-aware.
+
+```html
+<div class="dropdown-content" data-state="open" data-side="bottom">
+  <div class="dropdown-label">My account</div>
+  <div class="dropdown-separator"></div>
+  <div class="dropdown-item" tabindex="0">Profile</div>
+  <div class="dropdown-item" tabindex="0">Settings</div>
+  <div class="dropdown-separator"></div>
+  <div class="dropdown-item dropdown-item--danger" tabindex="0">Sign out</div>
+</div>
+```
+
+Disabled items: add `data-disabled` to the `.dropdown-item` element.
+
+## States and tokens used
+
+- `[data-highlighted]` / `:hover` — background transitions to `--accent` (`--l-light`), color to `--accent-foreground`.
+- `[data-disabled]` — opacity `0.4`, `pointer-events: none`.
+- `.dropdown-item--danger` highlighted — background `rgba(217, 28, 24, 0.08)`, color stays `--destructive`.
+- **Open/close animation** — `opacity` and `transform` transition at `--motion-fast` / `--ease-standard`. Direction-aware: the panel slides toward the trigger when closing.
+
+| Token              | Role                              |
+| ------------------ | --------------------------------- |
+| `--background`     | Panel background                  |
+| `--border`         | Panel border and separator        |
+| `--foreground`     | Default item text                 |
+| `--muted-foreground`| Label and shortcut text          |
+| `--accent`         | Item hover/highlight fill         |
+| `--accent-foreground`| Item hover/highlight text       |
+| `--destructive`    | Danger item text                  |
+| `--shadow-popover` | Panel elevation                   |
+| `--z-dropdown`     | Stacking tier                     |
+| `--motion-fast`    | Transition duration               |
+| `--ease-standard`  | Transition easing                 |
+| `--space-row`      | Gap inside items                  |
