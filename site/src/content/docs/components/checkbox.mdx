@@ -1,0 +1,87 @@
+---
+title: Checkbox
+description: 16×16 sharp square with a CSS-only checkmark. CSS from forms.css pairs with @radix-ui/react-checkbox.
+---
+
+The checkbox is a 16×16 sharp square — zero radius, matching the system-wide doctrine. The check mark and indeterminate dash are both rendered via CSS `::after` pseudo-elements, with no SVG or icon font required. CSS lives in `components/forms.css`; see the [Forms](/components/forms) page for the full reference.
+
+## React playground (live)
+
+import CheckboxDemo from "../../../components/CheckboxDemo.tsx";
+
+<CheckboxDemo client:load />
+
+## React usage
+
+```tsx
+import { Checkbox } from "@ars/design-system-react";
+
+// Uncontrolled
+<Checkbox defaultChecked />
+
+// Controlled
+<Checkbox checked={accepted} onCheckedChange={setAccepted} />
+
+// Indeterminate
+<Checkbox checked="indeterminate" />
+
+// Disabled
+<Checkbox disabled />
+```
+
+The `Checkbox` component renders as `<button role="checkbox">`. Radix's `<Checkbox.Indicator>` is mounted in the tree but hidden via `display: none` — the CSS `::after` checkmark is the sole visual. No separate `<Indicator>` to import.
+
+`onCheckedChange` receives `boolean | "indeterminate"`. Cast to `boolean` if your state only needs true/false:
+
+```tsx
+<Checkbox onCheckedChange={(v) => setAccepted(v === true)} />
+```
+
+## CSS-only usage (any framework)
+
+Works with native `<input type="checkbox">` or any element that carries `[data-state]`:
+
+```html
+<!-- Native -->
+<input type="checkbox" class="checkbox" />
+
+<!-- Radix-compatible markup -->
+<button
+  type="button"
+  role="checkbox"
+  class="checkbox"
+  data-state="unchecked"
+  aria-checked="false"
+></button>
+
+<!-- Indeterminate -->
+<button
+  type="button"
+  role="checkbox"
+  class="checkbox"
+  data-state="indeterminate"
+  aria-checked="mixed"
+></button>
+```
+
+## States
+
+| State | Visual |
+| ----- | ------ |
+| Unchecked | 1.5px `--border` outline, transparent fill |
+| Checked (`:checked` / `[data-state="checked"]`) | `--primary` fill, CSS-only rotated checkmark in `--primary-foreground` |
+| Indeterminate (`[data-state="indeterminate"]`) | `--primary` fill, 1.5px horizontal dash in `--primary-foreground` |
+| `:focus-visible` | 2px `--ring` outline, 2px offset |
+| `:disabled` / `[data-disabled]` | opacity 0.4, `cursor: not-allowed` |
+| `:hover:not(:disabled)` | Border transitions to `--l-mid` |
+
+## Tokens used
+
+| Token                  | Role                                |
+| ---------------------- | ----------------------------------- |
+| `--border`             | Unchecked outline                   |
+| `--primary`            | Checked / indeterminate fill        |
+| `--primary-foreground` | Checkmark and dash colour           |
+| `--l-mid`              | Hover border                        |
+| `--ring`               | Focus ring                          |
+| `--motion-fast`        | Background and border-colour transition |

@@ -1,0 +1,68 @@
+---
+title: Switch
+description: Toggle control. CSS from forms.css pairs with @radix-ui/react-switch.
+---
+
+The switch is a 32×16px toggle — a track with a sliding circular thumb. It shares the same focus, disabled, and `[data-state]` conventions as all other form controls in the system. The CSS lives in `components/forms.css` alongside the other selection controls; see the [Forms](/components/forms) page for the full CSS reference.
+
+## React playground (live)
+
+import SwitchDemo from "../../../components/SwitchDemo.tsx";
+
+<SwitchDemo client:load />
+
+## React usage
+
+```tsx
+import { Switch } from "@ars/design-system-react";
+
+// Uncontrolled
+<Switch defaultChecked />
+
+// Controlled
+<Switch checked={enabled} onCheckedChange={setEnabled} />
+
+// Disabled
+<Switch disabled />
+```
+
+The `Switch` component renders as `<button role="switch">`. Radix's `<Switch.Thumb>` is mounted in the tree for accessibility completeness but hidden via `display: none` — the CSS `::after` pseudo-element on `.switch` is the sole visual thumb. This keeps the component API minimal: consumers use `<Switch />` alone, with no separate `<Thumb>` to import.
+
+## CSS-only usage (any framework)
+
+Works with native `<input type="checkbox" role="switch">` or any element that sets `[data-state="checked|unchecked"]`:
+
+```html
+<!-- Native -->
+<input type="checkbox" role="switch" class="switch" />
+
+<!-- Radix-compatible markup -->
+<button
+  type="button"
+  role="switch"
+  class="switch"
+  data-state="unchecked"
+  aria-checked="false"
+></button>
+```
+
+Toggle `data-state` between `"checked"` and `"unchecked"` from your state machine; the CSS transitions the thumb and track colour automatically.
+
+## States
+
+| State                              | Visual                                               |
+| ---------------------------------- | ---------------------------------------------------- |
+| Unchecked                          | `--l-rule` track, thumb at left                      |
+| Checked (`:checked` / `[data-state="checked"]`) | `--primary` track, thumb translated 16px right |
+| `:focus-visible`                   | 2px `--ring` outline, 2px offset                     |
+| `:disabled` / `[data-disabled]`   | opacity 0.4, `cursor: not-allowed`                   |
+
+## Tokens used
+
+| Token        | Role                         |
+| ------------ | ---------------------------- |
+| `--l-rule`   | Unchecked track fill         |
+| `--primary`  | Checked track fill           |
+| `--l-white`  | Thumb fill                   |
+| `--ring`     | Focus ring                   |
+| `--motion-fast` | Thumb slide and track colour transition |

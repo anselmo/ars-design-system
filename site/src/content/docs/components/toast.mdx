@@ -1,0 +1,123 @@
+---
+title: Toast
+description: Non-intrusive notification overlay. CSS shell pairs with @radix-ui/react-toast.
+---
+
+The toast ships as a CSS shell. Auto-dismiss timing, queue management, swipe physics, and accessibility announcements are handled by the consumer's headless library. The React package wraps Radix UI Toast; the CSS classes work with any headless lib that sets `[data-state]` and `[data-swipe]` attributes.
+
+## Anatomy
+
+| Class                | Purpose                                                               |
+| -------------------- | --------------------------------------------------------------------- |
+| `.toast-viewport`    | Fixed portal container, bottom-right, `z-index: var(--z-toast)`      |
+| `.toast`             | Individual notification root; flex column                             |
+| `.toast--success`    | 3px green left-edge accent bar                                        |
+| `.toast--warning`    | 3px orange left-edge accent bar                                       |
+| `.toast--danger`     | 3px red left-edge accent bar                                          |
+| `.toast--info`       | 3px mid-grey left-edge accent bar                                     |
+| `.toast-title`       | Short heading (14px / 700)                                            |
+| `.toast-description` | Detail text (13px / `--muted-foreground`)                             |
+| `.toast-action`      | Inline action link (11px uppercase, underlined)                       |
+| `.toast-close`       | Absolutely-positioned top-right CSS-only X dismiss button             |
+
+## React playground (live)
+
+import ToastDemo from "../../../components/ToastDemo.tsx";
+
+<ToastDemo client:load />
+
+## React usage
+
+`ToastProvider` must wrap the application root. `ToastViewport` is the fixed container that Radix portals toasts into — render it once, typically in your root layout.
+
+```tsx
+import {
+  ToastProvider,
+  ToastViewport,
+  Toast,
+  ToastTitle,
+  ToastDescription,
+  ToastAction,
+  ToastClose,
+} from "@ars/design-system-react";
+import { useState } from "react";
+
+// Root layout:
+export function RootLayout({ children }) {
+  return (
+    <ToastProvider>
+      {children}
+      <ToastViewport />
+    </ToastProvider>
+  );
+}
+
+// At the call site:
+function SaveButton() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <button className="btn btn-default" onClick={() => setOpen(true)}>
+        Save
+      </button>
+      <Toast open={open} onOpenChange={setOpen} variant="success">
+        <ToastTitle>Changes saved</ToastTitle>
+        <ToastDescription>Your settings have been updated.</ToastDescription>
+        <ToastAction altText="Undo save">Undo</ToastAction>
+        <ToastClose />
+      </Toast>
+    </>
+  );
+}
+```
+
+`Toast` accepts a `variant` prop (`"success" | "warning" | "danger" | "info"`) that appends the matching `.toast--variant` modifier class. All other Radix props (`duration`, `onSwipeEnd`, etc.) pass through unchanged.
+
+## CSS-only usage (any framework)
+
+Set `data-state="open"` to show, `data-state="closed"` to trigger the slide-out animation. For swipe-to-dismiss, Radix sets `data-swipe` stages and `--radix-toast-swipe-move-x` during the gesture; if you're rolling your own, set these manually.
+
+```html
+<div class="toast-viewport">
+  <li
+    class="toast toast--success"
+    data-state="open"
+    role="status"
+    aria-live="off"
+    aria-atomic="true"
+  >
+    <p class="toast-title">Changes saved</p>
+    <p class="toast-description">Your settings have been updated.</p>
+    <button class="toast-close" aria-label="Dismiss"></button>
+  </li>
+</div>
+```
+
+## Variants
+
+The `.toast--*` modifier draws a 3px left-edge accent bar via `::before`. Body fill stays neutral across all variants — colour is an indicator only, not a background tint.
+
+| Modifier         | Accent colour | Token          |
+| ---------------- | ------------- | -------------- |
+| (none)           | No accent bar | —              |
+| `.toast--success` | Green        | `--l-green`    |
+| `.toast--warning` | Orange       | `--l-orange`   |
+| `.toast--danger`  | Red          | `--destructive` |
+| `.toast--info`    | Mid-grey     | `--l-mid`      |
+
+The info accent uses `--l-mid` rather than `--l-blue` because `--l-blue` (`#F4FCFF`) is near-white and invisible as a 3px bar on a white surface.
+
+## Tokens used
+
+| Token                              | Role                                    |
+| ---------------------------------- | --------------------------------------- |
+| `--background`                     | Toast background                        |
+| `--border`                         | Toast border                            |
+| `--foreground`                     | Title text                              |
+| `--muted-foreground`               | Description text                        |
+| `--shadow-overlay`                 | Elevation                               |
+| `--z-toast`                        | Stacking tier                           |
+| `--motion-base`                    | Transition duration                     |
+| `--ease-standard` / `--ease-emphasized` | Transition easing                  |
+| `--space-row`                      | Gap between stacked toasts in viewport  |
