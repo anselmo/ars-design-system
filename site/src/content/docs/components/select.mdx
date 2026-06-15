@@ -1,0 +1,91 @@
+---
+title: Select
+description: Styled select trigger and portal-mounted listbox. CSS from forms.css and dropdown.css pairs with @radix-ui/react-select.
+---
+
+The React `Select` is a Radix-powered popover listbox — not a native `<select>`. The trigger uses `.select` from `forms.css` for visual appearance; the portal-mounted listbox reuses `.dropdown-content` and `.dropdown-item` from `dropdown.css`. A native `<select class="select">` is also supported for CSS-only consumers.
+
+## React playground (live)
+
+import SelectDemo from "../../../components/SelectDemo.tsx";
+
+<SelectDemo client:load />
+
+## React usage
+
+```tsx
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+  SelectItem,
+  SelectSeparator,
+} from "@ars/design-system-react";
+
+<Select value={region} onValueChange={setRegion}>
+  <SelectTrigger style={{ width: "240px" }}>
+    <SelectValue placeholder="Select a region" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      <SelectLabel>Americas</SelectLabel>
+      <SelectItem value="us-east">US East</SelectItem>
+      <SelectItem value="us-west">US West</SelectItem>
+    </SelectGroup>
+    <SelectSeparator />
+    <SelectGroup>
+      <SelectLabel>Europe</SelectLabel>
+      <SelectItem value="eu-west">EU West</SelectItem>
+    </SelectGroup>
+  </SelectContent>
+</Select>
+```
+
+`SelectContent` auto-portals and wraps `<Select.Viewport>` internally. `SelectTrigger` suppresses the `.select` background-image chevron (it would double with Radix's own icon) via inline `style={{ backgroundImage: "none" }}` and adds `display: flex; align-items: center` so Radix's `<Select.Icon>` aligns in the same visual slot.
+
+## CSS-only usage (any framework)
+
+For a native `<select>`, apply `.select` directly:
+
+```html
+<select class="select">
+  <option value="">Select a region</option>
+  <option value="us-east">US East</option>
+  <option value="eu-west">EU West</option>
+</select>
+```
+
+The `.select` class renders a 32px-tall bordered control with a custom SVG chevron (stroke `--l-mid`) via `background-image`.
+
+## Anatomy
+
+| Export / Class       | Source file      | Role                                       |
+| -------------------- | ---------------- | ------------------------------------------ |
+| `SelectTrigger`      | `forms.css`      | `.select` — trigger button with chevron    |
+| `SelectContent`      | `dropdown.css`   | `.dropdown-content` — portal listbox panel |
+| `SelectItem`         | `dropdown.css`   | `.dropdown-item` — individual option row   |
+| `SelectLabel`        | `dropdown.css`   | `.dropdown-label` — group heading          |
+| `SelectSeparator`    | `dropdown.css`   | `.dropdown-separator` — divider rule       |
+
+## States
+
+| State | Visual |
+| ----- | ------ |
+| Default | 1px `--border`, 13px text, 32px height |
+| `:focus` | `border-color: var(--l-black)` |
+| `:focus-visible` | 2px `--ring` outline, 2px offset |
+| `:disabled` | opacity 0.5, `--l-paper` fill, `cursor: not-allowed` |
+
+## Tokens used
+
+| Token           | Role                                 |
+| --------------- | ------------------------------------ |
+| `--border`      | Trigger border                       |
+| `--l-black`     | Focus border and text colour         |
+| `--l-mid`       | Chevron stroke, disabled text        |
+| `--l-paper`     | Disabled fill                        |
+| `--ring`        | Focus ring                           |
+| `--motion-fast` | Border-colour transition             |

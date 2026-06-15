@@ -1,0 +1,85 @@
+---
+title: Tabs
+description: Horizontal and vertical tab strip. CSS shell pairs with @radix-ui/react-tabs or any headless lib using [data-state].
+---
+
+Four anatomy classes handle both horizontal and vertical orientations. The active tab indicator is a 2px `--primary` underline (or right-side border in vertical mode) that merges with the list's own divider line. CSS lives in `components/tabs.css`.
+
+## React playground (live)
+
+import TabsDemo from "../../../components/TabsDemo.tsx";
+
+<TabsDemo client:load />
+
+## React usage
+
+```tsx
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@ars/design-system-react";
+
+<Tabs defaultValue="overview">
+  <TabsList>
+    <TabsTrigger value="overview">Overview</TabsTrigger>
+    <TabsTrigger value="activity">Activity</TabsTrigger>
+    <TabsTrigger value="settings">Settings</TabsTrigger>
+  </TabsList>
+  <TabsContent value="overview">…</TabsContent>
+  <TabsContent value="activity">…</TabsContent>
+  <TabsContent value="settings">…</TabsContent>
+</Tabs>
+```
+
+For vertical orientation, pass `orientation="vertical"` to `<Tabs>`. Radix sets `[data-orientation]` on the root element; the CSS switches `.tabs-list` from a row to a column and moves the indicator border from bottom to right.
+
+```tsx
+<Tabs defaultValue="overview" orientation="vertical">
+  …
+</Tabs>
+```
+
+## CSS-only usage (any framework)
+
+Wire `[data-state="active"]` from your own state machine:
+
+```html
+<div class="tabs" data-orientation="horizontal">
+  <div class="tabs-list">
+    <button class="tabs-trigger" data-state="active">Overview</button>
+    <button class="tabs-trigger" data-state="inactive">Activity</button>
+    <button class="tabs-trigger" data-state="inactive">Settings</button>
+  </div>
+  <div class="tabs-content" data-state="active">…</div>
+  <div class="tabs-content" data-state="inactive">…</div>
+</div>
+```
+
+Inactive panels use `display: none` via `[data-state="inactive"]` — no JavaScript visibility toggling needed beyond toggling the attribute.
+
+## Anatomy
+
+| Class           | Element           | Notes                                                          |
+| --------------- | ----------------- | -------------------------------------------------------------- |
+| `.tabs`         | Root container    | `flex-direction: column`; `row` when `[data-orientation="vertical"]` |
+| `.tabs-list`    | Tab strip         | `border-bottom` (horizontal) / `border-right` (vertical)      |
+| `.tabs-trigger` | Individual tab    | 11px / 700 / 0.06em uppercase; `--muted-foreground` default   |
+| `.tabs-content` | Panel             | `display: none` when `[data-state="inactive"]`                |
+
+## States
+
+| State | Visual |
+| ----- | ------ |
+| Inactive | `--muted-foreground` label, transparent indicator border |
+| Active (`[data-state="active"]`) | `--foreground` label, 2px `--primary` border-bottom (or border-right) |
+| `:hover` | Transitions label to `--foreground` |
+| `:focus-visible` | 2px `--ring` outline, 2px offset |
+| `[data-disabled]` | opacity 0.4, `cursor: not-allowed`, `pointer-events: none` |
+
+## Tokens used
+
+| Token                | Role                                         |
+| -------------------- | -------------------------------------------- |
+| `--border`           | List divider line                            |
+| `--primary`          | Active tab indicator border                  |
+| `--foreground`       | Active and hover label colour                |
+| `--muted-foreground` | Inactive label colour                        |
+| `--ring`             | Focus ring                                   |
+| `--motion-fast`      | Label colour transition                      |

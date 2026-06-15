@@ -1,0 +1,74 @@
+---
+title: Radio Group
+description: 16×16 circle radio controls. CSS from forms.css pairs with @radix-ui/react-radio-group.
+---
+
+The radio is a 16×16 circle — one of two sanctioned `border-radius: 50%` exceptions in the system (the other is the switch thumb). The selected-state dot is an 8×8 `::after` pseudo-element; no SVG or icon font required. CSS lives in `components/forms.css`.
+
+## React playground (live)
+
+import RadioGroupDemo from "../../../components/RadioGroupDemo.tsx";
+
+<RadioGroupDemo client:load />
+
+## React usage
+
+```tsx
+import { RadioGroup, RadioGroupItem } from "@ars/design-system-react";
+
+<RadioGroup value={plan} onValueChange={setPlan}>
+  <RadioGroupItem value="monthly" id="monthly" />
+  <label htmlFor="monthly">Monthly</label>
+
+  <RadioGroupItem value="annual" id="annual" />
+  <label htmlFor="annual">Annual</label>
+</RadioGroup>
+```
+
+`RadioGroup` is the Radix root — pass `value`/`onValueChange` for controlled use, or `defaultValue` for uncontrolled. It applies no ARS class; consumers set their own layout via `className` or `style`.
+
+`RadioGroupItem` applies `.radio` and wraps `<RadioGroup.Indicator>` with `display: none` — the CSS `::after` dot wins. No separate `<Indicator>` to import.
+
+## CSS-only usage (any framework)
+
+Works with native `<input type="radio">` or any element carrying `[data-state]`:
+
+```html
+<!-- Native fieldset -->
+<fieldset style="border: none; padding: 0;">
+  <input type="radio" class="radio" name="plan" value="monthly" id="monthly" />
+  <label for="monthly">Monthly</label>
+
+  <input type="radio" class="radio" name="plan" value="annual" id="annual" />
+  <label for="annual">Annual</label>
+</fieldset>
+
+<!-- Radix-compatible markup -->
+<button
+  type="button"
+  role="radio"
+  class="radio"
+  data-state="checked"
+  aria-checked="true"
+></button>
+```
+
+## States
+
+| State | Visual |
+| ----- | ------ |
+| Unchecked | 1.5px `--border` ring, transparent fill |
+| Checked (`:checked` / `[data-state="checked"]`) | `--primary` ring, 8×8 `--primary` dot centred via `::after` |
+| `:focus-visible` | 2px `--ring` outline, 2px offset |
+| `:disabled` / `[data-disabled]` | opacity 0.4, `cursor: not-allowed` |
+| `:hover:not(:disabled)` | Border transitions to `--l-mid` |
+
+## Tokens used
+
+| Token           | Role                              |
+| --------------- | --------------------------------- |
+| `--border`      | Unchecked ring                    |
+| `--primary`     | Checked ring and dot colour       |
+| `--l-mid`       | Hover border                      |
+| `--ring`        | Focus ring                        |
+| `--motion-fast` | Border-colour transition          |
