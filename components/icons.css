@@ -1,0 +1,63 @@
+/* ═══════════════════════════════════════════════
+   ARS Design System — Icons
+   ═══════════════════════════════════════════════
+   Base icon class + size variants for use with
+   the Iconoir SVG sprite (icons/sprite.svg).
+
+   Usage
+   ─────
+   <svg class="icon icon-lg"><use href="#icon-search"/></svg>
+
+   The .icon class sets display, default size (16px),
+   and inherits color via fill: currentColor. Size
+   variants (.icon-xs through .icon-xl) override
+   width/height. Existing icon slot classes
+   (.empty-state-icon, .alert-icon, .sidebar-icon)
+   already set size and color — apply those instead
+   of .icon-* variants when used in those contexts.
+   ═══════════════════════════════════════════════ */
+
+/* ── Base ────────────────────────────────────────
+   Default 16×16, inline-block for text flow,
+   currentColor for theme inheritance. */
+
+.icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  stroke: currentColor;
+  vertical-align: middle;
+  flex-shrink: 0;
+  line-height: 0;
+  pointer-events: none;
+}
+
+/* ── Size variants ───────────────────────────────
+   Match common icon sizes across the design system.
+   -sm (16px) is the default, explicitly available
+   for clarity in code. */
+
+.icon-xs { width: 12px; height: 12px; }
+.icon-sm { width: 16px; height: 16px; }
+.icon-md { width: 20px; height: 20px; }
+.icon-lg { width: 24px; height: 24px; }
+.icon-xl { width: 48px; height: 48px; }
+
+/* ── Animated loading ────────────────────────────
+   Spinning animation for loading states. Applied
+   with .icon-loading modifier. */
+
+@keyframes ds-icon-spin {
+  to { transform: rotate(360deg); }
+}
+
+.icon-loading {
+  animation: ds-icon-spin 1s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-loading {
+    animation: none;
+  }
+}

@@ -592,7 +592,7 @@
     outline: 2px solid var(--ring);
     outline-offset: -2px;
   }
-  .sidebar-icon { width: 16px; height: 16px; background: var(--l-rule); }
+  .sidebar-icon { width: 16px; height: 16px; color: var(--muted-foreground); }
 
   /* ── Table specimen ── */
   .table-specimen {
@@ -1604,9 +1604,109 @@
   @media (prefers-reduced-motion: reduce) {
     .skeleton { animation: none; }
   }
+
+  /* ── Icons ── */
+  .icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    stroke: currentColor;
+    vertical-align: middle;
+    flex-shrink: 0;
+    line-height: 0;
+    pointer-events: none;
+  }
+  .icon-xs { width: 12px; height: 12px; }
+  .icon-sm { width: 16px; height: 16px; }
+  .icon-md { width: 20px; height: 20px; }
+  .icon-lg { width: 24px; height: 24px; }
+  .icon-xl { width: 48px; height: 48px; }
+
+  @keyframes ds-icon-spin {
+    to { transform: rotate(360deg); }
+  }
+  .icon-loading {
+    animation: ds-icon-spin 1s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .icon-loading { animation: none; }
+  }
 </style>
 </head>
 <body>
+
+<!-- ═══ Iconoir Icon Sprite ═══ -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="icon-menu" viewBox="0 0 24 24">   <path d="M3 5H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M3 12H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M3 19H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-menu-scale" viewBox="0 0 24 24">   <path d="M3 5H11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M3 12H16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M3 19H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-nav-arrow-left" viewBox="0 0 24 24">   <path d="M15 6L9 12L15 18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-nav-arrow-right" viewBox="0 0 24 24">   <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-nav-arrow-up" viewBox="0 0 24 24">   <path d="M6 15L12 9L18 15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-nav-arrow-down" viewBox="0 0 24 24">   <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-home" viewBox="0 0 24 24">   <path d="M2 8L11.7317 3.13416C11.9006 3.04971 12.0994 3.0497 12.2683 3.13416L22 8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M20 11V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-more-horiz" viewBox="0 0 24 24">   <path d="M20 12.5C20.2761 12.5 20.5 12.2761 20.5 12C20.5 11.7239 20.2761 11.5 20 11.5C19.7239 11.5 19.5 11.7239 19.5 12C19.5 12.2761 19.7239 12.5 20 12.5Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>   <path d="M12 12.5C12.2761 12.5 12.5 12.2761 12.5 12C12.5 11.7239 12.2761 11.5 12 11.5C11.7239 11.5 11.5 11.7239 11.5 12C11.5 12.2761 11.7239 12.5 12 12.5Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>   <path d="M4 12.5C4.27614 12.5 4.5 12.2761 4.5 12C4.5 11.7239 4.27614 11.5 4 11.5C3.72386 11.5 3.5 11.7239 3.5 12C3.5 12.2761 3.72386 12.5 4 12.5Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>  </symbol>
+  <symbol id="icon-plus" viewBox="0 0 24 24">   <path d="M6 12H12M18 12H12M12 12V6M12 12V18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-minus" viewBox="0 0 24 24">   <path d="M6 12H18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-edit" viewBox="0 0 24 24">   <path d="M3 21L12 21H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M12.2218 5.82839L15.0503 2.99996L20 7.94971L17.1716 10.7781M12.2218 5.82839L6.61522 11.435C6.42769 11.6225 6.32233 11.8769 6.32233 12.1421L6.32233 16.6776L10.8579 16.6776C11.1231 16.6776 11.3774 16.5723 11.565 16.3847L17.1716 10.7781M12.2218 5.82839L17.1716 10.7781" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-trash" viewBox="0 0 24 24">   <path d="M20 9L18.005 20.3463C17.8369 21.3026 17.0062 22 16.0353 22H7.96474C6.99379 22 6.1631 21.3026 5.99496 20.3463L4 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M21 6L15.375 6M3 6L8.625 6M8.625 6V4C8.625 2.89543 9.52043 2 10.625 2H13.375C14.4796 2 15.375 2.89543 15.375 4V6M8.625 6L15.375 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-copy" viewBox="0 0 24 24">   <path d="M19.4 20H9.6C9.26863 20 9 19.7314 9 19.4V9.6C9 9.26863 9.26863 9 9.6 9H19.4C19.7314 9 20 9.26863 20 9.6V19.4C20 19.7314 19.7314 20 19.4 20Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M15 9V4.6C15 4.26863 14.7314 4 14.4 4H4.6C4.26863 4 4 4.26863 4 4.6V14.4C4 14.7314 4.26863 15 4.6 15H9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-download" viewBox="0 0 24 24">   <path d="M6 20L18 20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M12 4V16M12 16L15.5 12.5M12 16L8.5 12.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-upload" viewBox="0 0 24 24">   <path d="M6 20L18 20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M12 16V4M12 4L15.5 7.5M12 4L8.5 7.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-check" viewBox="0 0 24 24">   <path d="M5 13L9 17L19 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-xmark" viewBox="0 0 24 24">   <path d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-search" viewBox="0 0 24 24">   <path d="M17 17L21 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M3 11C3 15.4183 6.58172 19 11 19C13.213 19 15.2161 18.1015 16.6644 16.6493C18.1077 15.2022 19 13.2053 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-filter" viewBox="0 0 24 24">   <path d="M3.99961 3H19.9997C20.552 3 20.9997 3.44764 20.9997 3.99987L20.9999 5.58569C21 5.85097 20.8946 6.10538 20.707 6.29295L14.2925 12.7071C14.105 12.8946 13.9996 13.149 13.9996 13.4142L13.9996 19.7192C13.9996 20.3698 13.3882 20.8472 12.7571 20.6894L10.7571 20.1894C10.3119 20.0781 9.99961 19.6781 9.99961 19.2192L9.99961 13.4142C9.99961 13.149 9.89425 12.8946 9.70672 12.7071L3.2925 6.29289C3.10496 6.10536 2.99961 5.851 2.99961 5.58579V4C2.99961 3.44772 3.44732 3 3.99961 3Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-refresh-double" viewBox="0 0 24 24">   <path d="M21.1679 8C19.6247 4.46819 16.1006 2 11.9999 2C6.81459 2 2.55104 5.94668 2.04932 11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M17 8H21.4C21.7314 8 22 7.73137 22 7.4V3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M2.88146 16C4.42458 19.5318 7.94874 22 12.0494 22C17.2347 22 21.4983 18.0533 22 13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M7.04932 16H2.64932C2.31795 16 2.04932 16.2686 2.04932 16.6V21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-info-circle" viewBox="0 0 24 24">   <path d="M12 11.5V16.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M12 7.51L12.01 7.49889" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-check-circle" viewBox="0 0 24 24">   <path d="M7 12.5L10 15.5L17 8.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-warning-triangle" viewBox="0 0 24 24">   <path d="M20.0429 21H3.95705C2.41902 21 1.45658 19.3364 2.22324 18.0031L10.2662 4.01533C11.0352 2.67792 12.9648 2.67791 13.7338 4.01532L21.7768 18.0031C22.5434 19.3364 21.581 21 20.0429 21Z" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" fill="none" stroke-linejoin="round"/>   <path d="M12 9V13" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" fill="none" stroke-linejoin="round"/>   <path d="M12 17.01L12.01 16.9989" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-cancel" viewBox="0 0 24 24">   <path d="M9.17218 14.8284L12.0006 12M14.829 9.17157L12.0006 12M12.0006 12L9.17218 9.17157M12.0006 12L14.829 14.8284" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-bell" viewBox="0 0 24 24">   <path d="M18 8.4C18 6.70261 17.3679 5.07475 16.2426 3.87452C15.1174 2.67428 13.5913 2 12 2C10.4087 2 8.88258 2.67428 7.75736 3.87452C6.63214 5.07475 6 6.70261 6 8.4C6 15.8667 3 18 3 18H21C21 18 18 15.8667 18 8.4Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-bell-notification" viewBox="0 0 24 24">   <path d="M18.1336 11C18.7155 16.3755 21 18 21 18H3C3 18 6 15.8667 6 8.4C6 6.70261 6.63214 5.07475 7.75736 3.87452C8.88258 2.67428 10.4087 2 12 2C12.3373 2 12.6717 2.0303 13 2.08949" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M19 8C20.6569 8 22 6.65685 22 5C22 3.34315 20.6569 2 19 2C17.3431 2 16 3.34315 16 5C16 6.65685 17.3431 8 19 8Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-eye" viewBox="0 0 24 24">   <path d="M3 13C6.6 5 17.4 5 21 13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M12 17C10.3431 17 9 15.6569 9 14C9 12.3431 10.3431 11 12 11C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-eye-close" viewBox="0 0 24 24">   <path d="M19.5 16L17.0248 12.6038" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M12 17.5V14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M4.5 16L6.96895 12.6124" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M3 8C6.6 16 17.4 16 21 8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-calendar" viewBox="0 0 24 24">   <path d="M15 4V2M15 4V6M15 4H10.5M3 10V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V10H3Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M3 10V6C3 4.89543 3.89543 4 5 4H7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M7 2V6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M21 10V6C21 4.89543 20.1046 4 19 4H18.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-clock" viewBox="0 0 24 24">   <path d="M12 6L12 12L18 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-folder" viewBox="0 0 24 24">   <path d="M2 11V4.6C2 4.26863 2.26863 4 2.6 4H8.77805C8.92127 4 9.05977 4.05124 9.16852 4.14445L12.3315 6.85555C12.4402 6.94876 12.5787 7 12.722 7H21.4C21.7314 7 22 7.26863 22 7.6V11M2 11V19.4C2 19.7314 2.26863 20 2.6 20H21.4C21.7314 20 22 19.7314 22 19.4V11M2 11H22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-folder-open" viewBox="0 0 24 24">   <path d="M2.6 4H8.77805C8.92127 4 9.05977 4.05124 9.16852 4.14445L12.3315 6.85555C12.4402 6.94876 12.5787 7 12.722 7H21.4C21.7314 7 22 7.26863 22 7.6V10.4C22 10.7314 21.7314 11 21.4 11H2.6C2.26863 11 2 10.7314 2 10.4V4.6C2 4.26863 2.26863 4 2.6 4Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M2 10V19.4C2 19.7314 2.26863 20 2.6 20H21.4C21.7314 20 22 19.7314 22 19.4V10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-file" viewBox="0 0 24 24">   <path d="M4 21.4V2.6C4 2.26863 4.26863 2 4.6 2H16.2515C16.4106 2 16.5632 2.06321 16.6757 2.17574L19.8243 5.32426C19.9368 5.43679 20 5.5894 20 5.74853V21.4C20 21.7314 19.7314 22 19.4 22H4.6C4.26863 22 4 21.7314 4 21.4Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M8 10L16 10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M8 18L16 18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M8 14L12 14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M16 2V5.4C16 5.73137 16.2686 6 16.6 6H20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-page" viewBox="0 0 24 24">   <path d="M4 21.4V2.6C4 2.26863 4.26863 2 4.6 2H16.2515C16.4106 2 16.5632 2.06321 16.6757 2.17574L19.8243 5.32426C19.9368 5.43679 20 5.5894 20 5.74853V21.4C20 21.7314 19.7314 22 19.4 22H4.6C4.26863 22 4 21.7314 4 21.4Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M16 2V5.4C16 5.73137 16.2686 6 16.6 6H20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-attachment" viewBox="0 0 24 24">   <path d="M21.4383 11.6622L12.2483 20.8522C11.1225 21.9781 9.59552 22.6106 8.00334 22.6106C6.41115 22.6106 4.88418 21.9781 3.75834 20.8522C2.63249 19.7264 2 18.1994 2 16.6072C2 15.015 2.63249 13.4881 3.75834 12.3622L12.9483 3.17222C13.6989 2.42166 14.7169 2 15.7783 2C16.8398 2 17.8578 2.42166 18.6083 3.17222C19.3589 3.92279 19.7806 4.94077 19.7806 6.00222C19.7806 7.06368 19.3589 8.08166 18.6083 8.83222L9.40834 18.0222C9.03306 18.3975 8.52406 18.6083 7.99334 18.6083C7.46261 18.6083 6.95362 18.3975 6.57834 18.0222C6.20306 17.6469 5.99222 17.138 5.99222 16.6072C5.99222 16.0765 6.20306 15.5675 6.57834 15.1922L15.0683 6.71222" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-link" viewBox="0 0 24 24">   <path d="M14 11.9976C14 9.5059 11.683 7 8.85714 7C8.52241 7 7.41904 7.00001 7.14286 7.00001C4.30254 7.00001 2 9.23752 2 11.9976C2 14.376 3.70973 16.3664 6 16.8714C6.36756 16.9525 6.75006 16.9952 7.14286 16.9952" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M10 11.9976C10 14.4893 12.317 16.9952 15.1429 16.9952C15.4776 16.9952 16.581 16.9952 16.8571 16.9952C19.6975 16.9952 22 14.7577 22 11.9976C22 9.6192 20.2903 7.62884 18 7.12383C17.6324 7.04278 17.2499 6.99999 16.8571 6.99999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-unlink" viewBox="0 0 24 24">   <path d="M7.14286 16.9953C6.75006 16.9953 6.36756 16.9525 6 16.8715C3.70973 16.3665 2 14.3761 2 11.9977C2 9.284 4.22573 7.07548 7 7.00195" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M13.3184 9.63429C12.7858 8.73635 11.9737 7.96977 11 7.4989" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M16.8571 6.99999C17.2499 6.99999 17.6324 7.04278 18 7.12383C20.2903 7.62884 22 9.6192 22 11.9976C22 14.7577 19.6975 16.9952 16.8571 16.9952C16.581 16.9952 15.4776 16.9952 15.1429 16.9952C12.317 16.9952 10 14.4893 10 11.9976C10 11.9976 10 11 10.5 10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M3 3L21 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-emoji" viewBox="0 0 24 24">   <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M16.5 14.5C16.5 14.5 15 16.5 12 16.5C9 16.5 7.5 14.5 7.5 14.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M15.5 9C15.2239 9 15 8.77614 15 8.5C15 8.22386 15.2239 8 15.5 8C15.7761 8 16 8.22386 16 8.5C16 8.77614 15.7761 9 15.5 9Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>   <path d="M8.5 9C8.22386 9 8 8.77614 8 8.5C8 8.22386 8.22386 8 8.5 8C8.77614 8 9 8.22386 9 8.5C9 8.77614 8.77614 9 8.5 9Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>  </symbol>
+  <symbol id="icon-user" viewBox="0 0 24 24">   <path d="M5 20V19C5 15.134 8.13401 12 12 12V12C15.866 12 19 15.134 19 19V20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-user-circle" viewBox="0 0 24 24">   <path d="M7 18V17C7 14.2386 9.23858 12 12 12V12C14.7614 12 17 14.2386 17 17V18" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" fill="none" stroke-linejoin="round"/>   <path d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3431 6 9 7.34315 9 9C9 10.6569 10.3431 12 12 12Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-settings" viewBox="0 0 24 24">   <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M19.6224 10.3954L18.5247 7.7448L20 6L18 4L16.2647 5.48295L13.5578 4.36974L12.9353 2H10.981L10.3491 4.40113L7.70441 5.51596L6 4L4 6L5.45337 7.78885L4.3725 10.4463L2 11V13L4.40111 13.6555L5.51575 16.2997L4 18L6 20L7.79116 18.5403L10.397 19.6123L11 22H13L13.6045 19.6132L16.2551 18.5155C16.6969 18.8313 18 20 18 20L20 18L18.5159 16.2494L19.6139 13.598L21.9999 12.9772L22 11L19.6224 10.3954Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-shield-check" viewBox="0 0 24 24">   <path d="M8.5 11.5L11.5 14.5L16.5 9.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M5 18L3.13036 4.91253C3.05646 4.39524 3.39389 3.91247 3.90398 3.79912L11.5661 2.09641C11.8519 2.03291 12.1481 2.03291 12.4339 2.09641L20.096 3.79912C20.6061 3.91247 20.9435 4.39524 20.8696 4.91252L19 18C18.9293 18.495 18.5 21.5 12 21.5C5.5 21.5 5.07071 18.495 5 18Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-log-in" viewBox="0 0 24 24">   <path d="M19 12H12M12 12L15 15M12 12L15 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M19 6V5C19 3.89543 18.1046 3 17 3H7C5.89543 3 5 3.89543 5 5V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-log-out" viewBox="0 0 24 24">   <path d="M12 12H19M19 12L16 15M19 12L16 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M19 6V5C19 3.89543 18.1046 3 17 3H7C5.89543 3 5 3.89543 5 5V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-cart" viewBox="0 0 24 24">   <path d="M19.5 22C20.3284 22 21 21.3284 21 20.5C21 19.6716 20.3284 19 19.5 19C18.6716 19 18 19.6716 18 20.5C18 21.3284 18.6716 22 19.5 22Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>   <path d="M9.5 22C10.3284 22 11 21.3284 11 20.5C11 19.6716 10.3284 19 9.5 19C8.67157 19 8 19.6716 8 20.5C8 21.3284 8.67157 22 9.5 22Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>   <path d="M5 4H22L20 15H7L5 4ZM5 4C4.83333 3.33333 4 2 2 2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M20 15H7H5.23077C3.44646 15 2.5 15.7812 2.5 17C2.5 18.2188 3.44646 19 5.23077 19H19.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-credit-card" viewBox="0 0 24 24">   <path d="M22 9V17C22 18.1046 21.1046 19 20 19H4C2.89543 19 2 18.1046 2 17V7C2 5.89543 2.89543 5 4 5H20C21.1046 5 22 5.89543 22 7V9ZM22 9H6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-coins" viewBox="0 0 24 24">   <path d="M16 13C13.2386 13 11 11.8807 11 10.5C11 9.11929 13.2386 8 16 8C18.7614 8 21 9.11929 21 10.5C21 11.8807 18.7614 13 16 13Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M11 14.5C11 15.8807 13.2386 17 16 17C18.7614 17 21 15.8807 21 14.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M3 9.5C3 10.8807 5.23858 12 8 12C9.12583 12 10.1647 11.814 11.0005 11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M3 13C3 14.3807 5.23858 15.5 8 15.5C9.12561 15.5 10.1643 15.314 11 15.0002" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M3 5.5V16.5C3 17.8807 5.23858 19 8 19C9.12563 19 10.1643 18.8139 11 18.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M13 8.5V5.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M11 10.5V18.5C11 19.8807 13.2386 21 16 21C18.7614 21 21 19.8807 21 18.5V10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M8 8C5.23858 8 3 6.88071 3 5.5C3 4.11929 5.23858 3 8 3C10.7614 3 13 4.11929 13 5.5C13 6.88071 10.7614 8 8 8Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-receipt" viewBox="0 0 24 24">   <path d="M8 6L20 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M4 6.01L4.01 5.99889" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M4 12.01L4.01 11.9989" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M4 18.01L4.01 17.9989" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M8 12L20 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M8 18L20 18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-percentage" viewBox="0 0 24 24">   <path d="M17 19C15.8954 19 15 18.1046 15 17C15 15.8954 15.8954 15 17 15C18.1046 15 19 15.8954 19 17C19 18.1046 18.1046 19 17 19Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M7 9C5.89543 9 5 8.10457 5 7C5 5.89543 5.89543 5 7 5C8.10457 5 9 5.89543 9 7C9 8.10457 8.10457 9 7 9Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M19 5L5 19" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-gift" viewBox="0 0 24 24">   <path d="M20 12V21.4C20 21.7314 19.7314 22 19.4 22H4.6C4.26863 22 4 21.7314 4 21.4V12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M21.4 7H2.6C2.26863 7 2 7.26863 2 7.6V11.4C2 11.7314 2.26863 12 2.6 12H21.4C21.7314 12 22 11.7314 22 11.4V7.6C22 7.26863 21.7314 7 21.4 7Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M12 22V7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M12 7H7.5C6.83696 7 6.20107 6.73661 5.73223 6.26777C5.26339 5.79893 5 5.16304 5 4.5C5 3.83696 5.26339 3.20107 5.73223 2.73223C6.20107 2.26339 6.83696 2 7.5 2C11 2 12 7 12 7Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M12 7H16.5C17.163 7 17.7989 6.73661 18.2678 6.26777C18.7366 5.79893 19 5.16304 19 4.5C19 3.83696 18.7366 3.20107 18.2678 2.73223C17.7989 2.26339 17.163 2 16.5 2C13 2 12 7 12 7Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-mail" viewBox="0 0 24 24">   <path d="M7 9L12 12.5L17 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M2 17V7C2 5.89543 2.89543 5 4 5H20C21.1046 5 22 5.89543 22 7V17C22 18.1046 21.1046 19 20 19H4C2.89543 19 2 18.1046 2 17Z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>  </symbol>
+  <symbol id="icon-mail-open" viewBox="0 0 24 24">   <path d="M7 12L12 15.5L17 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M2 20V9.13238C2 8.42985 2.3686 7.77884 2.97101 7.41739L10.971 2.61739C11.6044 2.23738 12.3956 2.23738 13.029 2.6174L21.029 7.4174C21.6314 7.77884 22 8.42985 22 9.13238V20C22 21.1046 21.1046 22 20 22H4C2.89543 22 2 21.1046 2 20Z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>  </symbol>
+  <symbol id="icon-message" viewBox="0 0 24 24">   <path d="M3 20.2895V5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V15C21 16.1046 20.1046 17 19 17H7.96125C7.35368 17 6.77906 17.2762 6.39951 17.7506L4.06852 20.6643C3.71421 21.1072 3 20.8567 3 20.2895Z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>  </symbol>
+  <symbol id="icon-send" viewBox="0 0 24 24">   <path d="M22 12L3 20L6.5625 12L3 4L22 12Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M6.5 12L22 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-phone" viewBox="0 0 24 24">   <path d="M18.1182 14.702L14 15.5C11.2183 14.1038 9.5 12.5 8.5 10L9.26995 5.8699L7.81452 2L4.0636 2C2.93605 2 2.04814 2.93178 2.21654 4.04668C2.63695 6.83 3.87653 11.8765 7.5 15.5C11.3052 19.3052 16.7857 20.9564 19.802 21.6127C20.9668 21.8662 22 20.9575 22 19.7655L22 16.1812L18.1182 14.702Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-image" viewBox="0 0 24 24">   <path d="M21 3.6V20.4C21 20.7314 20.7314 21 20.4 21H3.6C3.26863 21 3 20.7314 3 20.4V3.6C3 3.26863 3.26863 3 3.6 3H20.4C20.7314 3 21 3.26863 21 3.6Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M3 16L10 13L21 18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M16 10C14.8954 10 14 9.10457 14 8C14 6.89543 14.8954 6 16 6C17.1046 6 18 6.89543 18 8C18 9.10457 17.1046 10 16 10Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-play" viewBox="0 0 24 24">   <path d="M6.90588 4.53682C6.50592 4.2998 6 4.58808 6 5.05299V18.947C6 19.4119 6.50592 19.7002 6.90588 19.4632L18.629 12.5162C19.0211 12.2838 19.0211 11.7162 18.629 11.4838L6.90588 4.53682Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-pause" viewBox="0 0 24 24">   <path d="M6 18.4V5.6C6 5.26863 6.26863 5 6.6 5H9.4C9.73137 5 10 5.26863 10 5.6V18.4C10 18.7314 9.73137 19 9.4 19H6.6C6.26863 19 6 18.7314 6 18.4Z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>   <path d="M14 18.4V5.6C14 5.26863 14.2686 5 14.6 5H17.4C17.7314 5 18 5.26863 18 5.6V18.4C18 18.7314 17.7314 19 17.4 19H14.6C14.2686 19 14 18.7314 14 18.4Z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>  </symbol>
+  <symbol id="icon-bookmark" viewBox="0 0 24 24">   <path d="M5 21V5C5 3.89543 5.89543 3 7 3H17C18.1046 3 19 3.89543 19 5V21L13.0815 17.1953C12.4227 16.7717 11.5773 16.7717 10.9185 17.1953L5 21Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-star" viewBox="0 0 24 24">   <path d="M8.58737 8.23597L11.1849 3.00376C11.5183 2.33208 12.4817 2.33208 12.8151 3.00376L15.4126 8.23597L21.2215 9.08017C21.9668 9.18848 22.2638 10.0994 21.7243 10.6219L17.5217 14.6918L18.5135 20.4414C18.6409 21.1798 17.8614 21.7428 17.1945 21.3941L12 18.678L6.80547 21.3941C6.1386 21.7428 5.35909 21.1798 5.48645 20.4414L6.47825 14.6918L2.27575 10.6219C1.73617 10.0994 2.03322 9.18848 2.77852 9.08017L8.58737 8.23597Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-help-circle" viewBox="0 0 24 24">   <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M9 9C9 5.49997 14.5 5.5 14.5 9C14.5 11.5 12 10.9999 12 13.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M12 18.01L12.01 17.9989" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-question-mark" viewBox="0 0 24 24">   <path d="M7.90039 8.07954C7.90039 3.30678 15.4004 3.30682 15.4004 8.07955C15.4004 11.4886 11.9913 10.8067 11.9913 14.8976" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M12 19.01L12.01 18.9989" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-loading" viewBox="0 0 24 24">   <path d="M12 6L12 12L18 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M21.8883 10.5C21.1645 5.68874 17.013 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C16.1006 22 19.6248 19.5318 21.1679 16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M17 16H21.4C21.7314 16 22 16.2686 22 16.6V21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-hourglass" viewBox="0 0 24 24">   <path d="M12 12C15.866 12 19 8.86599 19 5H5C5 8.86599 8.13401 12 12 12ZM12 12C15.866 12 19 15.134 19 19H5C5 15.134 8.13401 12 12 12Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M5 2L12 2L19 2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M5 22H12L19 22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-thumbs-up" viewBox="0 0 24 24">   <path d="M16.4724 20H4.1C3.76863 20 3.5 19.7314 3.5 19.4V9.6C3.5 9.26863 3.76863 9 4.1 9H6.86762C7.57015 9 8.22116 8.6314 8.5826 8.02899L11.293 3.51161C11.8779 2.53688 13.2554 2.44422 13.9655 3.33186C14.3002 3.75025 14.4081 4.30635 14.2541 4.81956L13.2317 8.22759C13.1162 8.61256 13.4045 9 13.8064 9H18.3815C19.7002 9 20.658 10.254 20.311 11.5262L18.4019 18.5262C18.1646 19.3964 17.3743 20 16.4724 20Z" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" fill="none" stroke-linejoin="round"/>   <path d="M7 20L7 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-thumbs-down" viewBox="0 0 24 24">   <path d="M16.4724 3.5H4.1C3.76863 3.5 3.5 3.76863 3.5 4.1V13.9C3.5 14.2314 3.76863 14.5 4.1 14.5H6.86762C7.57015 14.5 8.22116 14.8686 8.5826 15.471L11.293 19.9884C11.8779 20.9631 13.2554 21.0558 13.9655 20.1681C14.3002 19.7497 14.4081 19.1937 14.2541 18.6804L13.2317 15.2724C13.1162 14.8874 13.4045 14.5 13.8064 14.5H18.3815C19.7002 14.5 20.658 13.246 20.311 11.9738L18.4019 4.97376C18.1646 4.10364 17.3743 3.5 16.4724 3.5Z" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" fill="none" stroke-linejoin="round"/>   <path d="M7 14.5L7 3.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+  <symbol id="icon-heart" viewBox="0 0 24 24">   <path d="M22 8.86222C22 10.4087 21.4062 11.8941 20.3458 12.9929C17.9049 15.523 15.5374 18.1613 13.0053 20.5997C12.4249 21.1505 11.5042 21.1304 10.9488 20.5547L3.65376 12.9929C1.44875 10.7072 1.44875 7.01723 3.65376 4.73157C5.88044 2.42345 9.50794 2.42345 11.7346 4.73157L11.9998 5.00642L12.2648 4.73173C13.3324 3.6245 14.7864 3 16.3053 3C17.8242 3 19.2781 3.62444 20.3458 4.73157C21.4063 5.83045 22 7.31577 22 8.86222Z" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5" fill="none" stroke-linecap="round"/>  </symbol>
+  <symbol id="icon-flag" viewBox="0 0 24 24">   <path d="M5 15L5.95039 4.54568C5.97849 4.23663 6.23761 4 6.54793 4H20.343C20.6958 4 20.9725 4.30295 20.9405 4.65432L20.0496 14.4543C20.0215 14.7634 19.7624 15 19.4521 15H5ZM5 15L4.4 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>   <path d="M9 7.5L16 11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>  </symbol>
+</svg>
 
 <!-- ── Navigation ── -->
 <nav class="ds-nav">
@@ -2134,6 +2234,71 @@
 
     <p class="specimen-label">Font Stack</p>
     <div class="code-block"><span class="hl">--font-sans</span>: <span class="or">"Barlow"</span>, "Helvetica Neue", Helvetica, Arial, sans-serif;</div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- ICONS                                              -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section>
+    <h2 class="section-title">Icons</h2>
+    <p class="section-intro">68 curated Iconoir icons. Copy sprite once, use via &lt;use href="#icon-name"/&gt;.</p>
+
+    <h3>Setup</h3>
+    <pre style="background:var(--l-light);padding:12px;font-size:12px;"><code>&lt;svg style="display:none"&gt;&lt;!-- Copy icons/sprite.svg --&gt;&lt;/svg&gt;</code></pre>
+
+    <h3>Sizes</h3>
+    <div style="display:flex;gap:16px;align-items:center;margin:16px 0;">
+      <svg class="icon icon-xs"><use href="#icon-check"/></svg>
+      <svg class="icon icon-sm"><use href="#icon-check"/></svg>
+      <svg class="icon icon-md"><use href="#icon-check"/></svg>
+      <svg class="icon icon-lg"><use href="#icon-check"/></svg>
+      <svg class="icon icon-xl"><use href="#icon-check"/></svg>
+      <span style="font-size:11px;color:var(--muted-foreground);">xs/sm/md/lg/xl</span>
+    </div>
+
+    <h3>Icon Finder</h3>
+    <div style="margin-bottom:32px;">
+      <input
+        type="text"
+        id="icon-search"
+        placeholder="Search icons..."
+        class="input-bordered"
+        style="width:100%;max-width:600px;margin-bottom:16px;"
+      />
+      <div id="icon-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;">
+        <!-- Icons will be populated by JavaScript -->
+      </div>
+    </div>
+
+    <h3>All 68 Icons</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:24px;">
+      <div style="grid-column:1/-1;font-weight:600;margin-top:8px;">Navigation & Layout</div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-menu"/></svg><p style="font-size:9px;margin-top:4px;">menu</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-menu-scale"/></svg><p style="font-size:9px;margin-top:4px;">menu-scale</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-nav-arrow-left"/></svg><p style="font-size:9px;margin-top:4px;">nav-arrow-left</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-nav-arrow-right"/></svg><p style="font-size:9px;margin-top:4px;">nav-arrow-right</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-nav-arrow-up"/></svg><p style="font-size:9px;margin-top:4px;">nav-arrow-up</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-nav-arrow-down"/></svg><p style="font-size:9px;margin-top:4px;">nav-arrow-down</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-home"/></svg><p style="font-size:9px;margin-top:4px;">home</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-more-horiz"/></svg><p style="font-size:9px;margin-top:4px;">more-horiz</p></div>
+
+      <div style="grid-column:1/-1;font-weight:600;margin-top:8px;">Actions & Controls</div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-plus"/></svg><p style="font-size:9px;margin-top:4px;">plus</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-minus"/></svg><p style="font-size:9px;margin-top:4px;">minus</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-edit"/></svg><p style="font-size:9px;margin-top:4px;">edit</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-trash"/></svg><p style="font-size:9px;margin-top:4px;">trash</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-copy"/></svg><p style="font-size:9px;margin-top:4px;">copy</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-download"/></svg><p style="font-size:9px;margin-top:4px;">download</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-upload"/></svg><p style="font-size:9px;margin-top:4px;">upload</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-check"/></svg><p style="font-size:9px;margin-top:4px;">check</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-xmark"/></svg><p style="font-size:9px;margin-top:4px;">xmark</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-search"/></svg><p style="font-size:9px;margin-top:4px;">search</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-filter"/></svg><p style="font-size:9px;margin-top:4px;">filter</p></div>
+      <div style="text-align:center;padding:8px;border:1px solid var(--border);"><svg class="icon icon-md"><use href="#icon-refresh-double"/></svg><p style="font-size:9px;margin-top:4px;">refresh-double</p></div>
+
+      <div style="grid-column:1/-1;font-weight:600;margin-top:8px;">Status & Alerts + Forms + User + Commerce + Communication + Media + System (remaining 48 icons)</div>
+      <p style="grid-column:1/-1;font-size:11px;color:var(--muted-foreground);">See icons.mdx docs for complete reference</p>
+    </div>
   </section>
 
   <!-- ══════════════════════════════════════════════════ -->
@@ -2793,19 +2958,19 @@
           <p style="font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--l-mid);margin-top:2px;">Partner Console</p>
         </div>
         <div class="sidebar-item active">
-          <div class="sidebar-icon"></div> Dashboard
+          <svg class="icon sidebar-icon"><use href="#icon-home"/></svg> Dashboard
         </div>
         <div class="sidebar-item">
-          <div class="sidebar-icon"></div> Campaigns
+          <svg class="icon sidebar-icon"><use href="#icon-home"/></svg> Campaigns
         </div>
         <div class="sidebar-item">
-          <div class="sidebar-icon"></div> Members
+          <svg class="icon sidebar-icon"><use href="#icon-home"/></svg> Members
         </div>
         <div class="sidebar-item">
-          <div class="sidebar-icon"></div> Settlement
+          <svg class="icon sidebar-icon"><use href="#icon-home"/></svg> Settlement
         </div>
         <div class="sidebar-item">
-          <div class="sidebar-icon"></div> Reports
+          <svg class="icon sidebar-icon"><use href="#icon-home"/></svg> Reports
         </div>
       </div>
       <div style="flex:1;padding:20px;background:white;">
@@ -3320,9 +3485,7 @@
 
     <div class="specimen-block">
       <div class="empty-state">
-        <div class="empty-state-icon">
-          <div style="width:48px;height:48px;background:var(--l-rule);"></div>
-        </div>
+        <svg class="icon empty-state-icon"><use href="#icon-search"/></svg>
         <h3 class="empty-state-title">No campaigns yet</h3>
         <p class="empty-state-description">Create your first campaign to start tracking performance, audiences, and ROI.</p>
         <div class="empty-state-action">
@@ -3395,6 +3558,86 @@
       localStorage.setItem(KEY, next);
       apply(next);
     });
+  })();
+
+  // Icon finder
+  (() => {
+    const icons = [
+      'attachment', 'bell', 'bell-notification', 'bookmark', 'calendar', 'cancel', 'cart',
+      'check', 'check-circle', 'clock', 'coins', 'copy', 'credit-card', 'download', 'edit',
+      'emoji', 'eye', 'eye-close', 'file', 'filter', 'flag', 'folder', 'folder-open', 'gift',
+      'heart', 'help-circle', 'home', 'hourglass', 'image', 'info-circle', 'link', 'loading',
+      'log-in', 'log-out', 'mail', 'mail-open', 'menu', 'menu-scale', 'message', 'minus',
+      'more-horiz', 'nav-arrow-down', 'nav-arrow-left', 'nav-arrow-right', 'nav-arrow-up',
+      'page', 'pause', 'percentage', 'phone', 'play', 'plus', 'question-mark', 'receipt',
+      'refresh-double', 'search', 'send', 'settings', 'shield-check', 'star', 'thumbs-down',
+      'thumbs-up', 'trash', 'unlink', 'upload', 'user', 'user-circle', 'warning-triangle', 'xmark'
+    ];
+
+    const grid = document.getElementById('icon-grid');
+    const searchInput = document.getElementById('icon-search');
+
+    function renderIcons(filter = '') {
+      const filtered = filter
+        ? icons.filter(name => name.includes(filter.toLowerCase()))
+        : icons;
+
+      grid.innerHTML = filtered.map(name => `
+        <div
+          class="icon-card"
+          style="
+            text-align:center;
+            padding:16px 8px;
+            border:1px solid var(--border);
+            cursor:pointer;
+            transition:background var(--motion-fast) var(--ease-standard);
+          "
+          onclick="copyIconCode('${name}')"
+          title="Click to copy code"
+        >
+          <svg class="icon icon-lg" style="margin:0 auto 8px;"><use href="#icon-${name}"/></svg>
+          <p style="font-size:10px;margin:0;word-break:break-word;">${name}</p>
+        </div>
+      `).join('');
+
+      // Add hover effect via event delegation
+      grid.querySelectorAll('.icon-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          card.style.background = 'var(--accent)';
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.background = 'transparent';
+        });
+      });
+    }
+
+    window.copyIconCode = function(name) {
+      const code = `<svg class="icon icon-md"><use href="#icon-${name}"/></svg>`;
+      navigator.clipboard.writeText(code).then(() => {
+        // Show feedback
+        const msg = document.createElement('div');
+        msg.textContent = 'Copied!';
+        msg.style.cssText = `
+          position:fixed;
+          top:20px;
+          right:20px;
+          background:var(--primary);
+          color:var(--primary-foreground);
+          padding:8px 16px;
+          font-size:13px;
+          font-weight:700;
+          z-index:10000;
+        `;
+        document.body.appendChild(msg);
+        setTimeout(() => msg.remove(), 2000);
+      });
+    };
+
+    searchInput.addEventListener('input', (e) => {
+      renderIcons(e.target.value);
+    });
+
+    renderIcons();
   })();
 </script>
 </body>

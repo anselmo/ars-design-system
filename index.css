@@ -38,6 +38,7 @@
 @import "./components/alert.css";
 @import "./components/empty-state.css";
 @import "./components/skeleton.css";
+@import "./components/icons.css";
 
 /* ── Base Reset ── */
 @layer base {
